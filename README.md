@@ -1,7 +1,6 @@
 # EECS 337 Project 1
 
 Explanation:
-Members: 
 
 ## Getting Started
 
@@ -18,26 +17,19 @@ A step by step series of examples that tell you how to get a development env run
 Say what the step will be
 
 ```
-Give the example
+Code
 ```
 And repeat
 ```
-until finished
+more code
 ```
 End with an example of getting some data out of the system or using it for a little demo
 
 ## Authors
+Group 1: Alex Rhee, Itay Golan, Arno Murica, Anthony Leonardi
 
-Alex Rhee
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/alexr17/nlp-golden-globes/graphs/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
