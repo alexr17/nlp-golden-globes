@@ -1,4 +1,4 @@
-# EECS 337 Project 1
+# EECS 337 Project 1 Winter 2019
 
 Explanation:
 
