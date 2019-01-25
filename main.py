@@ -6,7 +6,7 @@ from nltk.corpus import stopwords
 from debug import top_keys
 
 stopwords = set(stopwords.words('english'))
-year = '2013'
+year = '2015'
 with open('./data/gg'+year+'.json') as f:
     data = json.load(f)
 
@@ -23,7 +23,7 @@ def valid_tkn(word):
         return False
 
     # special unicode character
-    if '\u' in word.encode('unicode_escape'):
+    if r'\u' in word:
         return False
     regex = re.compile('[^a-zA-Z]')
     word = regex.sub('', word)
@@ -58,7 +58,7 @@ def find_name(lst, name_dict):
             name_tpls.append(tpl)
         else:
             break
-    
+
     # find last name(s)
     full_names = []
     for name_tpl in name_tpls:
