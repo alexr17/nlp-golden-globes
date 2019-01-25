@@ -6,7 +6,7 @@ from nltk.corpus import stopwords
 from debug import top_keys
 
 stopwords = set(stopwords.words('english'))
-year = '2015'
+year = '2013'
 with open('./data/gg'+year+'.json') as f:
     data = json.load(f)
 
@@ -23,7 +23,8 @@ def valid_tkn(word):
         return False
 
     # special unicode character
-    if r'\u' in word:
+    if any(ord(c) > 128 for c in word):
+        print(word)
         return False
     regex = re.compile('[^a-zA-Z]')
     word = regex.sub('', word)
