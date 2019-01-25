@@ -17,10 +17,11 @@ from debug import top_keys
 
 
 stopwords = set(stopwords.words('english'))
-year = '2015'
+year = '2013'
 with open('./data/gg'+year+'.json') as f:
     data = json.load(f)
 
+# print(len(data))
 # filter out token
 def valid_tkn(word):
     # stopwords
