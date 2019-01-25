@@ -8,13 +8,13 @@ Clone this repo and install packages
 ```
 $ git clone https://github.com/alexr17/nlp-golden-globes
 $ cd nlp-golden-globes/
-$ pip2.7 install -r requirements.txt
+$ pip install -r requirements.txt
 ```
-If you don't have pip2.7 you will need to install it.
+If you don't have pip you will need to install it.
 
 Import nltk stopwords
 ```
-$ python2.7
+$ python3
 >>> import nltk
 >>> nltk.download('stopwords')
 ```
@@ -24,12 +24,19 @@ Within the same directory, create a 'data' folder containing files `gg2013.json`
 
 Twitter API integration will be added later.
 
+
+#### Adding new packages
+```
+$ pip install <package-name>
+$ pip freeze > requirements.txt
+```
+
 ## Getting Started
 
-This project runs on Python2.7, so any running of files or downloading of packages should be done with the appropriate commands ` $ python2.7 ` and ` $ pip2.7 `.
+This project runs on Python3, so any running of files or downloading of packages should be done with the appropriate commands ` $ python3 ` and ` $ pip `.
 Once all the data and packages have been imported, then run:
 ```
-$ python2.7 main.py
+$ python3 main.py
 ```
 
 ## Authors

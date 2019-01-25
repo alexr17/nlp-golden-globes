@@ -1,20 +1,9 @@
-# MAKE SURE TO USE PYTHON 2.7
-# pip2.7 install <package_name>
-# python2.7 main.py
-# EECS 337 Project 1 - golden globes twitter scraping
-
-# to import nltk stopwords:
-# $ python2
-# >>> import nltk
-# >>> nltk.download('stopwords')
-from __future__ import division
 import json
 import nltk
 import math
 import re
 from nltk.corpus import stopwords
 from debug import top_keys
-
 
 stopwords = set(stopwords.words('english'))
 year = '2013'
