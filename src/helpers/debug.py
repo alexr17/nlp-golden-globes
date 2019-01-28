@@ -6,5 +6,5 @@ def top_keys(lst, min):
 
 def find_key(lst, key):
     for item in lst:
-        if key in lst:
+        if key in item[0]:
             print(item)
