@@ -3,7 +3,10 @@ import re
 stopwords = set(stopwords.words('english'))
 
 # filter out token
-def valid_tkn(tkn):
+def valid_tkn(tkn, exceptions):
+
+    if tkn in exceptions:
+        return True
     # stopwords
     if tkn in stopwords:
         return False

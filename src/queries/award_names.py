@@ -11,7 +11,7 @@ gg_sw = ['golden', 'globe', 'globes', 'goldenglobes']
 award_sw = ['year', 'show', 'award', 'awards']
 
 # award keywords
-award_kw = ['award', 'best', 'actor', 'actress']
+award_kw = ['award', 'best', 'actor', 'actress', "supporting"]
 def find_awards(data, year):
     award_dict = {}
 
@@ -28,7 +28,7 @@ def find_awards(data, year):
             tokens = nltk.word_tokenize(obj['text'])
             for i, tkn in enumerate(tokens):
                 tkn = tkn.lower()
-                if valid_tkn(tkn) and not tkn in gg_sw + award_sw:
+                if valid_tkn(tkn, award_kw) and not tkn in gg_sw + award_sw:
                     if tkn not in award_dict:
                         award_dict[tkn] = 1
                     else:
