@@ -1,6 +1,7 @@
 import nltk
 from src.helpers.load import load_json
 from src.helpers.clean import valid_tkn
+from src.helpers.clean import bigrams
 import pprint
 #from src.helpers.find import find_name
 
@@ -25,7 +26,10 @@ def find_awards(data, year):
         if 'best' in obj['text'].lower():
             # if 'award for best' in obj['text'].lower():
             #     pprint.pprint(obj['text'])
-            tokens = nltk.word_tokenize(obj['text'])
+            # tokens = nltk.word_tokenize(obj['text'])
+            # tokens = [nltk.bigrams(nltk.word_tokenize(s)) for s in nltk.sent_tokenize(obj['text'])]
+            tokens = bigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw)
+            #print(tokens)
             for i, tkn in enumerate(tokens):
                 tkn = tkn.lower()
                 if valid_tkn(tkn, award_kw) and not tkn in gg_sw + award_sw:

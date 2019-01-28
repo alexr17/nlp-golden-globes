@@ -3,9 +3,9 @@ import re
 stopwords = set(stopwords.words('english'))
 
 # filter out token
-def valid_tkn(tkn, exceptions):
+def valid_tkn(tkn, valid_kw):
 
-    if tkn in exceptions:
+    if tkn in valid_kw:
         return True
     # stopwords
     if tkn in stopwords:
@@ -26,3 +26,11 @@ def valid_tkn(tkn, exceptions):
         return False
     return True
 
+def bigrams(tokens, valid_kw, invalid_kw):
+    prev = tokens[0]
+    bigrams = []
+    for i in range(1, len(tokens)):
+        if valid_tkn(tokens[i], valid_kw) and tokens[i] not in invalid_kw:
+            bigrams.append(prev + ' ' + tokens[i])
+            prev = tokens[i]
+    return bigrams
