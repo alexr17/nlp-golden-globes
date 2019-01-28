@@ -2,3 +2,6 @@
 /data
 /__pycache__
 config.ini
+/src/__pycache__
+/src/helpers/__pycache__
+/src/queries/__pycache__

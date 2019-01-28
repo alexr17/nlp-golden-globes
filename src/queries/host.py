@@ -4,12 +4,13 @@ from src.helpers.clean import valid_tkn
 from src.helpers.find import find_name
 
 # golden globes stopwords
-gg_sw = ['golden', 'globes']
+gg_sw = ['golden', 'globes', 'goldenglobes', 'globe']
 
 # host stopwords
 host_sw = ['next', 'year', 'host']
 
-host_keywords = []
+# host keywords
+host_kw = []
 
 def find_hosts(data, year):
     # host
@@ -20,7 +21,7 @@ def find_hosts(data, year):
             tokens = nltk.word_tokenize(obj['text'])
             for tkn in tokens:
                 tkn = tkn.lower()
-                if valid_tkn(tkn, host_keywords) and not any(substr in tkn for substr in gg_sw + host_sw):
+                if valid_tkn(tkn, host_kw, host_sw + gg_sw):
                     if tkn not in host_dict:
                         host_dict[tkn] = 1
                     else:
