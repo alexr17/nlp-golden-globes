@@ -1,19 +1,23 @@
 from nltk.corpus import stopwords
+from src.helpers.debug import top_keys
 import re
 stopwords = set(stopwords.words('english'))
 
 # filter out token
-def valid_tkn(tkn, valid_kw):
-
+def valid_tkn(tkn, valid_kw, invalid_kw):
+    tkn = tkn.lower()
     if tkn in valid_kw:
         return True
+    
+    if tkn in invalid_kw:
+        return False
     # stopwords
     if tkn in stopwords:
         return False
 
     # ampersand and twitter link
-    twitter_stop = ['&amp;', '//t.co/', 'rt', 'http']
-    if any(substr in tkn for substr in twitter_stop):
+    twitter_stop = ['&amp;', 'rt', 'http']
+    if '//t.co/' in tkn or tkn in twitter_stop:
         return False
 
     # special unicode character
@@ -27,11 +31,12 @@ def valid_tkn(tkn, valid_kw):
     return True
 
 def bigrams(tokens, valid_kw, invalid_kw):
-    prev = tokens[0]
+    prev = False
     bigrams = []
-    for i in range(1, len(tokens)):
-        if valid_tkn(tokens[i], valid_kw) and tokens[i] not in invalid_kw:
-            bigrams.append(prev + ' ' + tokens[i])
+    for i in range(len(tokens)):
+        if valid_tkn(tokens[i], valid_kw, invalid_kw):
+            if prev:
+                bigrams.append(prev + ' ' + tokens[i])
             prev = tokens[i]
     return bigrams
 
@@ -67,3 +72,18 @@ def merge_bigrams(lst):
 
 
 
+def join_ngrams(tpls):
+    ngrams = []
+    coeff = 0.5
+    min = 50
+    for idx, tpl in enumerate(tpls):
+        
+        inc = 1
+        while len(tpls) > idx + inc and tpls[idx + inc][1] > min and tpls[idx + inc][1] > tpl[1] * coeff:
+            top = tpl[0].split(' ')
+            bot = tpls[idx + inc][0].split(' ')
+            if top[1] == bot[0]: #join
+                ngrams.append((' '.join(top) + ' ' + ' '.join(bot[1:]), tpls[idx + inc][1] + tpl[1]))
+            #print(tpls[idx + inc])
+            inc += 1
+    #top_keys(ngrams, 100)
