@@ -16,7 +16,7 @@ gg_sw = ['golden', 'globe', 'globes', 'goldenglobes']
 award_sw = ['year', 'show', 'award', 'awards']
 
 # media stopwords
-media_sw = ['eonline']
+media_sw = ['eonline', 'cnnshowbiz']
 
 # award keywords
 award_kw = ['actor', 'actress', 'supporting']
@@ -33,8 +33,8 @@ def find_awards(data, year):
     for obj in data:
         if 'best' in obj['text'].lower():
             # tokens = [nltk.bigrams(nltk.word_tokenize(s)) for s in nltk.sent_tokenize(obj['text'])]
-            #tokens = bigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw)
-            tokens = trigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw)
+            # tokens = bigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw + media_sw)
+            tokens = trigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw + media_sw)
 
             #print(tokens)
             for i, tkn in enumerate(tokens):

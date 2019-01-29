@@ -41,12 +41,13 @@ def bigrams(tokens, valid_kw, invalid_kw):
     return bigrams
 
 def trigrams(tokens, valid_kw, invalid_kw):
-    prev1 = tokens[0]
-    prev2 = tokens[1]
+    prev1 = False
+    prev2 = False
     trigrams = []
     for i in range(2, len(tokens)):
-        if valid_tkn(tokens[i], valid_kw) and tokens[i] not in invalid_kw:
-            trigrams.append(prev1 + ' ' + prev2 + ' ' + tokens[i])
+        if valid_tkn(tokens[i], valid_kw, invalid_kw):
+            if prev1 and prev2:
+                trigrams.append(prev1 + ' ' + prev2 + ' ' + tokens[i])
             prev1 = prev2
             prev2 = tokens[i]
     return trigrams
