@@ -30,10 +30,8 @@ def find_awards(data, year):
 
     for obj in data:
         if 'best' in obj['text'].lower():
-            # tokens = nltk.word_tokenize(obj['text'])
             # tokens = [nltk.bigrams(nltk.word_tokenize(s)) for s in nltk.sent_tokenize(obj['text'])]
             tokens = bigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw)
-            #print(tokens)
             for i, tkn in enumerate(tokens):
                 tkn = tkn.lower()
                 #if valid_tkn(tkn, award_kw) and not tkn in gg_sw + award_sw:
@@ -41,8 +39,6 @@ def find_awards(data, year):
                     award_dict[tkn] = 1
                 else:
                     award_dict[tkn] += 1
-    #award_keys = award_dict.keys()
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
     join_ngrams(award_lst)
     return award_lst
-    #return find_name(award_lst, award_dict)

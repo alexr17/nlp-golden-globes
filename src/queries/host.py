@@ -1,6 +1,6 @@
 import nltk
 from src.helpers.load import load_json
-from src.helpers.clean import valid_tkn
+from src.helpers.clean import valid_tkn, bigrams
 from src.helpers.find import find_name
 
 # golden globes stopwords
@@ -19,6 +19,7 @@ def find_hosts(data, year):
     for obj in data:
         if 'host' in obj['text']:
             tokens = nltk.word_tokenize(obj['text'])
+            # tokens = bigrams(nltk.word_tokenize(obj['text']), host_kw, host_sw + gg_sw)
             for tkn in tokens:
                 tkn = tkn.lower()
                 if valid_tkn(tkn, host_kw, host_sw + gg_sw):

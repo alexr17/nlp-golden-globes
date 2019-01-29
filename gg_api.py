@@ -35,8 +35,10 @@ OFFICIAL_AWARDS = [
     'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television',
     'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television'
 ]
+
 lst = find_awards(data, year)
 top_keys(lst, 1000)
+# find_key(lst, 'supporting')
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
