@@ -3,7 +3,9 @@ from src.helpers.load import load_json
 from src.helpers.clean import valid_tkn
 from src.helpers.clean import bigrams
 from src.helpers.debug import top_keys
-from src.helpers.clean import join_ngrams
+#from src.helpers.clean import join_ngrams
+from src.helpers.clean import trigrams
+from src.helpers.clean import merge_bigrams
 import pprint
 #from src.helpers.find import find_name
 
@@ -31,14 +33,18 @@ def find_awards(data, year):
     for obj in data:
         if 'best' in obj['text'].lower():
             # tokens = [nltk.bigrams(nltk.word_tokenize(s)) for s in nltk.sent_tokenize(obj['text'])]
-            tokens = bigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw + media_sw)
+            #tokens = bigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw)
+            tokens = trigrams(nltk.word_tokenize(obj['text']), award_kw, gg_sw + award_sw)
+
+            #print(tokens)
             for i, tkn in enumerate(tokens):
+
+                # if "best" in tkn[0]
+                # tkn[1] == next_tkn[0]
                 tkn = tkn.lower()
-                #if valid_tkn(tkn, award_kw) and not tkn in gg_sw + award_sw:
                 if tkn not in award_dict:
                     award_dict[tkn] = 1
                 else:
                     award_dict[tkn] += 1
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    join_ngrams(award_lst)
     return award_lst

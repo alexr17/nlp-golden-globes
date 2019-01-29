@@ -34,3 +34,36 @@ def bigrams(tokens, valid_kw, invalid_kw):
             bigrams.append(prev + ' ' + tokens[i])
             prev = tokens[i]
     return bigrams
+
+def trigrams(tokens, valid_kw, invalid_kw):
+    prev1 = tokens[0]
+    prev2 = tokens[1]
+    trigrams = []
+    for i in range(2, len(tokens)):
+        if valid_tkn(tokens[i], valid_kw) and tokens[i] not in invalid_kw:
+            trigrams.append(prev1 + ' ' + prev2 + ' ' + tokens[i])
+            prev1 = prev2
+            prev2 = tokens[i]
+    return trigrams
+
+
+def merge_bigrams(lst):
+    lst1 = [x[0].split(" ")[0] for x in lst]
+    #motion, best, supporting, best"
+    lst2 = [x[0].split(" ")[1] for x in lst]
+    # picture, supporting, actor, best
+    lst_of_words = {}
+    for i, element in enumerate(lst):
+        word = ""
+        if lst1[i] == "best":
+            if lst2[i] in lst1:
+                word = lst1[i] + " " + lst2[i] + " " + lst2[lst1.index(lst2[i])]
+                if word in lst_of_words:
+                    lst_of_words[word] +=1
+                else:
+                    lst_of_words[word] = 1
+
+    return lst_of_words
+
+
+
