@@ -19,7 +19,17 @@ award_sw = ['year', 'show', 'award', 'awards']
 media_sw = ['eonline', 'cnnshowbiz']
 
 # award keywords
-award_kw = ['actor', 'actress', 'supporting']
+award_kw = ['award', 'best']
+media_kw = ['movie', 'tv', 'television', 'motion picture', 'documentary']
+acting_kw = ['actor', 'actress', 'supporting']
+prod_kw = ['director', 'screenplay', 'cinematography', 'score', 'song', 'editing', 'costume design', 'writing', 'sound']
+categ_kw = ['comedy', 'musical', 'drama', 'foreign language', 'animated feature']
+
+'''
+ACTOR IN A LEADING ROLE
+best performance by an actress in a motion picture - drama
+'''
+
 
 def find_awards(data, year):
     award_dict = {}

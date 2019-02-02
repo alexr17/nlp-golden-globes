@@ -1,7 +1,7 @@
 from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.helpers.load import load_json
-from src.helpers.debug import top_keys, find_key
+from src.helpers.debug import top_keys, find_key, show_best
 year = '2013'
 data = load_json(year)
 
@@ -37,7 +37,8 @@ OFFICIAL_AWARDS = [
 ]
 
 lst = find_awards(data, year)
-top_keys(lst, 1000)
+#top_keys(lst, 100)
+show_best(lst, 100)
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
