@@ -40,6 +40,18 @@ Once all the data and packages have been imported, then run:
 $ python3 gg_api.py
 ```
 
+## Contributing
+
+If you want to try solving different sections, rather than adding to the main branch, create your own branch:
+```
+$ git checkout -b <branch-name>
+```
+When you want to merge your changes
+```
+$ git checkout master
+$ git merge <branch-name>
+```
+
 ## Authors
 Group 1: Alex Rhee, Itay Golan, Arno Murica, Anthony Leonardi
 
