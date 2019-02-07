@@ -27,16 +27,17 @@ Twitter API integration will be added later.
 
 #### Adding new packages
 ```
-$ pip install <package-name>
-$ pip freeze > requirements.txt
+$ pip3 install <package-name>
+$ pip3 show <package-name>
 ```
+Add the package name with the version to requirements.txt
 
 ## Getting Started
 
 This project runs on Python3, so any running of files or downloading of packages should be done with the appropriate commands ` $ python3 ` and ` $ pip `.
 Once all the data and packages have been imported, then run:
 ```
-$ python3 main.py
+$ python3 gg_api.py
 ```
 
 ## Authors
