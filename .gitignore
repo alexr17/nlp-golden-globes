@@ -5,3 +5,5 @@ config.ini
 /src/__pycache__
 /src/helpers/__pycache__
 /src/queries/__pycache__
+/.DS_Store
+/src/.DS_Store
