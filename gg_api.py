@@ -1,5 +1,7 @@
 from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
+from src.queries.nominees import find_nominee
+from src.queries.winners import find_winner
 from src.helpers.load import load_json
 from src.helpers.debug import top_keys, find_key
 year = '2013'
@@ -36,8 +38,9 @@ OFFICIAL_AWARDS = [
     'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television'
 ]
 
-lst = find_awards(data, year)
-top_keys(lst, 1000)
+lst = find_winner('best performance by an actress in a television series - drama', data)
+#print(lst)
+top_keys(lst, 50)
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
@@ -56,7 +59,8 @@ def get_nominees(year):
     '''Nominees is a dictionary with the hard coded award
     names as keys, and each entry a list of strings. Do NOT change
     the name of this function or what it returns.'''
-    # Your code here
+    for award in OFFICIAL_AWARDS:
+        print(find_nominee(award, data))
     return False
 
 
