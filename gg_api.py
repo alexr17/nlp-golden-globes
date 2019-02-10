@@ -37,9 +37,6 @@ OFFICIAL_AWARDS = [
     'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television'
 ]
 
-lst = find_winner('best performance by an actress in a television series - drama', data)
-#print(lst)
-top_keys(lst, 50)
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
@@ -68,7 +65,9 @@ def get_winner(year):
     names as keys, and each entry containing a single string.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
-    return False
+    for award in OFFICIAL_AWARDS:
+        if 'award' in award or 'actress' in award or 'actor' in award:
+            print(find_winner(data, award), award)
 
 
 def get_presenters(year):
@@ -97,6 +96,7 @@ def main():
     # Your code here
     return
 
+get_winner(2013)
 
 if __name__ == '__main__':
     main()
