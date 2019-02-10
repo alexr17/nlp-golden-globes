@@ -14,7 +14,7 @@ def find_winner(data, award_name):
     award_dict = {}
     # award_lst = [x for x in re.sub('[^a-zA-Z]', ' ', award_name).split(' ') if x not in stopwords and x not in award_sw]
     award_lst = [x for x in award_name.split(' ') if x not in award_sw]
-    print(award_lst)
+    # print(award_lst)
     # regex = g_regex(award_lst)
     for obj in data:
         if all(word in obj['text'].lower() for word in award_lst):
