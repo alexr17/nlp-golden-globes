@@ -1,7 +1,11 @@
 /.vscode
-/data
+/data/gg2013.json
+/data/gg2015.json
+/data/name.basics.tsv
 /__pycache__
 config.ini
 /src/__pycache__
 /src/helpers/__pycache__
 /src/queries/__pycache__
+/.DS_Store
+/src/.DS_Store
