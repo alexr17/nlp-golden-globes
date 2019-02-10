@@ -1,5 +1,6 @@
 import nltk
 from nltk.corpus import stopwords
+from src.helpers.find import find_name_with_db
 from src.helpers.load import load_json, get_movies
 from src.helpers.clean import valid_tkn, bigrams
 
@@ -22,17 +23,16 @@ def find_winner(award, data):
 
     for obj in data:
         if all(word in obj['text'].lower() for word in award_lst):
-            tokens = nltk.word_tokenize(obj['text'])
-            # tokens = bigrams(nltk.word_tokenize(obj['text']), host_kw, host_sw + gg_sw)
+            
+            tokens = bigrams(nltk.word_tokenize(obj['text']), winners_kw, winners_sw + gg_sw)
             for tkn in tokens:
                 tkn = tkn.lower()
-                if valid_tkn(tkn, winners_kw, winners_sw + gg_sw):
-                    if tkn not in award_dict:
-                        award_dict[tkn] = 1
-                    else:
-                        award_dict[tkn] += 1
+                if tkn not in award_dict:
+                    award_dict[tkn] = 1
+                else:
+                    award_dict[tkn] += 1
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    return award_lst
+    return find_name_with_db(award_lst)
 
 def clean_award_name(award):
     tokens = nltk.word_tokenize(award)
