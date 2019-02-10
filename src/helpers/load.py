@@ -1,6 +1,7 @@
 import json
 import requests
 import configparser
+import csv
 from urllib.parse import urlencode
 
 def load_json(year):
@@ -8,6 +9,21 @@ def load_json(year):
         data = json.load(f)
     return data
 
+valid_roles = {
+    'actor', 'actress'
+}
+
+def load_names():
+    
+    return set(line.strip() for line in open('./data/names.txt'))
+    # count = 0
+    # with open('./data/name.basics.tsv', 'r') as tsvin, open('./data/names.txt', 'w') as names_out:
+    #     tsvin = csv.reader(tsvin, delimiter='\t')
+    #     for row in tsvin:
+    #         if row[4].split(',')[0] in valid_roles and len(row[1].split(' ')) > 1 and row[2].isdigit() and not row[3].isdigit() and int(row[2]) > 1920 and len(row[5].split(',')) == 4:
+    #             names_out.write(row[1]+'\n')
+    #             count += 1
+    # print(count)
 
 # movie database stuff
 # api keys
