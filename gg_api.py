@@ -1,3 +1,4 @@
+import json
 from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee
@@ -65,10 +66,11 @@ def get_winner(year):
     names as keys, and each entry containing a single string.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
+    winners_obj = {}
     for award in OFFICIAL_AWARDS:
         if 'award' in award or 'actress' in award or 'actor' in award:
-            print(find_winner(data, award), award)
-
+            winners_obj[award] = find_winner(data, award)
+    print(json.dumps(winners_obj, indent=4, sort_keys=True))
 
 def get_presenters(year):
     '''Presenters is a dictionary with the hard coded award
