@@ -1,26 +1,21 @@
 import nltk
+import re
 from nltk.corpus import stopwords
 from src.helpers.find import find_name_with_db
 from src.helpers.load import load_json, get_movies
 from src.helpers.clean import valid_tkn, bigrams
 
-stopwords = set(stopwords.words('english'))
-stopwords.add('-')
-
-winners_kw = ['wins', 'win']
-winners_sw = ["best", "award", "performance"]
+winners_kw = ['don']
+winners_sw = ["best", "award", "performance", 'wins', 'actress', 'actor', 'supporting', 'tv', 'drama', 'comedy', 'musical', 'motion', 'picture', 'movie', 'television', 'series']
 gg_sw = ['golden', 'globes', 'goldenglobes', 'globe']
+award_sw = ["best", "award", "performance", 'by', 'an', 'in', 'a', 'or']
 
-
-def find_winner(award, data):
+def find_winner(data, award_name):
     award_dict = {}
-
-    award_lst = award.split(" ")
-    award_lst = [x for x in award_lst if x not in stopwords and x not in winners_sw]
-    award = " ".join(award_lst)
-
-    winners_sw.extend([word for word in award.split(' ')])
-
+    # award_lst = [x for x in re.sub('[^a-zA-Z]', ' ', award_name).split(' ') if x not in stopwords and x not in award_sw]
+    award_lst = [x for x in award_name.split(' ') if x not in award_sw]
+    print(award_lst)
+    # regex = g_regex(award_lst)
     for obj in data:
         if all(word in obj['text'].lower() for word in award_lst):
             
@@ -34,6 +29,19 @@ def find_winner(award, data):
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
     return find_name_with_db(award_lst)
 
-def clean_award_name(award):
-    tokens = nltk.word_tokenize(award)
-    print(tokens)
+def g_regex(lst):
+    regex = ['(win)', '(best)']
+    for e in lst:
+        # actor keywords
+        if e == 'actress':
+            # add spanish
+            regex += ['(actriz)', '(actress)']
+        elif e == 'television':
+            regex += ['(television)', '(tv)']
+        elif e == 'picture':
+            regex += ['(motion picture)', '(movie)']
+        else:
+            regex.append('(' + e + ')')
+
+    return '|'.join(regex)
+        
