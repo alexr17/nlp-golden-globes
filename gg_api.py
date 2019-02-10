@@ -2,11 +2,10 @@ from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee
 from src.queries.winners import find_winner
-from src.helpers.load import load_json
+from src.helpers.load import load_json, load_names
 from src.helpers.debug import top_keys, find_key
 year = '2013'
 data = load_json(year)
-
 '''Version 0.1'''
 
 OFFICIAL_AWARDS = [
