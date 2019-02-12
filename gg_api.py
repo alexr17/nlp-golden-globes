@@ -5,11 +5,9 @@ from src.queries.nominees import find_nominee
 from src.queries.winners import find_winner
 from src.helpers.load import load_json, load_names
 from src.helpers.debug import top_keys, find_key
-year = '2013'
-data = load_json(year)
 '''Version 0.1'''
 
-OFFICIAL_AWARDS = [
+OFFICIAL_AWARDS_1315 = [
     'cecil b. demille award',
     'best motion picture - drama',
     'best performance by an actress in a motion picture - drama',
@@ -38,11 +36,43 @@ OFFICIAL_AWARDS = [
     'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television'
 ]
 
+OFFICIAL_AWARDS_1819 = [
+    'best motion picture - drama',
+    'best motion picture - musical or comedy', 
+    'best performance by an actress in a motion picture - drama', 
+    'best performance by an actor in a motion picture - drama', 
+    'best performance by an actress in a motion picture - musical or comedy', 
+    'best performance by an actor in a motion picture - musical or comedy', 
+    'best performance by an actress in a supporting role in any motion picture', 
+    'best performance by an actor in a supporting role in any motion picture', 
+    'best director - motion picture', 
+    'best screenplay - motion picture', 
+    'best motion picture - animated', 
+    'best motion picture - foreign language', 
+    'best original score - motion picture', 
+    'best original song - motion picture', 
+    'best television series - drama', 
+    'best television series - musical or comedy',
+    'best television limited series or motion picture made for television', 
+    'best performance by an actress in a limited series or a motion picture made for television', 
+    'best performance by an actor in a limited series or a motion picture made for television', 
+    'best performance by an actress in a television series - drama', 
+    'best performance by an actor in a television series - drama', 
+    'best performance by an actress in a television series - musical or comedy', 
+    'best performance by an actor in a television series - musical or comedy', 
+    'best performance by an actress in a supporting role in a series, limited series or motion picture made for television', 
+    'best performance by an actor in a supporting role in a series, limited series or motion picture made for television', 
+    'cecil b. demille award'
+]
+
+data = {}
+
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
-    return find_hosts(data, year)
+
+    return find_hosts(data[year])
 
 
 def get_awards(year):
@@ -56,8 +86,13 @@ def get_nominees(year):
     '''Nominees is a dictionary with the hard coded award
     names as keys, and each entry a list of strings. Do NOT change
     the name of this function or what it returns.'''
+    OFFICIAL_AWARDS = []
+    if year in ['2013', '2015']:
+        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
+    else:
+        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
     for award in OFFICIAL_AWARDS:
-        print(find_nominee(award, data))
+        find_nominee(award, data[year])
     return False
 
 
@@ -66,11 +101,20 @@ def get_winner(year):
     names as keys, and each entry containing a single string.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
+    OFFICIAL_AWARDS = []
+    if year in ['2013', '2015']:
+        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
+    else:
+        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
+    
     winners_obj = {}
     for award in OFFICIAL_AWARDS:
-        if 'award' in award or 'actress' in award or 'actor' in award:
-            winners_obj[award] = find_winner(data, award)
-    print(json.dumps(winners_obj, indent=4, sort_keys=True))
+        if any(name in award for name in ['award', 'actress', 'actor', 'director']):
+            winners_obj[award] = find_winner(data[year], award)
+
+    print(json.dumps(winners_obj, indent=4))
+    return winners_obj
+
 
 def get_presenters(year):
     '''Presenters is a dictionary with the hard coded award
@@ -86,6 +130,8 @@ def pre_ceremony():
     plain text file. It is the first thing the TA will run when grading.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
+    data['2015'] = load_json('2015')
+    data['2013'] = load_json('2013')
     return False
 
 
@@ -96,9 +142,12 @@ def main():
     run when grading. Do NOT change the name of this function or
     what it returns.'''
     # Your code here
-    return
+    pre_ceremony()
+    #print(get_hosts('2013'))
+    #print(get_hosts('2015'))
+    get_winner('2013')
+    return False
 
-get_winner(2013)
 
 if __name__ == '__main__':
     main()
