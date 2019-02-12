@@ -9,3 +9,6 @@ config.ini
 /src/queries/__pycache__
 /.DS_Store
 /src/.DS_Store
+/gg2013answers.json
+/gg2015answers.json
+/autograder.py

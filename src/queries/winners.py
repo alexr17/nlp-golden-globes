@@ -10,7 +10,7 @@ import json
 winners_kw = []
 winners_sw = ['wins', 'winning', "best", "award", "performance", 'wins', 'actress', 'actor', 'supporting', 'tv', 'drama', 'comedy', 'musical', 'motion', 'picture', 'movie', 'television', 'series']
 gg_sw = ['golden', 'globes', 'goldenglobes', 'globe']
-award_sw = ["best", "award", "performance", 'made', 'role']
+award_sw = ["best", "award", "performance", 'made', 'role', 'any']
 media_sw = ["eonline", 'cnnshowbiz', 'cinema21']
 
 def find_winner(data, award_name):
@@ -30,7 +30,7 @@ def find_winner(data, award_name):
                     award_dict[tkn] += 1
 
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    return award_lst# find_name_with_db(award_lst)
+    return find_name_with_db(award_lst)
 
 def id_award(string, award_map):
     for award_key in award_map:
@@ -47,7 +47,7 @@ def id_award(string, award_map):
     return True
 
 def g_map(lst):
-    map = {'present': []}
+    map = {}
     for e in lst:
         # actor keywords
         if e == 'actress':

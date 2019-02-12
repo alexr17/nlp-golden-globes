@@ -79,7 +79,7 @@ def get_awards(year):
     '''Awards is a list of strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
-    return False
+    return []
 
 
 def get_nominees(year):
@@ -91,9 +91,11 @@ def get_nominees(year):
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
     else:
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
+    
+    nominees_obj = {}
     for award in OFFICIAL_AWARDS:
-        find_nominee(award, data[year])
-    return False
+        nominees_obj[award] = find_winner(data[year], award)
+    return nominees_obj
 
 
 def get_winner(year):
@@ -109,10 +111,10 @@ def get_winner(year):
     
     winners_obj = {}
     for award in OFFICIAL_AWARDS:
-        if any(name in award for name in ['award', 'actress', 'actor', 'director']):
-            winners_obj[award] = find_winner(data[year], award)
+        # if any(name in award for name in ['award', 'actress', 'actor', 'director']):
+        winners_obj[award] = find_winner(data[year], award)
 
-    print(json.dumps(winners_obj, indent=4))
+    # print(json.dumps(winners_obj, indent=4))
     return winners_obj
 
 
@@ -121,7 +123,16 @@ def get_presenters(year):
     names as keys, and each entry a list of strings. Do NOT change the
     name of this function or what it returns.'''
     # Your code here
-    return False
+    OFFICIAL_AWARDS = []
+    if year in ['2013', '2015']:
+        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
+    else:
+        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
+    
+    presenters_obj = {}
+    for award in OFFICIAL_AWARDS:
+        presenters_obj[award] = '' # find_presenters(data[year], award)
+    return presenters_obj
 
 
 def pre_ceremony():
@@ -145,7 +156,7 @@ def main():
     pre_ceremony()
     #print(get_hosts('2013'))
     #print(get_hosts('2015'))
-    get_winner('2013')
+    # get_winner('2013')
     return False
 
 

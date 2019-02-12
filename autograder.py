@@ -168,6 +168,7 @@ def score_structured(year, answers, info_type):
     # c_score is the completeness score
     spelling_score = 0
     c_score = 0
+    gg_api.pre_ceremony()
     results = getattr(gg_api, 'get_%s' % info_type)(year)
     length = 26
 
@@ -194,6 +195,7 @@ def score_structured(year, answers, info_type):
 
 
 def score_unstructured(year, answers, info_type):
+    gg_api.pre_ceremony()
     results = getattr(gg_api, 'get_%s' % info_type)(year)
     spelling_score, translation = calc_translation(results, answers[info_type])
     c_score = calc_score([translation[res] if res in translation else res for res in results], answers[info_type])
