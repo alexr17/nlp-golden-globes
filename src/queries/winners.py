@@ -17,7 +17,7 @@ def find_winner(data, award_name):
     award_dict = {}
     award_lst = [tkn for tkn in re.sub('[^a-zA-Z. ]', '', award_name).split(' ') if valid_tkn(tkn, [], award_sw)]
     award_map = g_map(award_lst)
-
+    t = time.time()
     for obj in data:
         bl = id_award(obj['text'].lower(), award_map)
         # if all(word in obj['text'].lower() for word in ['actor', 'miniseries', 'tv', 'movie']):
@@ -30,7 +30,9 @@ def find_winner(data, award_name):
                     award_dict[tkn] += 1
 
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    return find_name_with_db(award_lst)
+    name = find_name_with_db(award_lst)
+    print("find winner time: " + str(time.time() - t))
+    return name
 
 def id_award(string, award_map):
     for award_key in award_map:
