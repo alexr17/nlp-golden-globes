@@ -2,6 +2,7 @@ from nltk.corpus import stopwords
 from src.helpers.debug import top_keys
 import re
 stopwords = set(stopwords.words('english'))
+stopwords.remove('don')
 
 # filter out token
 def valid_tkn(tkn, valid_kw, invalid_kw):
@@ -26,7 +27,7 @@ def valid_tkn(tkn, valid_kw, invalid_kw):
 
     regex = re.compile('[^a-zA-Z]')
     tkn = regex.sub('', tkn)
-    if len(tkn) < 2:
+    if len(tkn) < 1:
         return False
     return True
 
