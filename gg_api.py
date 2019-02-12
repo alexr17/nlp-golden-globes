@@ -5,6 +5,7 @@ from src.queries.nominees import find_nominee
 from src.queries.winners import find_winner
 from src.queries.presenters import find_presenter
 from src.helpers.load import load_json, load_names
+from src.helpers.clean import join_ngrams
 from src.helpers.debug import top_keys, find_key
 '''Version 0.1'''
 
@@ -155,7 +156,9 @@ def main():
     run when grading. Do NOT change the name of this function or
     what it returns.'''
     # Your code here
-    pre_ceremony()
+    #pre_ceremony()
+    lst = [('cecil b.', 26), ('b. demille', 26), ('jodie foster', 25), ('robert downey', 23), ('downey jr.', 21), ('premio cecil', 15), ('jr. presenta', 13), ('presenta jodie', 10)]
+    print(join_ngrams(lst))
     #print(get_presenters('2013'))
     #print(get_hosts('2013'))
     #print(get_hosts('2015'))

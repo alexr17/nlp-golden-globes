@@ -9,7 +9,7 @@ def valid_tkn(tkn, valid_kw, invalid_kw):
     tkn = tkn.lower()
     if tkn in valid_kw:
         return True
-    
+
     if tkn in invalid_kw:
         return False
     # stopwords
@@ -73,19 +73,33 @@ def merge_bigrams(lst):
     return lst_of_words
 
 
+def join_ngrams(lst):
+    # lst : [("name name"), 23]
+    threshold = 0.8
+    minimum = 10
+    if not lst:
+        return lst
 
-def join_ngrams(tpls):
-    ngrams = []
-    coeff = 0.5
-    min = 50
-    for idx, tpl in enumerate(tpls):
-        
-        inc = 1
-        while len(tpls) > idx + inc and tpls[idx + inc][1] > min and tpls[idx + inc][1] > tpl[1] * coeff:
-            top = tpl[0].split(' ')
-            bot = tpls[idx + inc][0].split(' ')
-            if top[1] == bot[0]: #join
-                ngrams.append((' '.join(top) + ' ' + ' '.join(bot[1:]), tpls[idx + inc][1] + tpl[1]))
-            #print(tpls[idx + inc])
-            inc += 1
-    #top_keys(ngrams, 100)
+    updated_lst = []
+    for i in range(len(lst)):
+        if lst[i][1] < minimum:
+            break
+        curr = lst[i]
+        j = i + 1
+        while j < len(lst) and curr[1]/lst[j][1] > threshold:
+            ngram = []
+            bigram1 = curr[0].split(" ")
+            bigram2 = lst[j][0].split(" ")
+            if bigram1[-1] == bigram2[0]:
+                ngram = [bigram1[0], bigram1[-1], bigram2[-1]]
+                occurence = lst[j][1]
+                updated_lst.append((" ".join(ngram), occurence))
+            elif bigram1[0] == bigram2[-1]:
+                ngram = [bigram1[-1], bigram1[0], bigram2[0]]
+                occurence = lst[j][1]
+                updated_lst.append((" ".join(ngram), occurence))
+            j += 1
+
+
+    return updated_lst #sorted(updated_lst, key=lambda x: x[1], reverse=True)
+
