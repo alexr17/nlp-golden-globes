@@ -17,7 +17,7 @@ def find_winner(data, award_name):
     award_dict = {}
     award_lst = [tkn for tkn in re.sub('[^a-zA-Z. ]', '', award_name).split(' ') if valid_tkn(tkn, [], award_sw)]
     award_map = g_map(award_lst)
-    
+
     for obj in data:
         bl = id_award(obj['text'].lower(), award_map)
         # if all(word in obj['text'].lower() for word in ['actor', 'miniseries', 'tv', 'movie']):
@@ -43,7 +43,7 @@ def id_award(string, award_map):
 
                 # did not pass test
                 return False
-            
+
     return True
 
 def g_map(lst):
@@ -64,4 +64,4 @@ def g_map(lst):
             map[e] = []
 
     return map
-        
+

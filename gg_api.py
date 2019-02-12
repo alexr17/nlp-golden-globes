@@ -3,6 +3,7 @@ from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee
 from src.queries.winners import find_winner
+from src.queries.presenters import find_presenter
 from src.helpers.load import load_json, load_names
 from src.helpers.debug import top_keys, find_key
 '''Version 0.1'''
@@ -38,30 +39,30 @@ OFFICIAL_AWARDS_1315 = [
 
 OFFICIAL_AWARDS_1819 = [
     'best motion picture - drama',
-    'best motion picture - musical or comedy', 
-    'best performance by an actress in a motion picture - drama', 
-    'best performance by an actor in a motion picture - drama', 
-    'best performance by an actress in a motion picture - musical or comedy', 
-    'best performance by an actor in a motion picture - musical or comedy', 
-    'best performance by an actress in a supporting role in any motion picture', 
-    'best performance by an actor in a supporting role in any motion picture', 
-    'best director - motion picture', 
-    'best screenplay - motion picture', 
-    'best motion picture - animated', 
-    'best motion picture - foreign language', 
-    'best original score - motion picture', 
-    'best original song - motion picture', 
-    'best television series - drama', 
+    'best motion picture - musical or comedy',
+    'best performance by an actress in a motion picture - drama',
+    'best performance by an actor in a motion picture - drama',
+    'best performance by an actress in a motion picture - musical or comedy',
+    'best performance by an actor in a motion picture - musical or comedy',
+    'best performance by an actress in a supporting role in any motion picture',
+    'best performance by an actor in a supporting role in any motion picture',
+    'best director - motion picture',
+    'best screenplay - motion picture',
+    'best motion picture - animated',
+    'best motion picture - foreign language',
+    'best original score - motion picture',
+    'best original song - motion picture',
+    'best television series - drama',
     'best television series - musical or comedy',
-    'best television limited series or motion picture made for television', 
-    'best performance by an actress in a limited series or a motion picture made for television', 
-    'best performance by an actor in a limited series or a motion picture made for television', 
-    'best performance by an actress in a television series - drama', 
-    'best performance by an actor in a television series - drama', 
-    'best performance by an actress in a television series - musical or comedy', 
-    'best performance by an actor in a television series - musical or comedy', 
-    'best performance by an actress in a supporting role in a series, limited series or motion picture made for television', 
-    'best performance by an actor in a supporting role in a series, limited series or motion picture made for television', 
+    'best television limited series or motion picture made for television',
+    'best performance by an actress in a limited series or a motion picture made for television',
+    'best performance by an actor in a limited series or a motion picture made for television',
+    'best performance by an actress in a television series - drama',
+    'best performance by an actor in a television series - drama',
+    'best performance by an actress in a television series - musical or comedy',
+    'best performance by an actor in a television series - musical or comedy',
+    'best performance by an actress in a supporting role in a series, limited series or motion picture made for television',
+    'best performance by an actor in a supporting role in a series, limited series or motion picture made for television',
     'cecil b. demille award'
 ]
 
@@ -87,11 +88,11 @@ def get_nominees(year):
     names as keys, and each entry a list of strings. Do NOT change
     the name of this function or what it returns.'''
     OFFICIAL_AWARDS = []
-    if year in ['2013', '2015']:
+    if year in set('2013', '2015'):
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
     else:
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
-    
+
     nominees_obj = {}
     for award in OFFICIAL_AWARDS:
         nominees_obj[award] = find_winner(data[year], award)
@@ -104,11 +105,11 @@ def get_winner(year):
     Do NOT change the name of this function or what it returns.'''
     # Your code here
     OFFICIAL_AWARDS = []
-    if year in ['2013', '2015']:
+    if year in set('2013', '2015'):
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
     else:
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
-    
+
     winners_obj = {}
     for award in OFFICIAL_AWARDS:
         # if any(name in award for name in ['award', 'actress', 'actor', 'director']):
@@ -128,10 +129,11 @@ def get_presenters(year):
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
     else:
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
-    
+
     presenters_obj = {}
     for award in OFFICIAL_AWARDS:
-        presenters_obj[award] = '' # find_presenters(data[year], award)
+        presenters_obj[award] = find_presenter(data[year], award)
+        break
     return presenters_obj
 
 
@@ -154,6 +156,7 @@ def main():
     what it returns.'''
     # Your code here
     pre_ceremony()
+    #print(get_presenters('2013'))
     #print(get_hosts('2013'))
     #print(get_hosts('2015'))
     # get_winner('2013')
