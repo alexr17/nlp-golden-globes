@@ -30,5 +30,8 @@ def find_name_with_db(lst):
     for tpl in lst:
         if tpl[0].title() in names_set:
             return tpl[0]
-    print("Could not find a name")
-    return False
+    print("Could not find a name... return top result")
+    try:
+        return lst[0][0]
+    except IndexError:
+        return False
