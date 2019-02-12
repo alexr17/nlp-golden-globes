@@ -2,7 +2,7 @@ import nltk
 import re
 import time
 from nltk.corpus import stopwords
-from src.helpers.find import find_name_with_db
+from src.helpers.find import find_name_with_db, find_title
 from src.helpers.load import load_json
 from src.helpers.clean import valid_tkn, bigrams, trigrams
 import json
@@ -10,29 +10,35 @@ import json
 winners_kw = []
 winners_sw = ['wins', 'winning', "best", "award", "performance", 'wins', 'actress', 'actor', 'supporting', 'tv', 'drama', 'comedy', 'musical', 'motion', 'picture', 'movie', 'television', 'series']
 gg_sw = ['golden', 'globes', 'goldenglobes', 'globe']
-award_sw = ["best", "award", "performance", 'made', 'role', 'any']
+award_sw = ["best", "award", "performance", 'made', 'role', 'any', '-']
 media_sw = ["eonline", 'cnnshowbiz', 'cinema21']
 
-def find_winner(data, award_name):
-    award_dict = {}
-    award_lst = [tkn for tkn in re.sub('[^a-zA-Z. ]', '', award_name).split(' ') if valid_tkn(tkn, [], award_sw)]
-    award_map = g_map(award_lst)
-    t = time.time()
-    for obj in data:
-        bl = id_award(obj['text'].lower(), award_map)
-        # if all(word in obj['text'].lower() for word in ['actor', 'miniseries', 'tv', 'movie']):
-        if bl:
-            tokens = bigrams(nltk.word_tokenize(obj['text'].lower()), winners_kw, winners_sw + gg_sw + media_sw)
-            for tkn in tokens:
-                if tkn not in award_dict:
-                    award_dict[tkn] = 1
-                else:
-                    award_dict[tkn] += 1
+def generate_awards_map(awards):
+    awards_map = {}
+    for award in awards:
+        award_lst = [tkn for tkn in re.sub('[^a-zA-Z. ]', '', award).split(' ') if valid_tkn(tkn, [], award_sw)]
+        awards_map[award] = g_map(award_lst)
+    return awards_map
 
-    award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    name = find_name_with_db(award_lst)
-    print("find winner time: " + str(time.time() - t))
-    return name
+def find_winner(winner_dict, award):    
+
+    winner_lst = sorted(winner_dict.items(), key=lambda x: x[1], reverse=True)
+    if any(word in award for word in ['actress', 'actor', 'director', 'award']): # name award
+        winner = find_name_with_db(winner_lst)
+    else:
+        winner = find_title(winner_lst)
+    return winner
+
+def eval_winner_tweet(tweet, dct, map):
+    bl = id_award(tweet, map)
+    # if all(word in obj['text'].lower() for word in ['actor', 'miniseries', 'tv', 'movie']):
+    if bl:
+        tokens = bigrams(nltk.word_tokenize(tweet), winners_kw, winners_sw + gg_sw + media_sw + list(map.keys()))
+        for tkn in tokens:
+            if tkn not in dct:
+                dct[tkn] = 1
+            else:
+                dct[tkn] += 1
 
 def id_award(string, award_map):
     for award_key in award_map:

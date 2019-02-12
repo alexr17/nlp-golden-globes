@@ -35,3 +35,7 @@ def find_name_with_db(lst):
         return lst[0][0]
     except IndexError:
         return False
+
+# TODO: implement this further
+def find_title(lst):
+    return lst[0][0]
