@@ -2,7 +2,7 @@ import nltk
 import re
 from nltk.corpus import stopwords
 from src.helpers.find import find_name_with_db
-from src.helpers.load import load_json, get_movies
+from src.helpers.load import load_json
 from src.helpers.clean import valid_tkn, bigrams
 
 winners_kw = ['don']

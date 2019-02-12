@@ -7,12 +7,12 @@ from src.helpers.find import find_name
 gg_sw = ['golden', 'globes', 'goldenglobes', 'globe']
 
 # host stopwords
-host_sw = ['next', 'year', 'host']
+host_sw = ['next', 'year', 'host', 'hosts']
 
 # host keywords
 host_kw = []
 
-def find_hosts(data, year):
+def find_hosts(data):
     # host
     host_dict = {}
 

@@ -19,7 +19,7 @@ def find_name(lst, name_dict):
                 last_name = tpl[0][len(name_tpl[0]):]
                 try:
                     if name_dict[last_name]/name_tpl[1] > .25:
-                        full_names.append(name_tpl[0].capitalize() + ' ' + last_name.capitalize())
+                        full_names.append(name_tpl[0] + ' ' + last_name)
                         break
                 except KeyError:
                     pass
