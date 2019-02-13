@@ -7,6 +7,7 @@ from src.queries.presenters import find_presenter
 from src.helpers.load import load_json, load_names
 from src.helpers.clean import join_ngrams
 from src.helpers.debug import top_keys, find_key
+import time
 '''Version 0.1'''
 
 OFFICIAL_AWARDS_1315 = [
@@ -73,8 +74,7 @@ data = {}
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
-
-    return find_hosts(data[year])
+    return load_json(year, 'results/')['host']
 
 
 def get_awards(year):
@@ -89,7 +89,7 @@ def get_nominees(year):
     names as keys, and each entry a list of strings. Do NOT change
     the name of this function or what it returns.'''
     OFFICIAL_AWARDS = []
-    if year in set('2013', '2015'):
+    if year in ['2013', '2015']:
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
     else:
         OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
@@ -105,20 +105,7 @@ def get_winner(year):
     names as keys, and each entry containing a single string.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
-    OFFICIAL_AWARDS = []
-    if year in ['2013', '2015']:
-        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
-    else:
-        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
-
-    winners_obj = {}
-    # load from file
-    for award in OFFICIAL_AWARDS:
-    #     # if any(name in award for name in ['award', 'actress', 'actor', 'director']):
-        winners_obj[award] = ''
-    
-    # print(json.dumps(winners_obj, indent=4))
-    return winners_obj
+    return load_json(year, 'results/')['winners']
 
 
 def get_presenters(year):
@@ -154,20 +141,47 @@ def pre_ceremony(raise_except=True):
             raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
     data['2015'] = load_json('2015')
     data['2013'] = load_json('2013')
-    
+    times = {}
     results = {}
     # 2013
     for year in ['2013', '2015']:
-        results[year] = {}
+        times[year] = {}
+        times[year]['host'] = {
+            'total': 0,
+            'count': 0
+        }
+
+        # hosts
+        t = time.time()
+        results[year] = {'host': find_hosts(data[year])}
+        times[year]['host']['total'] += time.time() - t
+        times[year]['host']['count'] += 1
+        
+        times[year]['winners'] = {
+            'total': 0,
+            'count': 0
+        }
+
+        # winners
+        results[year]['winners'] = {}
+        
+
         awards_map = generate_awards_map(OFFICIAL_AWARDS_1315)
         for award in awards_map:
             winner_dict = {}
-
+            t = time.time()
             for obj in data[year]:
                 eval_winner_tweet(obj['text'].lower(), winner_dict, awards_map[award])
-            results[year][award] = find_winner(winner_dict, award)
+            results[year]['winners'][award] = find_winner(winner_dict, award)
+            times[year]['winners']['total'] += time.time() - t
+            times[year]['winners']['count'] += 1
+        
+        
+        # write results to file
+        with open('results/' + year +'.json', 'w') as outfile:
+            json.dump(results[year], outfile)
     
-    # write results to file
+    print(json.dumps(times, indent=4))
     return False
 
 
@@ -179,9 +193,9 @@ def main():
     what it returns.'''
     # Your code here
     #pre_ceremony()
-    lst = [('cecil b.', 26), ('b. demille', 26), ('jodie foster', 25), ('robert downey', 23), ('downey jr.', 21), ('premio cecil', 15), ('jr. presenta', 13), ('presenta jodie', 10)]
-    print(join_ngrams(lst))
-    pre_ceremony(False)
+    #lst = [('cecil b.', 26), ('b. demille', 26), ('jodie foster', 25), ('robert downey', 23), ('downey jr.', 21), ('premio cecil', 15), ('jr. presenta', 13), ('presenta jodie', 10)]
+    #print(join_ngrams(lst))
+    # pre_ceremony(False)
     #print(get_presenters('2013'))
     #print(get_hosts('2013'))
     #print(get_hosts('2015'))
