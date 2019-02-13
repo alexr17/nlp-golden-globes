@@ -4,14 +4,17 @@ import time
 from nltk.corpus import stopwords
 from src.helpers.find import find_name_with_db, find_title
 from src.helpers.load import load_json
-from src.helpers.clean import valid_tkn, bigrams, trigrams
+from src.helpers.clean import valid_tkn, unigrams, bigrams, trigrams
+from src.helpers.debug import top_keys
 import json
 
-winners_kw = []
-winners_sw = ['wins', 'winning', "best", "award", "performance", 'wins', 'actress', 'actor', 'supporting', 'tv', 'drama', 'comedy', 'musical', 'motion', 'picture', 'movie', 'television', 'series']
-gg_sw = ['golden', 'globes', 'goldenglobes', 'globe']
-award_sw = ["best", "award", "performance", 'made', 'role', 'any', '-']
-media_sw = ["eonline", 'cnnshowbiz', 'cinema21']
+winners_kw = {}
+gg_sw = {'golden', 'globes', 'goldenglobes', 'globe'}
+award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
+media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
+
+def generate_winners_sw(awards):
+    return set((' '.join(awards)).split(' ') + ['movie', 'tv','miniseries'])
 
 def generate_awards_map(awards):
     awards_map = {}
@@ -23,31 +26,35 @@ def generate_awards_map(awards):
 def find_winner(winner_dict, award):    
 
     winner_lst = sorted(winner_dict.items(), key=lambda x: x[1], reverse=True)
+    # print("Top keys for: " + award)
+    # top_keys(winner_lst, 50)
     if any(word in award for word in ['actress', 'actor', 'director', 'award']): # name award
         winner = find_name_with_db(winner_lst)
     else:
         winner = find_title(winner_lst)
     return winner
 
-def eval_winner_tweet(tweet, dct, map):
-    bl = id_award(tweet, map)
-    # if all(word in obj['text'].lower() for word in ['actor', 'miniseries', 'tv', 'movie']):
-    if bl:
-        tokens = bigrams(nltk.word_tokenize(tweet), winners_kw, winners_sw + gg_sw + media_sw + list(map.keys()))
-        for tkn in tokens:
-            if tkn not in dct:
-                dct[tkn] = 1
+def eval_winner_tweet(tweet, dicts, maps, keys, sw):
+    # tokens = bigrams(tweet.split(' '), winners_kw, winners_sw + gg_sw + media_sw + list(map.keys()))
+    tokens = nltk.word_tokenize(tweet)
+    bgms = bigrams(tokens, winners_kw, sw | gg_sw | media_sw)
+    tkns = unigrams(tokens, winners_kw, sw | gg_sw | media_sw)
+    for key in keys:
+        # TODO: fix this so it has an overarching list of keys for the awards (perhaps write a method?)
+        for bgm in bgms:
+            if bgm not in dicts[key]:
+                dicts[key][bgm] = 1
             else:
-                dct[tkn] += 1
+                dicts[key][bgm] += 1
 
-def id_award(string, award_map):
+def id_award(tweet, award_map):
     for award_key in award_map:
 
         # check if the parent key is the string
-        if award_key not in string:
+        if award_key not in tweet:
 
             # if not then check if the child keys are
-            if not any(rel_key in string for rel_key in award_map[award_key]):
+            if not any(rel_key in tweet for rel_key in award_map[award_key]):
 
                 # did not pass test
                 return False
