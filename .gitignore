@@ -1,7 +1,5 @@
 /.vscode
-/data/gg2013.json
-/data/gg2015.json
-/data/name.basics.tsv
+/data/
 /__pycache__
 config.ini
 /src/__pycache__

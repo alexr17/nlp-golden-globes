@@ -31,14 +31,21 @@ def valid_tkn(tkn, valid_kw, invalid_kw):
         return False
     return True
 
+def unigrams(tokens, valid_kw, invalid_kw):
+    unigrams = []
+    for tkn in tokens:
+        if valid_tkn(tkn, valid_kw, invalid_kw):
+            unigrams.append(tkn)
+    return unigrams
+
 def bigrams(tokens, valid_kw, invalid_kw):
     prev = False
     bigrams = []
-    for i in range(len(tokens)):
-        if valid_tkn(tokens[i], valid_kw, invalid_kw):
+    for tkn in tokens:
+        if valid_tkn(tkn, valid_kw, invalid_kw):
             if prev:
-                bigrams.append(prev + ' ' + tokens[i])
-            prev = tokens[i]
+                bigrams.append(prev + ' ' + tkn)
+            prev = tkn
     return bigrams
 
 def trigrams(tokens, valid_kw, invalid_kw):
