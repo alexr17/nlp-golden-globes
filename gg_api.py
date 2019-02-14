@@ -4,7 +4,7 @@ from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee
 from src.queries.winners import find_winner, eval_winner_tweet, generate_awards_map, id_award, generate_winners_sw
 from src.queries.presenters import find_presenter
-from src.helpers.load import load_json, load_names
+from src.helpers.load import load_json, request_imdb_data, parse_imdb_data
 from src.helpers.clean import join_ngrams
 from src.helpers.debug import top_keys, find_key
 import time
@@ -125,20 +125,37 @@ def get_presenters(year):
     return presenters_obj
 
 
-def pre_ceremony(raise_except=True):
+def pre_ceremony():
     '''This function loads/fetches/processes any data your program
     will use, and stores that data in your DB or in a json, csv, or
     plain text file. It is the first thing the TA will run when grading.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
+    print("Now loading titles and names from imdb API")
+    print("Note - if you run this function in an environment like vscode, it will crash due to the size of the file being parsed")
+    request_imdb_data('title')
+    parse_imdb_data('title')
+    print("Titles imported and parsed into ./data/titles.txt")
+    request_imdb_data('name')
+    parse_imdb_data('name')
+    print("Names imported and parsed into ./data/names.txt")
+    return False
 
+
+def main():
+    '''This function calls your program. Typing "python gg_api.py"
+    will run this function. Or, in the interpreter, import gg_api
+    and then run gg_api.main(). This is the second thing the TA will
+    run when grading. Do NOT change the name of this function or
+    what it returns.'''
+    # Your code here
     # load data
     try:
         data['2019'] = load_json('2019')
         data['2018'] = load_json('2018')
     except FileNotFoundError as e:
-        if raise_except:
-            raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
+        print("File not found")
+        # raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
     data['2015'] = load_json('2015')
     data['2013'] = load_json('2013')
     times = {}
@@ -193,31 +210,13 @@ def pre_ceremony(raise_except=True):
             times[year]['host']['count'] += 1
 
         for award in awards_map:
-            results[year]['winners'][award] = find_winner(winner_dicts[award], award)
-
+            results[year]['winners'][award] = find_winner(winner_dicts[award], award, results[year]['winners'].values())
+        
         # write results to file
         with open('results/' + year +'.json', 'w') as outfile:
             json.dump(results[year], outfile)
 
     print(json.dumps(times, indent=4))
-    return False
-
-
-def main():
-    '''This function calls your program. Typing "python gg_api.py"
-    will run this function. Or, in the interpreter, import gg_api
-    and then run gg_api.main(). This is the second thing the TA will
-    run when grading. Do NOT change the name of this function or
-    what it returns.'''
-    # Your code here
-    #pre_ceremony()
-    #lst = [('cecil b.', 26), ('b. demille', 26), ('jodie foster', 25), ('robert downey', 23), ('downey jr.', 21), ('premio cecil', 15), ('jr. presenta', 13), ('presenta jodie', 10)]
-    #print(join_ngrams(lst))
-    pre_ceremony(False)
-    #print(get_presenters('2013'))
-    #print(get_hosts('2013'))
-    #print(get_hosts('2015'))
-    # get_winner('2013')
     return False
 
 

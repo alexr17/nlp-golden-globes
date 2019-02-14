@@ -14,7 +14,7 @@ award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
 media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
 
 def generate_winners_sw(awards):
-    return set((' '.join(awards)).split(' ') + ['movie', 'tv','miniseries'])
+    return set((' '.join(awards)).split(' ') + ['movie', 'tv','miniseries', 'win', 'wins'])
 
 def generate_awards_map(awards):
     awards_map = {}
@@ -23,15 +23,16 @@ def generate_awards_map(awards):
         awards_map[award] = g_map(award_lst)
     return awards_map
 
-def find_winner(winner_dict, award):
-
+def find_winner(winner_dict, award, other_winners):    
+    
     winner_lst = sorted(winner_dict.items(), key=lambda x: x[1], reverse=True)
-    # print("Top keys for: " + award)
-    # top_keys(winner_lst, 50)
+    # if award in ['best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television']:
+    #     print("\n\n\nTop keys for: " + award)
+    #     top_keys(winner_lst, 50)
     if any(word in award for word in ['actress', 'actor', 'director', 'award']): # name award
-        winner = find_name_with_db(winner_lst)
+        winner = find_name_with_db(winner_lst, other_winners)
     else:
-        winner = find_title(winner_lst)
+        winner = find_title(winner_lst, other_winners)
     return winner
 
 def eval_winner_tweet(tweet, dicts, maps, keys, sw):
@@ -46,37 +47,53 @@ def eval_winner_tweet(tweet, dicts, maps, keys, sw):
                 dicts[key][bgm] = 1
             else:
                 dicts[key][bgm] += 1
+        for tkn in tkns:
+            if tkn not in dicts[key]:
+                dicts[key][tkn] = 1
+            else:
+                dicts[key][tkn] += 1
 
 def id_award(tweet, award_map):
-    for award_key in award_map:
+    for award_key in award_map['include']:
+        # if not then check if the child keys are
+        if not any(rel_key in tweet for rel_key in ([award_key] + award_map['include'][award_key])):
 
-        # check if the parent key is the string
-        if award_key not in tweet:
+            # did not pass test
+            return False
 
-            # if not then check if the child keys are
-            if not any(rel_key in tweet for rel_key in award_map[award_key]):
+    for award_key in award_map['exclude']:
+         
+        if any(rel_key in tweet for rel_key in ([award_key] + award_map['exclude'][award_key])):
 
-                # did not pass test
-                return False
-
+            return False
     return True
 
 def g_map(lst):
-    map = {}
+    map = {
+        'include': {},
+        'exclude': {}
+    }
     for e in lst:
         # actor keywords
         if e == 'actress':
-            map[e] = ['actriz']
+            map['include'][e] = ['actriz']
         elif e == 'television' or e == 'series':
-            map['television'] = ['series', 'tv', 'show']
+            map['include']['television'] = ['series', 'tv', 'show']
         elif e == 'motion' or e == 'picture':
-            map['motion'] = ['picture', 'movie']
+            map['include']['motion'] = ['picture', 'movie']
         elif e == 'miniseries':
-            map[e] = ['mini-series', 'mini']
+            map['include'][e] = ['mini-series', 'mini']
         elif e == 'comedy' or e == 'musical':
-            map['comedy'] = ['musical']
+            map['include']['comedy'] = ['musical']
         else:
-            map[e] = []
+            map['include'][e] = []
 
+    # if map generated for best actor and not supporting actor, then exclude supporting from search
+    if 'supporting' not in map['include'] and any(word in map['include'] for word in ['actress', 'actor']):
+        map['exclude']['supporting'] = []
+
+    # if non-actor award, exclude actor/actress from results
+    if not any(word in map['include'] for word in ['actress', 'actor']):
+        map['exclude']['actress'] = ['actriz', 'actor']
     return map
 
