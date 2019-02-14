@@ -25,12 +25,12 @@ def parse_imdb_data(d_type):
     with open(f'./data/{d_type}.basics.tsv', 'r') as tsvin, open(f'./data/{d_type}s.txt', 'w') as type_out:
         tsvin = csv.reader(tsvin, delimiter='\t')
         for i, row in enumerate(tsvin):
-            if i % 10000 == 0:
-                print(i)
+            if i % 100000 == 0:
+                print(str(i) + ' lines parsed')
             if d_type == 'name' and row[4].split(',')[0] in valid_roles and len(row[1].split(' ')) > 1 and row[2].isdigit() and not row[3].isdigit() and int(row[2]) > min_birth and len(row[5].split(',')) == 4:
-                type_out.write(row[1]+'\n')
+                type_out.write(row[1].lower()+'\n')
             elif d_type == 'title' and (row[1] == 'movie' or row[1] == 'tvseries') and ((row[5].isdigit() and int(row[5]) > min_title) or (row[6].isdigit() and int(row[6]) > min_title)):
-                type_out.write(row[2]+'\n')
+                type_out.write(row[2].lower()+'\n')
 
 def request_imdb_data(d_type):
     try:

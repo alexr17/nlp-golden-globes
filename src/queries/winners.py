@@ -12,6 +12,7 @@ winners_kw = {}
 gg_sw = {'golden', 'globes', 'goldenglobes', 'globe'}
 award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
 media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
+debug_awards = {}#{'best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
 
 def generate_winners_sw(awards):
     return set((' '.join(awards)).split(' ') + ['movie', 'tv','miniseries', 'win', 'wins'])
@@ -26,9 +27,9 @@ def generate_awards_map(awards):
 def find_winner(winner_dict, award, other_winners):    
     
     winner_lst = sorted(winner_dict.items(), key=lambda x: x[1], reverse=True)
-    # if award in ['best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television']:
-    #     print("\n\n\nTop keys for: " + award)
-    #     top_keys(winner_lst, 50)
+    if award in debug_awards:
+        print("\n\n\nTop keys for: " + award)
+        top_keys(winner_lst, 50)
     if any(word in award for word in ['actress', 'actor', 'director', 'award']): # name award
         winner = find_name_with_db(winner_lst, other_winners)
     else:
