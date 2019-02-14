@@ -216,7 +216,10 @@ def main():
         with open('results/' + year +'.json', 'w') as outfile:
             json.dump(results[year], outfile)
 
+    # printing time data
     print(json.dumps(times, indent=4))
+
+
     return False
 
 

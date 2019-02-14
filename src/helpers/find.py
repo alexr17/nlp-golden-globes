@@ -28,7 +28,7 @@ def find_name(lst, name_dict):
 def find_name_with_db(lst, other_winners):
     names_set = load_imdb_data('name')
     for tpl in lst:
-        if tpl[0] not in other_winners and tpl[0].title() in names_set:
+        if tpl[0] not in other_winners and tpl[0] in names_set:
             # print("returning from find_name: " + tpl[0])
             return tpl[0]
     print("Could not find a name... return top result")
@@ -38,11 +38,11 @@ def find_name_with_db(lst, other_winners):
         return False
 
 def find_title(lst, other_winners):
-    names_set = load_imdb_data('title')
+    titles_set = load_imdb_data('title')
     for tpl in lst:
         # if tpl[0] == 'jessica chastain':
         #     print(tpl[0].title() in names_set)
-        if tpl[0] not in other_winners and tpl[0].title() not in names_set:
+        if tpl[0] not in other_winners and tpl[0] in titles_set:
             # print("returning from find_title: " + tpl[0])
             return tpl[0]
     return False
