@@ -4,8 +4,8 @@ import configparser
 import csv
 from urllib.parse import urlencode
 
-def load_json(year):
-    with open('./data/gg'+year+'.json') as f:
+def load_json(year, path='data/gg'):
+    with open(path + year + '.json') as f:
         data = json.load(f)
     return data
 

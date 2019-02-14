@@ -1,4 +1,4 @@
-from src.helpers.load import load_names 
+from src.helpers.load import load_names
 # tries to find a name in a given list of tuples
 def find_name(lst, name_dict):
     # gets the first names
@@ -35,3 +35,7 @@ def find_name_with_db(lst):
         return lst[0][0]
     except IndexError:
         return False
+
+# TODO: implement this further
+def find_title(lst):
+    return lst[0][0]
