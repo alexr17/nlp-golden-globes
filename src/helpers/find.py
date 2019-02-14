@@ -1,4 +1,4 @@
-from src.helpers.load import load_names
+from src.helpers.load import load_imdb_data 
 # tries to find a name in a given list of tuples
 def find_name(lst, name_dict):
     # gets the first names
@@ -25,17 +25,24 @@ def find_name(lst, name_dict):
                     pass
     return full_names
 
-def find_name_with_db(lst):
-    names_set = load_names()
+def find_name_with_db(lst, other_winners):
+    names_set = load_imdb_data('name')
     for tpl in lst:
-        if tpl[0].title() in names_set:
+        if tpl[0] not in other_winners and tpl[0].title() in names_set:
+            # print("returning from find_name: " + tpl[0])
             return tpl[0]
     print("Could not find a name... return top result")
     try:
-        return lst[0][0]
+        return find_title(lst, other_winners)
     except IndexError:
         return False
 
-# TODO: implement this further
-def find_title(lst):
-    return lst[0][0]
+def find_title(lst, other_winners):
+    names_set = load_imdb_data('title')
+    for tpl in lst:
+        # if tpl[0] == 'jessica chastain':
+        #     print(tpl[0].title() in names_set)
+        if tpl[0] not in other_winners and tpl[0].title() not in names_set:
+            # print("returning from find_title: " + tpl[0])
+            return tpl[0]
+    return False
