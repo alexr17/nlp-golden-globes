@@ -2,7 +2,7 @@ import nltk
 import re
 import time
 from nltk.corpus import stopwords
-from src.helpers.find import find_name_with_db, find_title
+from src.helpers.find import find_name, find_title
 from src.helpers.load import load_json
 from src.helpers.clean import valid_tkn, unigrams, bigrams, trigrams
 from src.helpers.debug import top_keys
@@ -31,12 +31,13 @@ def find_winner(winner_dict, award, other_winners):
     if award in debug_awards:
         print("\n\n\nTop keys for: " + award)
         top_keys(winner_lst, 50)
-    if any(word in award for word in ['actress', 'actor', 'director', 'award']): # name award
-        winner = find_name_with_db(winner_lst, other_winners, award)
-        other_winners['name'].append(winner)
-    else:
+    # people
+    if any(word in award for word in ['actress', 'actor', 'director', 'award']):
+        winner = find_name(winner_lst, other_winners, award)
+        other_winners['name'].add(winner)
+    else: # titles
         winner = find_title(winner_lst, other_winners, award)
-        other_winners['title'].append(winner)
+        other_winners['title'].add(winner)
     return winner
 
 def eval_winner_tweet(tweet, dicts, maps, keys, sw):

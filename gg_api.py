@@ -210,8 +210,8 @@ def main():
             times[year]['host']['count'] += 1
 
         other_winners = {
-            'name': [],
-            'title': []
+            'name': set(),
+            'title': set()
         }
         for award in awards_map:
             results[year]['winners'][award] = find_winner(winner_dicts[award], award, other_winners)

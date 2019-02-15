@@ -1,7 +1,7 @@
 import nltk
 from src.helpers.load import load_json
 from src.helpers.clean import valid_tkn, bigrams
-from src.helpers.find import find_name
+from src.helpers.find import find_host_names
 
 # golden globes stopwords
 gg_sw = ['golden', 'globes', 'goldenglobes', 'globe']
@@ -30,5 +30,5 @@ def find_hosts(data):
 
     #host_keys = host_dict.keys()
     host_lst = sorted(host_dict.items(), key=lambda x: x[1], reverse=True)
-    return find_name(host_lst, host_dict)
+    return find_host_names(host_lst, host_dict)
 
