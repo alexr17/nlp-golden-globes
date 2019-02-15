@@ -8,14 +8,15 @@ from src.helpers.clean import valid_tkn, unigrams, bigrams, trigrams
 from src.helpers.debug import top_keys
 import json
 
-winners_kw = {}
+winners_kw = []
+winners_sw = {'movie', 'tv','miniseries', 'win', 'wins', 'goes'}
 gg_sw = {'golden', 'globes', 'goldenglobes', 'globe'}
 award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
 media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
-debug_awards = {}#{'best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
+debug_awards = {}#{"best motion picture - comedy or musical",'best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
 
 def generate_winners_sw(awards):
-    return set((' '.join(awards)).split(' ') + ['movie', 'tv','miniseries', 'win', 'wins'])
+    return set((' '.join(awards)).split(' ')) | winners_sw
 
 def generate_awards_map(awards):
     awards_map = {}
@@ -31,9 +32,11 @@ def find_winner(winner_dict, award, other_winners):
         print("\n\n\nTop keys for: " + award)
         top_keys(winner_lst, 50)
     if any(word in award for word in ['actress', 'actor', 'director', 'award']): # name award
-        winner = find_name_with_db(winner_lst, other_winners)
+        winner = find_name_with_db(winner_lst, other_winners, award)
+        other_winners['name'].append(winner)
     else:
-        winner = find_title(winner_lst, other_winners)
+        winner = find_title(winner_lst, other_winners, award)
+        other_winners['title'].append(winner)
     return winner
 
 def eval_winner_tweet(tweet, dicts, maps, keys, sw):
