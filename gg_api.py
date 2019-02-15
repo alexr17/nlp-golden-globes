@@ -1,6 +1,7 @@
 from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.helpers.load import load_json
+from src.queries.red_carpet import find_best_dressed, find_worst_dressed
 from src.helpers.debug import top_keys, find_key
 year = '2013'
 data = load_json(year)
@@ -35,9 +36,9 @@ OFFICIAL_AWARDS = [
     'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television',
     'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television'
 ]
-
-lst = find_awards(data, year)
-top_keys(lst, 1000)
+#
+lst = find_worst_dressed(data, year)
+top_keys(lst,10)
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
