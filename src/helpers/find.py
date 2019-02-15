@@ -25,24 +25,44 @@ def find_name(lst, name_dict):
                     pass
     return full_names
 
-def find_name_with_db(lst, other_winners):
+def find_name_with_db(lst, other_winners, award):
     names_set = load_imdb_data('name')
+    max = lst[0][1]
+    tpls = []
     for tpl in lst:
-        if tpl[0] not in other_winners and tpl[0] in names_set:
+        if tpl[1] > max * 0.5 and tpl[0] not in other_winners['name'] + other_winners['title'] and tpl[0] in names_set:
             # print("returning from find_name: " + tpl[0])
             return tpl[0]
-    print("Could not find a name... return top result")
-    try:
-        return find_title(lst, other_winners)
-    except IndexError:
-        return False
+        elif tpl[1] < max * 0.5:
+            break
+        tpls.append(tpl)
+    print("\n\n\nCould not find name for award: " + award)
+    print(tpls)
+    return lst[0][0]
 
-def find_title(lst, other_winners):
+# def find_name_without_db(lst, other_winners):
+#     dct = {}
+#     for tpl in lst:
+#         dct[tpl[0]] = len(tpl[0].split(' '))
+    
+#     for key in dct:
+
+
+
+def find_title(lst, other_winners, award):
     titles_set = load_imdb_data('title')
+    max = lst[0][1]
+    tpls = []
     for tpl in lst:
+        tpls.append(tpl)
         # if tpl[0] == 'jessica chastain':
         #     print(tpl[0].title() in names_set)
-        if tpl[0] not in other_winners and tpl[0] in titles_set:
+        if tpl[1] > max * 0.5 and tpl[0] not in other_winners['name'] and tpl[0] in titles_set:
             # print("returning from find_title: " + tpl[0])
             return tpl[0]
-    return False
+        elif tpl[1] < max * 0.5:
+            break
+        tpls.append(tpl)
+    print("\n\n\nCould not find title for award: " + award)
+    print(tpls)
+    return lst[0][0]

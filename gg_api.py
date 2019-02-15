@@ -209,12 +209,16 @@ def main():
             times[year]['host']['total'] += time.time() - t
             times[year]['host']['count'] += 1
 
+        other_winners = {
+            'name': [],
+            'title': []
+        }
         for award in awards_map:
-            results[year]['winners'][award] = find_winner(winner_dicts[award], award, results[year]['winners'].values())
+            results[year]['winners'][award] = find_winner(winner_dicts[award], award, other_winners)
         
         # write results to file
         with open('results/' + year +'.json', 'w') as outfile:
-            json.dump(results[year], outfile)
+            outfile.write(json.dumps(results[year], indent=4))
 
     # printing time data
     print(json.dumps(times, indent=4))
