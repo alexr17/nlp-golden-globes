@@ -2,7 +2,7 @@ import nltk
 import re
 import time
 from nltk.corpus import stopwords
-from src.helpers.find import find_name_with_db
+from src.helpers.find import find_name
 from src.helpers.load import load_json
 from src.helpers.clean import valid_tkn, bigrams, trigrams
 import json
@@ -30,7 +30,7 @@ def find_presenter(data, award_name):
                     award_dict[tkn] += 1
 
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    return find_name_with_db(award_lst, [])
+    return find_name(award_lst, [])
 
 def id_award(string, award_map):
     for award_key in award_map:
