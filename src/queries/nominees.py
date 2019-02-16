@@ -1,11 +1,11 @@
 import nltk
-from src.helpers.load import load_json, load_movies
+from src.helpers.load import load_json
 from src.helpers.clean import valid_tkn, bigrams
 
 nominees_kw = []
 nominees_sw = ["best", "award", "performance"]
 gg_sw = ['golden', 'globes', 'goldenglobes', 'globe']
-movies = [] #load_movies(2013))
+movies = []
 def find_nominee(award, data):
     nom_dict = {}
     nominees_sw.extend([word for word in award.split(' ')])
