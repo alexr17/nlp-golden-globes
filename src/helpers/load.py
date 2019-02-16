@@ -15,35 +15,8 @@ def load_json(year, path='data/gg'):
         data = json.load(f)
     return data
 
-valid_roles = {
-    'actor', 'actress'
-}
-
 def load_imdb_data(d_type):
     return set(line.strip() for line in open(f'./data/{d_type}s.txt'))
-
-def parse_imdb_data(d_type):
-    min_birth = 1920
-    min_title = 2010
-    with open(f'./data/{d_type}.basics.tsv', 'r') as tsvin, open(f'./data/{d_type}s.txt', 'w') as type_out:
-        tsvin = csv.reader(tsvin, delimiter='\t')
-        for i, row in enumerate(tsvin):
-            if i % 100000 == 0:
-                print(str(i) + ' lines parsed')
-            if d_type == 'name' and row[4].split(',')[0] in valid_roles and len(row[1].split(' ')) > 1 and row[2].isdigit() and not row[3].isdigit() and int(row[2]) > min_birth and len(row[5].split(',')) == 4:
-                type_out.write(row[1].lower()+'\n')
-            elif d_type == 'title' and (row[1] == 'movie' or row[1] == 'tvseries') and ((row[5].isdigit() and int(row[5]) > min_title) or (row[6].isdigit() and int(row[6]) > min_title)):
-                type_out.write(row[2].lower()+'\n')
-
-def request_imdb_data(d_type):
-    try:
-        urllib.request.urlretrieve(f"https://datasets.imdbws.com/{d_type}.basics.tsv.gz", f"./data/{d_type}.basics.tsv.gz")
-        with gzip.open(f"./data/{d_type}.basics.tsv.gz", 'rb') as f_in:
-            with open(f"./data/{d_type}.basics.tsv", 'wb') as f_out:
-                shutil.copyfileobj(f_in, f_out)
-    except:
-        print("Could not get data from imdb. Please make sure you have a working internet connection.")
-
 
 def write_to_file(arr, file_name):
     with open(file_name, 'w') as f_in:
@@ -73,6 +46,8 @@ def parse_tmdb_data(key, params, tmdb_method):
 
     return data
 
+# Generating the tmdb data for a range of years
+# NOTE: only run this if it hasn't been generated yet
 def generate_tmdb_data(years, vote_min=100, score_min=6):
     print("Getting list of movies and tv shows from TMDB")
 
@@ -114,5 +89,30 @@ def generate_tmdb_data(years, vote_min=100, score_min=6):
         titles += parse_tmdb_data('name', params, tmdb_method)
 
     write_to_file(titles, './data/titles.txt')
-    
-# generate_tmdb_data((2012,2019))
+
+
+# IMDB -- not currently being used
+def parse_imdb_data(d_type):
+    valid_roles = {
+        'actor', 'actress'
+    }
+    min_birth = 1920
+    min_title = 2010
+    with open(f'./data/{d_type}.basics.tsv', 'r') as tsvin, open(f'./data/{d_type}s.txt', 'w') as type_out:
+        tsvin = csv.reader(tsvin, delimiter='\t')
+        for i, row in enumerate(tsvin):
+            if i % 100000 == 0:
+                print(str(i) + ' lines parsed')
+            if d_type == 'name' and row[4].split(',')[0] in valid_roles and len(row[1].split(' ')) > 1 and row[2].isdigit() and not row[3].isdigit() and int(row[2]) > min_birth and len(row[5].split(',')) == 4:
+                type_out.write(row[1].lower()+'\n')
+            elif d_type == 'title' and (row[1] == 'movie' or row[1] == 'tvseries') and ((row[5].isdigit() and int(row[5]) > min_title) or (row[6].isdigit() and int(row[6]) > min_title)):
+                type_out.write(row[2].lower()+'\n')
+
+def request_imdb_data(d_type):
+    try:
+        urllib.request.urlretrieve(f"https://datasets.imdbws.com/{d_type}.basics.tsv.gz", f"./data/{d_type}.basics.tsv.gz")
+        with gzip.open(f"./data/{d_type}.basics.tsv.gz", 'rb') as f_in:
+            with open(f"./data/{d_type}.basics.tsv", 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+    except:
+        print("Could not get data from imdb. Please make sure you have a working internet connection.")
