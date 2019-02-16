@@ -217,7 +217,11 @@ def main():
     #print(join_ngrams([("robert downey", 10), ("downey jr", 10), ("jr hello", 10)], 1))
     data = load_json('2013')
     lst = find_awards(data)
+    counter = 0
     for l in lst:
+        if counter > 30:
+            break
+        counter += 1
         print(l)
     #top_keys(lst, 100)
     #print(get_presenters('2013'))

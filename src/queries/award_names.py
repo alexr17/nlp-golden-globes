@@ -13,8 +13,8 @@ from src.helpers.clean import merge_bigrams
 import pprint
 #from src.helpers.find import find_name
 
-list_of_awards = set(line.strip() for line in open('./data/award_kw.txt'))
-
+list_of_awards =[line.strip() for line in open('./data/award_kw.txt')] # ['best', 'motion', 'picture', 'drama', 'performance', 'actress', 'actor', 'comedy', 'musical', 'animated', 'feature', 'film', 'foreign', 'language', 'supporting', 'role', 'director', 'screenplay', 'orginal', 'score', 'song', 'television', 'series',  'mini-series', 'mini']
+helper_words = ['by','an','in', 'a', 'for','-',':','or']
 # golden globes stopwords
 gg_sw = ['golden', 'globe', 'globes', 'goldenglobes']
 
@@ -30,6 +30,43 @@ media_sw = ['eonline', 'cnnshowbiz']
 award_kw = ['actor', 'actress', 'supporting']
 
 answer = {}
+
+
+def see_awards(data):
+    all_awards = []
+    award_tweets = []
+    for obj in data:
+        text = obj['text'].lower()
+        if len(set(list_of_awards).intersection(set(text.split(" ")))) > 4:
+            award_tweets.append(text)
+
+    for tweet in award_tweets:
+        tweet = tweet.split(" ")
+        start = len(tweet) - 1
+        for word in list_of_awards:
+            if word in tweet:
+                index = tweet.index(word)
+                if index < start:
+                    start = index
+
+        temp = []
+        for word in tweet[start:]:
+            if word in list_of_awards or word in helper_words:
+                temp.append(word)
+        award = ' '.join(temp)#' '.join(sorted(set(temp), key=lambda x: temp.index(x)))
+        if award not in all_awards:
+            all_awards.append(award)
+
+    for x in all_awards:
+        if x.split()[0] != 'best':
+            all_awards.remove(x)
+    for x in all_awards:
+        for y in all_awards:
+            if len(set(x.split(" ")).intersection(set(y.split(" ")))) > 4:
+                all_awards.remove(y)
+
+    return all_awards
+
 
 
 def award_set(bigrams):
@@ -64,6 +101,7 @@ def award_set(bigrams):
 
 
 def find_awards(data):
+    return see_awards(data)
     award_dict = {}
 
     best_dict = {
@@ -85,7 +123,7 @@ def find_awards(data):
         #award_regex = r"(best(?=\s[a-z])(?:\s([z-z]\w+|in|a|by an|\s-\s))+)"
         #match = re.search(award_regex, text)
         if "best" in text:#match != None:
-            text = re.sub(r'[^a-zA-Z0-9\s]', ' ', text)
+            text = re.sub(r'[^a-zA-Z0-9\s\-]', ' ', text)
 
             tokens = [tkn for tkn in text.split(" ") if valid_tkn(tkn, award_kw, award_sw + gg_sw + media_sw)]
             tokens = [tkn for tkn in tokens if tkn in list_of_awards]
@@ -122,13 +160,16 @@ def find_awards(data):
                 else:
                     award_dict[tkn] += 1
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    return award_set([
-        ("motion picture", 1000),
-        ("actor motion", 1000),
-        ("supporting actor", 1000),
-        ("picture drama", 1000),
-        # ("motion picture", 100),
-        # ("motion picture", 100),
-        # ("motion picture", 100),
+    return award_set(award_lst)
+    # return award_set([
+    #     ("motion picture", 1000),
+    #     ("actor motion", 1000),
+    #     ("supporting actor", 1000),
+    #     ("picture drama", 1000),
+    #     ("picture comedy", 1000),
+    #     ("comedy musical", 1000),
+    #     # ("motion picture", 100),
+    #     # ("motion picture", 100),
+    #     # ("motion picture", 100),
 
-    ])
+    # ])
