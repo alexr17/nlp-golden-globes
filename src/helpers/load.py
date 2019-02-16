@@ -45,9 +45,10 @@ def request_imdb_data(d_type):
         print("Could not get data from imdb. Please make sure you have a working internet connection.")
 
 
-# TODO: implement load_movies and add file writing to parse movies 
-def load_movies():
-    raise Exception("not implemented yet")
+def write_to_file(arr, file_name):
+    with open(file_name, 'w') as f_in:
+        for e in arr:
+            f_in.write(e + '\n')
 
 def parse_tmdb(data, field):
     lst = []
@@ -56,39 +57,62 @@ def parse_tmdb(data, field):
         lst.append(unidecode.unidecode(result[field].lower()))
     return lst
 
-def parse_tmdb_data(years,vote_min=100, score_min=6):
+def parse_tmdb_data(key, params, tmdb_method):
+    tmdb_url = "https://api.themoviedb.org/"
+    data = []
+
+    resp = requests.get(f"{tmdb_url}{tmdb_method}?{urlencode(params)}").json()
+    pages = int(resp['total_pages'])
+
+    data += parse_tmdb(resp, key)
+    for i in range(2, pages+1):
+        params['page'] = str(i)
+        time.sleep(0.25)
+        data += parse_tmdb(requests.get(f"{tmdb_url}{tmdb_method}?{urlencode(params)}").json(), key)
+        print(len(data))
+
+    return data
+
+def generate_tmdb_data(years, vote_min=100, score_min=6):
     print("Getting list of movies and tv shows from TMDB")
+
     config = configparser.ConfigParser()
     config.read('./config.ini')
-
-    tmdb_url = "https://api.themoviedb.org/"
-    tmdb_method = "3/discover/"
-    types = ['movie', 'tv']
-    titles = []
-    for t_type in types:
-        title_type = 'title' if t_type == 'movie' else 'name'
-        for year in years:
-            params = {
-                "sort_by": "vote_average.desc",
-                "with_original_language": "en",
-                "primary_release_year": str(year-1),
-                "vote_count.gte": str(vote_min),
-                "vote_average.gte": str(score_min),
-                "api_key": config['api_keys']['tmdb'],
-                "page": "1"
-            }
-            # print(f"{tmdb_url}{tmdb_method}movie?{urlencode(params)}")
-            data = requests.get(f"{tmdb_url}{tmdb_method}{t_type}?{urlencode(params)}").json()
-            pages = int(data['total_pages'])
-            titles += parse_tmdb(data, title_type)
-            for i in range(2, pages+1):
-                params['page'] = str(i)
-                time.sleep(0.25)
-                titles += parse_tmdb(requests.get(f"{tmdb_url}{tmdb_method}{t_type}?{urlencode(params)}").json(), title_type)
     
-    print("Done loading from api, now writing to file")
-    with open(f'./data/titles.txt', 'w') as tmdb_out:
-        for title in titles:
-            tmdb_out.write(title+'\n')
+    # people
+    tmdb_method = "3/person/popular"
+    params = {
+        "api_key": config['api_keys']['tmdb']
+    }
+    
+    if len(list(line.strip() for line in open(f'./data/names.txt'))) < 18000:
+        people = parse_tmdb_data('name', params, tmdb_method)
+        write_to_file(people, './data/names.txt')
+        print("Done loading people")
 
-parse_tmdb_data([2013,2014,2015,2016,2017,2018,2019,2020])
+    titles = []
+    params = {
+        "with_original_language": "en",
+        "vote_count.gte": str(vote_min),
+        "vote_average.gte": str(score_min),
+        "api_key": config['api_keys']['tmdb']
+    }
+
+    # movies
+    tmdb_method = f"3/discover/movie"
+    movie_years = range(years[0], years[1])
+    
+    for year in movie_years:
+        params["primary_release_year"] = str(year)
+        titles += parse_tmdb_data('title', params, tmdb_method)
+    
+    # tv
+    tmdb_method = f"3/discover/tv"
+    tv_years = range(years[0]-5, years[1])
+    for year in tv_years:
+        params["first_air_date_year"] = str(year)
+        titles += parse_tmdb_data('name', params, tmdb_method)
+
+    write_to_file(titles, './data/titles.txt')
+    
+# generate_tmdb_data((2012,2019))
