@@ -1,4 +1,5 @@
-from src.helpers.load import load_imdb_data 
+import itertools
+from src.helpers.load import load_imdb_data
 # tries to find a name in a given list of tuples
 def find_host_names(lst, name_dict):
     # gets the first names
@@ -25,11 +26,21 @@ def find_host_names(lst, name_dict):
                     pass
     return full_names
 
-def finesse(tpls):
-    pair_threshold = 0.5
+
+def finesse_name(tpls):
     if len(tpls) < 3:
         return tpls[0][0]
+    
+    unigrams = {}
+    ngrams = {}
+    for tpl in tpls:
+        if len(tpl[0].split(' ')) == 1:
+            unigrams[tpl[0]] = tpl[1]
+        else:
+            ngrams[tpl[0]] = tpl[1]
 
+    print(unigrams)
+    print(ngrams)
 
 def find_name_generic(lst, other_winners, type_set, award):
     max = lst[0][1]
@@ -49,7 +60,7 @@ def find_name_generic(lst, other_winners, type_set, award):
     
     print("\n\nCould not find name for award: " + award)
     print(top_tpls)
-
+    # finesse_name(top_tpls)
     #defaulting
     return lst[0][0]
 

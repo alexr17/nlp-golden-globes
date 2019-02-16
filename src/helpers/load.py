@@ -6,6 +6,9 @@ import urllib
 from urllib.parse import urlencode
 import gzip
 import shutil
+import time
+import unidecode
+
 
 def load_json(year, path='data/gg'):
     with open(path + year + '.json') as f:
@@ -46,37 +49,46 @@ def request_imdb_data(d_type):
 def load_movies():
     raise Exception("not implemented yet")
 
-def parse_movies(years,vote_min=100, score_min=6):
+def parse_tmdb(data, field):
+    lst = []
+    results = data['results']
+    for result in results:
+        lst.append(unidecode.unidecode(result[field].lower()))
+    return lst
 
+def parse_tmdb_data(years,vote_min=100, score_min=6):
+    print("Getting list of movies and tv shows from TMDB")
     config = configparser.ConfigParser()
     config.read('./config.ini')
 
     tmdb_url = "https://api.themoviedb.org/"
     tmdb_method = "3/discover/"
-
-    for year in years:
-        params = {
-            "sort_by": "vote_average.desc",
-            "with_original_language": "en",
-            "primary_release_year": str(year-1),
-            "vote_count.gte": str(vote_min),
-            "vote_average.gte": str(score_min),
-            "api_key": config['api_keys']['tmdb'],
-            "page": "1"
-        }
-        data = requests.get(f"{tmdb_url}{tmdb_method}movie?{urlencode(params)}").json()
-        pages = int(data['total_pages'])
-        movies = parse_tmdb(data, 'title')
-        for i in range(2, pages+1):
-            params['page'] = str(i)
-            movies += parse_tmdb(requests.get(f"{tmdb_url}{tmdb_method}movie?{urlencode(params)}").json(), 'title')
-
-    return movies
+    types = ['movie', 'tv']
+    titles = []
+    for t_type in types:
+        title_type = 'title' if t_type == 'movie' else 'name'
+        for year in years:
+            params = {
+                "sort_by": "vote_average.desc",
+                "with_original_language": "en",
+                "primary_release_year": str(year-1),
+                "vote_count.gte": str(vote_min),
+                "vote_average.gte": str(score_min),
+                "api_key": config['api_keys']['tmdb'],
+                "page": "1"
+            }
+            # print(f"{tmdb_url}{tmdb_method}movie?{urlencode(params)}")
+            data = requests.get(f"{tmdb_url}{tmdb_method}{t_type}?{urlencode(params)}").json()
+            pages = int(data['total_pages'])
+            titles += parse_tmdb(data, title_type)
+            for i in range(2, pages+1):
+                params['page'] = str(i)
+                time.sleep(0.25)
+                titles += parse_tmdb(requests.get(f"{tmdb_url}{tmdb_method}{t_type}?{urlencode(params)}").json(), title_type)
     
+    print("Done loading from api, now writing to file")
+    with open(f'./data/titles.txt', 'w') as tmdb_out:
+        for title in titles:
+            tmdb_out.write(title+'\n')
 
-def parse_tmdb(data, field):
-    lst = []
-    results = data['results']
-    for result in results:
-        lst.append(result[field])
-    return lst
+parse_tmdb_data([2013,2014,2015,2016,2017,2018,2019,2020])

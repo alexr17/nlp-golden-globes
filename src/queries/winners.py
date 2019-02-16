@@ -32,7 +32,7 @@ def find_winner(winner_dict, award, other_winners):
         print("\n\n\nTop keys for: " + award)
         top_keys(winner_lst, 50)
     # people
-    if any(word in award for word in ['actress', 'actor', 'director', 'award']):
+    if any(word in award for word in {'actress', 'actor', 'director', 'award'}):
         winner = find_name(winner_lst, other_winners, award)
         other_winners['name'].add(winner)
     else: # titles
@@ -44,7 +44,7 @@ def eval_winner_tweet(tweet, dicts, maps, keys, sw):
     # tokens = bigrams(tweet.split(' '), winners_kw, winners_sw + gg_sw + media_sw + list(map.keys()))
     tokens = nltk.word_tokenize(tweet)
     bgms = bigrams(tokens, winners_kw, sw | gg_sw | media_sw)
-    tkns = unigrams(tokens, winners_kw, sw | gg_sw | media_sw)
+    ugms = unigrams(tokens, winners_kw, sw | gg_sw | media_sw)
     for key in keys:
         # TODO: fix this so it has an overarching list of keys for the awards (perhaps write a method?)
         for bgm in bgms:
@@ -52,11 +52,14 @@ def eval_winner_tweet(tweet, dicts, maps, keys, sw):
                 dicts[key][bgm] = 1
             else:
                 dicts[key][bgm] += 1
-        for tkn in tkns:
-            if tkn not in dicts[key]:
-                dicts[key][tkn] = 1
-            else:
-                dicts[key][tkn] += 1
+
+        # DON'T ADD UNIGRAMS TO AWARDS WITH PEOPLE AS WINNERS PEOPLE DON'T HAVE ONE WORD IN THEIR NAMES
+        if not any(word in key for word in ['actress', 'actor', 'director', 'award']):
+            for ugm in ugms:
+                if ugm not in dicts[key]:
+                    dicts[key][ugm] = 1
+                else:
+                    dicts[key][ugm] += 1
 
 def id_award(tweet, award_map):
     for award_key in award_map['include']:
