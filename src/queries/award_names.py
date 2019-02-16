@@ -32,6 +32,37 @@ award_kw = ['actor', 'actress', 'supporting']
 answer = {}
 
 
+def award_set(bigrams):
+    all_awards = []
+    threshold = 0.8
+    minimum = 100
+    bigrams = [x for x in bigrams if x[1] > minimum]
+    for i, bigram1 in enumerate(bigrams):
+        ngram = bigram1[0].split(" ")
+        for j, bigram2 in enumerate(bigrams):
+            if bigram2 == bigram1:
+                continue
+            bigram = bigram2[0].split(" ")
+            if ngram[-1] == bigram[0]:
+               ngram += bigram[1:]
+            elif ngram[0] == bigram[-1]:
+                ngram = [bigram[0]] + ngram
+        ngram = " ".join(ngram)
+        flag = False
+        for award in all_awards:
+            if ngram in award:
+                flag = True
+                break
+        if not flag:
+            all_awards.append(ngram)
+
+    return all_awards
+
+
+
+
+
+
 def find_awards(data):
     award_dict = {}
 
@@ -59,23 +90,29 @@ def find_awards(data):
             tokens = [tkn for tkn in text.split(" ") if valid_tkn(tkn, award_kw, award_sw + gg_sw + media_sw)]
             tokens = [tkn for tkn in tokens if tkn in list_of_awards]
 
-            # ngrams of 4
-            ngrams4 = zip(*[tokens[i:] for i in range(4)])
-            ngrams4 = ["best "+" ".join(ngram) for ngram in ngrams4]
 
-            # ngrams of 5
-            ngrams5 = zip(*[tokens[i:] for i in range(5)])
-            ngrams5 = ["best "+" ".join(ngram) for ngram in ngrams5]
+            # ngrams of 2
+            ngrams = zip(*[tokens[i:] for i in range(2)])
+            ngrams = [" ".join(ngram) for ngram in ngrams]
 
-            # ngrams of 6
-            ngrams6 = zip(*[tokens[i:] for i in range(6)])
-            ngrams6 = ["best "+" ".join(ngram) for ngram in ngrams6]
 
-            # ngrams of 7
-            ngrams7 = zip(*[tokens[i:] for i in range(7)])
-            ngrams7 = ["best "+" ".join(ngram) for ngram in ngrams6]
+            # # ngrams of 4
+            # ngrams4 = zip(*[tokens[i:] for i in range(4)])
+            # ngrams4 = ["best "+" ".join(ngram) for ngram in ngrams4]
 
-            ngrams = ngrams4 + ngrams5 + ngrams6 + ngrams7
+            # # ngrams of 5
+            # ngrams5 = zip(*[tokens[i:] for i in range(5)])
+            # ngrams5 = ["best "+" ".join(ngram) for ngram in ngrams5]
+
+            # # ngrams of 6
+            # ngrams6 = zip(*[tokens[i:] for i in range(6)])
+            # ngrams6 = ["best "+" ".join(ngram) for ngram in ngrams6]
+
+            # # ngrams of 7
+            # ngrams7 = zip(*[tokens[i:] for i in range(7)])
+            # ngrams7 = ["best "+" ".join(ngram) for ngram in ngrams6]
+
+            #ngrams = ngrams4 + ngrams5 + ngrams6 + ngrams7
 
             for tkn in ngrams:
                 # if "best" in tkn[0]
@@ -85,4 +122,13 @@ def find_awards(data):
                 else:
                     award_dict[tkn] += 1
     award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    return award_lst
+    return award_set([
+        ("motion picture", 1000),
+        ("actor motion", 1000),
+        ("supporting actor", 1000),
+        ("picture drama", 1000),
+        # ("motion picture", 100),
+        # ("motion picture", 100),
+        # ("motion picture", 100),
+
+    ])
