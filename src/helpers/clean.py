@@ -88,13 +88,13 @@ def join_ngrams(lst, minimum):
 
     flag = True
     counter = 0
+    updated_lst = lst
     while flag:
         #updated_lst = []
         # if counter == 1:
         #     break
         flag = False
         for i in range(len(lst)):
-            check_merge = False
             if i >= len(lst):
                 break
             if lst[i][1] < minimum:
@@ -107,9 +107,8 @@ def join_ngrams(lst, minimum):
                 bigram2 = lst[j][0].split(" ")
                 if bigram1[1:] == bigram2[:-1]:
                     ngram = bigram1 + [bigram2[-1]]
-                    occurence = lst[j][1]
-                    lst[j] = (" ".join(ngram), occurence, True)
-                    #updated_lst.append((" ".join(ngram), occurence))
+                    occurence = lst[j][1] + 100
+                    updated_lst.append((" ".join(ngram), occurence))
                     flag = True
                     check_merge = True
                 # elif bigram1[-1] == bigram2[0]:
@@ -128,8 +127,8 @@ def join_ngrams(lst, minimum):
             # print(curr)
             # print('----')
 
-            if check_merge and len(curr) < 3:
-                lst.remove(curr)
+            # if check_merge and len(curr) < 3:
+            #     lst.remove(curr)
 
         # if updated_lst:
         #     lst = updated_lst

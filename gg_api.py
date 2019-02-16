@@ -217,7 +217,7 @@ def main():
     #print(join_ngrams([("robert downey", 10), ("downey jr", 10), ("jr hello", 10)], 1))
     data = load_json('2013')
     lst = find_awards(data)
-    top_keys(lst, 200)
+    top_keys(lst, 1)
     #print(get_presenters('2013'))
     #print(get_hosts('2013'))
     #print(get_hosts('2015'))
