@@ -213,7 +213,11 @@ def main():
     #pre_ceremony()
     #lst = [('cecil b.', 26), ('b. demille', 26), ('jodie foster', 25), ('robert downey', 23), ('downey jr.', 21), ('premio cecil', 15), ('jr. presenta', 13), ('presenta jodie', 10)]
     #print(join_ngrams(lst))
-    pre_ceremony(False)
+    #pre_ceremony(False)
+    #print(join_ngrams([("robert downey", 10), ("downey jr", 10), ("jr hello", 10)], 1))
+    data = load_json('2013')
+    lst = find_awards(data)
+    top_keys(lst, 200)
     #print(get_presenters('2013'))
     #print(get_hosts('2013'))
     #print(get_hosts('2015'))
