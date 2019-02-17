@@ -220,15 +220,15 @@ def main():
     lst = find_awards(data)
     for l in lst:
         print(l)
-    results = load_json('2013', 'results/')
-    results['award_names'] = lst
-    with open('results/' + '2013' +'.json', 'w') as outfile:
-        outfile.write(json.dumps(results, indent=4))
+    # results = load_json('2013', 'results/')
+    # results['award_names'] = lst
+    # with open('results/' + '2013' +'.json', 'w') as outfile:
+    #     outfile.write(json.dumps(results, indent=4))
 
-    results = load_json('2015', 'results/')
-    results['award_names'] = lst
-    with open('results/' + '2015' +'.json', 'w') as outfile:
-        outfile.write(json.dumps(results, indent=4))
+    # results = load_json('2015', 'results/')
+    # results['award_names'] = lst
+    # with open('results/' + '2015' +'.json', 'w') as outfile:
+    #     outfile.write(json.dumps(results, indent=4))
     #top_keys(lst, 100)
     #print(get_presenters('2013'))
     #print(get_hosts('2013'))

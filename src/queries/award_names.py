@@ -31,10 +31,10 @@ media_sw = ['eonline', 'cnnshowbiz']
 # award keywords
 award_kw = ['actor', 'actress', 'supporting']
 
-answer = {}
 
+# Used intersection of tweet set and tweet indexing from the following project:
 # https://github.com/brownrout/EECS-337-Golden-Globes/blob/master/gg_api.py
-def see_awards(data, bigrams):
+def find_awards(data):
     all_awards = {}
     similar_names = {}
     award_tweets = []
@@ -97,17 +97,10 @@ def see_awards(data, bigrams):
                  bigrams_dict[tkn] += 1
 
     bigrams_lst = sorted(bigrams_dict.items(), key=lambda x: x[1], reverse=True)
-    #print(bigrams_lst[0:5])
-    # for key in similar_names:
-    #     print(key, similar_names[key])
-    #     print('-----')
 
     common_phrases = [x[0] for x in bigrams_lst if x[1] > 50]
-    #common_phrases = get_phrases(common_phrases)
-    #print(common_phrases)
-    #print(common_phrases)
     #common_phrases = ["motion picture", "supporting role", "best performance", "television series", "original score", "original song"]
-    #print(common_phrases)
+
 
     new_award_lst = []
     for key in similar_names:
@@ -137,125 +130,47 @@ def see_awards(data, bigrams):
     for a in removed_awards:
         if a in new_award_lst:
             new_award_lst.remove(a)
-    print(len(new_award_lst))
     return new_award_lst
 
-# (downey jr)
-# (hello downey)
-def get_phrases(bigrams):
-    updated_lst = []
-    for i in range(len(bigrams)):
-        curr = bigrams[i]
-        j = i+1
-        while j < len(bigrams):
-            bigram1 = curr.split(" ")
-            bigram2 = bigrams[j].split(" ")
-            if bigram1[-1] == bigram2[0]:
-                ngram = bigram1 + [bigram2[-1]]
-                updated_lst.append(" ".join(ngram))
-            if bigram1[0] == bigram2[-1]:
-                ngram = bigram2 + [bigram1[-1]]
-                updated_lst.append(" ".join(ngram))
-            j += 1
-    return updated_lst
-
-def award_set(bigrams):
-    all_awards = []
-    for i, bigram1 in enumerate(bigrams):
-        ngram = bigram1.split(" ")
-        for j, bigram2 in enumerate(bigrams):
-            if bigram2 == bigram1:
-                continue
-            bigram = bigram2.split(" ")
-            if ngram[-1] == bigram[0]:
-               ngram += bigram[1:]
-            elif ngram[0] == bigram[-1]:
-                ngram = [bigram[0]] + ngram
-        ngram = " ".join(ngram)
-        flag = False
-        for award in all_awards:
-            if ngram in award:
-                flag = True
-                break
-        if not flag:
-            all_awards.append(ngram)
-
-    return all_awards
 
 
+# def get_phrases(bigrams):
+#     updated_lst = []
+#     for i in range(len(bigrams)):
+#         curr = bigrams[i]
+#         j = i+1
+#         while j < len(bigrams):
+#             bigram1 = curr.split(" ")
+#             bigram2 = bigrams[j].split(" ")
+#             if bigram1[-1] == bigram2[0]:
+#                 ngram = bigram1 + [bigram2[-1]]
+#                 updated_lst.append(" ".join(ngram))
+#             if bigram1[0] == bigram2[-1]:
+#                 ngram = bigram2 + [bigram1[-1]]
+#                 updated_lst.append(" ".join(ngram))
+#             j += 1
+#     return updated_lst
 
+# def award_set(bigrams):
+#     all_awards = []
+#     for i, bigram1 in enumerate(bigrams):
+#         ngram = bigram1.split(" ")
+#         for j, bigram2 in enumerate(bigrams):
+#             if bigram2 == bigram1:
+#                 continue
+#             bigram = bigram2.split(" ")
+#             if ngram[-1] == bigram[0]:
+#                ngram += bigram[1:]
+#             elif ngram[0] == bigram[-1]:
+#                 ngram = [bigram[0]] + ngram
+#         ngram = " ".join(ngram)
+#         flag = False
+#         for award in all_awards:
+#             if ngram in award:
+#                 flag = True
+#                 break
+#         if not flag:
+#             all_awards.append(ngram)
 
+#     return all_awards
 
-
-def find_awards(data):
-    award_dict = {}
-
-    best_dict = {
-        'nxt': {},
-        'nxt_two': {},
-        'nxt_three': {}
-    }
-#     >>> from collections import Counter
-# >>> from nltk import ngrams
-# >>> bigtxt = open('big.txt').read()
-# >>> ngram_counts = Counter(ngrams(bigtxt.split(), 2))
-# >>> ngram_counts.most_common(10)
-
-
-
-
-    for obj in data:
-        text = obj['text'].lower()
-        #award_regex = r"(best(?=\s[a-z])(?:\s([z-z]\w+|in|a|by an|\s-\s))+)"
-        #match = re.search(award_regex, text)
-        if "best" in text:#match != None:
-            text = re.sub(r'[^a-zA-Z0-9\s\-]', ' ', text)
-
-            tokens = [tkn for tkn in text.split(" ") if valid_tkn(tkn, award_kw, award_sw + gg_sw + media_sw)]
-            tokens = [tkn for tkn in tokens if tkn in list_of_awards]
-
-
-            # ngrams of 2
-            ngrams = zip(*[tokens[i:] for i in range(2)])
-            ngrams = [" ".join(ngram) for ngram in ngrams]
-
-
-            # # ngrams of 4
-            # ngrams4 = zip(*[tokens[i:] for i in range(4)])
-            # ngrams4 = ["best "+" ".join(ngram) for ngram in ngrams4]
-
-            # # ngrams of 5
-            # ngrams5 = zip(*[tokens[i:] for i in range(5)])
-            # ngrams5 = ["best "+" ".join(ngram) for ngram in ngrams5]
-
-            # # ngrams of 6
-            # ngrams6 = zip(*[tokens[i:] for i in range(6)])
-            # ngrams6 = ["best "+" ".join(ngram) for ngram in ngrams6]
-
-            # # ngrams of 7
-            # ngrams7 = zip(*[tokens[i:] for i in range(7)])
-            # ngrams7 = ["best "+" ".join(ngram) for ngram in ngrams6]
-
-            #ngrams = ngrams4 + ngrams5 + ngrams6 + ngrams7
-
-            for tkn in ngrams:
-                # if "best" in tkn[0]
-                # tkn[1] == next_tkn[0]
-                if tkn not in award_dict:
-                    award_dict[tkn] = 1
-                else:
-                    award_dict[tkn] += 1
-    award_lst = sorted(award_dict.items(), key=lambda x: x[1], reverse=True)
-    return see_awards(data, award_lst)
-    # return award_set([
-    #     ("motion picture", 1000),
-    #     ("actor motion", 1000),
-    #     ("supporting actor", 1000),
-    #     ("picture drama", 1000),
-    #     ("picture comedy", 1000),
-    #     ("comedy musical", 1000),
-    #     # ("motion picture", 100),
-    #     # ("motion picture", 100),
-    #     # ("motion picture", 100),
-
-    # ])
