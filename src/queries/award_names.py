@@ -71,7 +71,7 @@ def see_awards(data, bigrams):
                 temp.append(word)
 
         award = ' '.join(sorted(set(temp), key=lambda x: tweet.index(x)))
-        temp1 = ' '.join(set(temp1))
+        temp1 = ' '.join(sorted(set(temp1), key=lambda x: tweet.index(x)))
 
         # print(award)
         # print('----')
@@ -81,7 +81,6 @@ def see_awards(data, bigrams):
         else:
             similar_names[temp1] = [award]
 
-        flag = False
         if award in all_awards:
             all_awards[award] += 1
         else:
@@ -98,13 +97,17 @@ def see_awards(data, bigrams):
                  bigrams_dict[tkn] += 1
 
     bigrams_lst = sorted(bigrams_dict.items(), key=lambda x: x[1], reverse=True)
-    #print(bigrams_lst)
-    #common_phrases = [x[0] for x in bigrams_lst if x[1] > 50]
+    #print(bigrams_lst[0:5])
+    # for key in similar_names:
+    #     print(key, similar_names[key])
+    #     print('-----')
+
+    common_phrases = [x[0] for x in bigrams_lst if x[1] > 50]
     #common_phrases = get_phrases(common_phrases)
     #print(common_phrases)
     #print(common_phrases)
-    common_phrases = ["motion picture", "supporting role", "best performance", "television series", "original score", "original song"]
-
+    #common_phrases = ["motion picture", "supporting role", "best performance", "television series", "original score", "original song"]
+    #print(common_phrases)
 
     new_award_lst = []
     for key in similar_names:
@@ -114,22 +117,26 @@ def see_awards(data, bigrams):
             if all_awards[award] > max_score:
                 max_score = all_awards[award]
                 max_award = award
-        new_award_lst.append(max_award)
-        if any(phrase in max_award for phrase in common_phrases): #.count(True) >= 1:
-                new_award_lst.append(max_award)
+        #new_award_lst.append(max_award)
+        if [phrase in max_award for phrase in common_phrases].count(True) > 1:
+            new_award_lst.append(max_award)
 
     new_award_lst = [x for x in new_award_lst if x.split(" ")[0] == "best"]
-    threshold = 0.8
+    threshold = 0.85
+    removed_awards = []
     for i, x in enumerate(new_award_lst):
-        x1 = set([a for a in x.split(" ") if a not in helper_words])
+        x1 = set([a for a in x.split(" ")])
         for j, y in enumerate(new_award_lst[i+1:]):
-            y1 = set([a for a in y.split(" ") if a not in helper_words])
+            y1 = set([a for a in y.split(" ")])
             if len(x1.intersection(y1)) >= threshold*len(x1):
-                if all_awards[x] > all_awards[y]:
-                    new_award_lst.remove(y)
-                else:
-                    new_award_lst.remove(x)
-                    break
+                if not ('actor' in x and 'actress' in y or 'actor' in y and 'actress' in x):
+                    if not ('actor' in x and 'actor' not in y or 'actress' in x and 'actress' not in y):
+                        removed_awards.append(x)
+
+    removed_awards = set(removed_awards)
+    for a in removed_awards:
+        if a in new_award_lst:
+            new_award_lst.remove(a)
     print(len(new_award_lst))
     return new_award_lst
 
