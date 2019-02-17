@@ -85,7 +85,8 @@ def get_awards(year):
     '''Awards is a list of strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
-    return []
+
+    return load_json(year, 'results/')['award_names']
 
 
 def get_nominees(year):
@@ -162,6 +163,9 @@ def main():
     data['2015'] = load_json('2015')
     data['2013'] = load_json('2013')
     
+    lst = find_awards(data['2013'])
+    for l in lst:
+        print(l)
 
     debug = {'aziz ansari', 'jason bateman'}
     # 2013/2015

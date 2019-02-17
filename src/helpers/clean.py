@@ -92,33 +92,62 @@ def merge_bigrams(lst):
     return lst_of_words
 
 
-def join_ngrams(lst):
+def join_ngrams(lst, minimum):
     # lst : [("name name"), 23]
     threshold = 0.8
-    minimum = 10
     if not lst:
         return lst
 
-    updated_lst = []
-    for i in range(len(lst)):
-        if lst[i][1] < minimum:
-            break
-        curr = lst[i]
-        j = i + 1
-        while j < len(lst) and curr[1]/lst[j][1] > threshold:
-            ngram = []
-            bigram1 = curr[0].split(" ")
-            bigram2 = lst[j][0].split(" ")
-            if bigram1[-1] == bigram2[0]:
-                ngram = [bigram1[0], bigram1[-1], bigram2[-1]]
-                occurence = lst[j][1]
-                updated_lst.append((" ".join(ngram), occurence))
-            elif bigram1[0] == bigram2[-1]:
-                ngram = [bigram1[-1], bigram1[0], bigram2[0]]
-                occurence = lst[j][1]
-                updated_lst.append((" ".join(ngram), occurence))
-            j += 1
+    flag = True
+    counter = 0
+    updated_lst = lst
+    while flag:
+        #updated_lst = []
+        # if counter == 1:
+        #     break
+        flag = False
+        for i in range(len(lst)):
+            if i >= len(lst):
+                break
+            if lst[i][1] < minimum:
+                break
+            curr = lst[i]
+            # ["robert downey", "downey jr"]
+            j = i+1
+            while j < len(lst) and curr[1]/lst[j][1] > threshold:
+                bigram1 = curr[0].split(" ")
+                bigram2 = lst[j][0].split(" ")
+                if bigram1[1:] == bigram2[:-1]:
+                    ngram = bigram1 + [bigram2[-1]]
+                    occurence = lst[j][1] + 100
+                    updated_lst.append((" ".join(ngram), occurence))
+                    flag = True
+                    check_merge = True
+                # elif bigram1[-1] == bigram2[0]:
+                #     ngram = bigram1 + bigram2[1:]
+                #     occurence = lst[j][1]
+                #     lst[j] = (" ".join(ngram), occurence, True)
+                #     #updated_lst.append((" ".join(ngram), occurence))
+                #     flag = True
+                #     check_merge = True
+                # elif bigram1[0] == bigram2[-1]:
+                #     ngram = [bigram1[-1], bigram1[0], bigram2[0]]
+                #     occurence = lst[j][1]
+                #     updated_lst.append((" ".join(ngram), occurence))
+                j += 1
+            # print(lst)
+            # print(curr)
+            # print('----')
+
+            # if check_merge and len(curr) < 3:
+            #     lst.remove(curr)
+
+        # if updated_lst:
+        #     lst = updated_lst
+        # else: break
 
 
-    return updated_lst #sorted(updated_lst, key=lambda x: x[1], reverse=True)
+
+
+    return sorted(lst, key=lambda x: x[1], reverse=True)
 
