@@ -44,15 +44,11 @@ def find_awards(data):
         if len(set(list_of_awards).intersection(set(text.split(" ")))) > 4:
             award_tweets.append(text)
 
+    # Find where award_words start and end in tweet
     for tweet in award_tweets:
         tweet = tweet.split(" ")
         start = len(tweet) - 1
         end = len(tweet) - 1
-        # for word in list_of_awards:
-        #     if word in tweet:
-        #         index = tweet.index(word)
-        #         if index < start:
-        #             start = index
         flag = False
         for i, word in enumerate(tweet):
             if word in list_of_awards and not flag:
@@ -63,30 +59,32 @@ def find_awards(data):
 
         temp = []
         temp1 = []
-        #print(tweet[start:end+1])
+
+        # Construct award based on indexed tweet
         for word in tweet[start:end+1]:
             if word in list_of_awards and word not in helper_words:
                 temp1.append(word)
             if word in list_of_awards or word in helper_words:
                 temp.append(word)
 
+        # Use set to prevent recurring words and sort it based on how it's order in the tweet
         award = ' '.join(sorted(set(temp), key=lambda x: tweet.index(x)))
         temp1 = ' '.join(sorted(set(temp1), key=lambda x: tweet.index(x)))
 
-        # print(award)
-        # print('----')
 
+        # Find similar award names based on key list
         if temp1 in similar_names:
             similar_names[temp1].append(award)
         else:
             similar_names[temp1] = [award]
 
+        # Find occurence of each award
         if award in all_awards:
             all_awards[award] += 1
         else:
             all_awards[award] = 1
 
-        # Find common phrases
+        # Find common phrases by using bigrams
         tokens = sorted(set(temp1.split(" ")), key=lambda x: tweet.index(x))
         bigrams = [[tokens[i]] + [tokens[i+1]] for i in range(len(tokens)-1)]
         bigrams = [" ".join(ngram) for ngram in bigrams]
@@ -98,10 +96,12 @@ def find_awards(data):
 
     bigrams_lst = sorted(bigrams_dict.items(), key=lambda x: x[1], reverse=True)
 
+    # Include only the more popular bigrams
     common_phrases = [x[0] for x in bigrams_lst if x[1] > 50]
     #common_phrases = ["motion picture", "supporting role", "best performance", "television series", "original score", "original song"]
 
-
+    # Include the most popular for every similar category and make sure it contains
+    # at least 2 common phrases
     new_award_lst = []
     for key in similar_names:
         max_score = 0
