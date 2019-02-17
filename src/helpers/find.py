@@ -26,23 +26,52 @@ def find_host_names(lst, name_dict):
                     pass
     return full_names
 
+def recur_ngram(names, dct, key, string):
+    if key in set(string):
+        return string
+    if key not in dct:
+        return string + [key]
+    ngrams = []
+    string.append(key)
+    for child in dct[key]:
+        if ' '.join(string) in names:
+            return ' '.join(string)
+        new_string = recur_ngram(names, dct, child, string)
+    return new_string
 
-def finesse_name(tpls):
-    if len(tpls) < 3:
-        return tpls[0][0]
+# dct = {'robert': {'downey', 'el'}, 'downey': {'jr.'}, 'jr.': {'presenta'}, 'hoy': {'el'}, 'quien': {'se'}, 'la': {'trayectoria'}, 'se': {'lleva'}, 'lleva': {'hoy'}, 'codiciado': {'premio'}, 'presenta': {'jodie'}}
+# key = 'robert'
+# print(recur_ngram(load_imdb_data('name'), dct, key, []))
+def find_ngram(tkns, names, optional, exclude_list):
+    if len(tkns) < 2:
+        return tkns[0][0]
+    if len(tkns) > 10:
+        tkns = tkns[:10]
+    bgm_map = {}
+
+    for tkn in tkns:
+        sp_tkn = tkn[0].split(' ')
+        if len(sp_tkn) == 2: # if it's a bigram
+            if sp_tkn[0] in bgm_map:
+                bgm_map[sp_tkn[0]].add(sp_tkn[-1])
+            else:
+                bgm_map[sp_tkn[0]] = {sp_tkn[-1]}
     
-    unigrams = {}
-    ngrams = {}
-    for tpl in tpls:
-        if len(tpl[0].split(' ')) == 1:
-            unigrams[tpl[0]] = tpl[1]
-        else:
-            ngrams[tpl[0]] = tpl[1]
+    best_ngrams = set()
 
-    print(unigrams)
-    print(ngrams)
+    for tkn in bgm_map:
+        name = recur_ngram(names, bgm_map, tkn, [])
+        if type(name) == str and name not in exclude_list:
+            return name
+        elif not optional:
+            best_ngrams.add(' '.join(name))
+    
+    if optional:
+        return False
+    else:
+        return tkns[0][0]
 
-def find_name_generic(lst, exclude_list, type_set, award, optional=False, no_max=False):
+def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=False):
     max = lst[0][1]
     top_tpls = []
     i = 0
@@ -63,24 +92,21 @@ def find_name_generic(lst, exclude_list, type_set, award, optional=False, no_max
             return lst.pop(i)[0]
         i += 1
     
-    # print("\nCould not find name for award: " + award)
+    print("\nCould not find generic for award: " + award)
     # print(top_tpls)
-    # finesse_name(top_tpls)
+    return (find_ngram(top_tpls, type_set, optional, exclude_list))
     #defaulting
-    if optional:
-        return False
-    return lst.pop(0)[0]
 
 def find_name(lst, exclude_list, award, max=1):
     names_set = load_imdb_data('name')
     optional = False
     if max == 1:
-        return find_name_generic(lst, exclude_list, names_set, award, optional, False)
+        return find_generic(lst, exclude_list, names_set, award, optional, False)
     
     names = set()
     
     for x in range(max):
-        name = find_name_generic(lst, exclude_list, names_set, award, optional, True)
+        name = find_generic(lst, exclude_list | names, names_set, award, optional, True)
         if name:
             names.add(name)
         if not len(lst):
@@ -92,4 +118,4 @@ def find_name(lst, exclude_list, award, max=1):
 def find_title(lst, exclude_list, award, max=1):
     titles_set = load_imdb_data('title')
     if max == 1:
-        return find_name_generic(lst, exclude_list, titles_set, award)
+        return find_generic(lst, exclude_list, titles_set, award)

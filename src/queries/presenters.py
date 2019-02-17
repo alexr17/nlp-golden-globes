@@ -4,7 +4,7 @@ import time
 from nltk.corpus import stopwords
 from src.helpers.find import find_name, find_title
 from src.helpers.load import load_json
-from src.helpers.clean import valid_tkn, unigrams, bigrams, trigrams
+from src.helpers.clean import valid_tkn, bigrams, trigrams
 from src.helpers.debug import top_keys
 import json
 
@@ -12,8 +12,8 @@ presenters_kw = []
 presenters_sw = {'movie', 'tv','miniseries', 'win', 'wins', 'goes', 'present', 'presenting', 'presented', 'mejor', 'actriz'}
 gg_sw = {'golden', 'globes', 'goldenglobes', 'globe', '@goldenglobes', '#goldenglobes'}
 award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
-media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
-debug_awards = {'cecil b. demille award','best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
+media_sw = {"eonline", 'cnnshowbiz', 'cinema21', 'vanityfair'}
+debug_awards = {'best performance by an actress in a motion picture - comedy or musical','best performance by an actress in a supporting role in a motion picture','best performance by an actress in a television series - comedy or musical'}
 
 def generate_presenters_sw(awards):
     return set((' '.join(awards)).split(' ')) | presenters_sw
@@ -30,14 +30,14 @@ def find_presenter(presenter_dict, award, other_presenters, winner):
         print("Could not find a presenter for: " + award)
         return 'aeiouprst'
     presenter_lst = sorted(presenter_dict.items(), key=lambda x: x[1], reverse=True)
-    
-    print("\n\nTop keys for: " + award)
-    top_keys(presenter_lst, 0)
+    # if award in debug_awards:
+    #     print("\n\nTop keys for: " + award)
+    #     top_keys(presenter_lst, 0)
     presenters = find_name(presenter_lst, {winner}, award, 2)
     other_presenters = other_presenters | presenters
     return list(presenters)
 
-def eval_presenter_tweet(tweet, dicts, maps, keys, sw):
+def eval_presenter_tweet(tweet, dicts, keys, sw):
     tokens = nltk.word_tokenize(tweet)
     bgms = bigrams(tokens, presenters_kw, sw | gg_sw | media_sw)
     for key in keys:
@@ -66,7 +66,7 @@ def presenters_id_award(tweet, award_map):
 def g_map(lst):
     map = {
         'include': {
-            'present': ['introduc']
+            'present': ['introduc', 'award best']
         },
         'exclude': {
             'host': []
@@ -77,7 +77,7 @@ def g_map(lst):
         if e == 'actress':
             map['include'][e] = ['actriz']
         elif e == 'television' or e == 'series':
-            map['include']['television'] = ['series', 'tv', 'show']
+            map['include']['television'] = ['series', 'tv']
         elif e == 'motion' or e == 'picture':
             map['include']['motion'] = ['picture', 'movie']
         elif e == 'miniseries':

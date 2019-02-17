@@ -27,36 +27,105 @@
         "best performance by an actor in a television series - comedy or musical": "jeffrey tambor",
         "best mini-series or motion picture made for television": "fargo",
         "best performance by an actress in a mini-series or motion picture made for television": "maggie gyllenhaal",
-        "best performance by an actor in a mini-series or motion picture made for television": "billy bob",
+        "best performance by an actor in a mini-series or motion picture made for television": "billy bob thornton",
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": "joanne froggatt",
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "matt bomer"
     },
     "presenters": {
-        "cecil b. demille award": "george clooney",
-        "best motion picture - drama": "boyhood boyhoodmovie",
-        "best performance by an actress in a motion picture - drama": "julianne moore",
-        "best performance by an actor in a motion picture - drama": "eddie redmayne",
-        "best motion picture - comedy or musical": "grand budapest",
-        "best performance by an actress in a motion picture - comedy or musical": "amy adams",
-        "best performance by an actor in a motion picture - comedy or musical": "michael keaton",
-        "best animated feature film": "train dragon",
-        "best foreign language film": "congrats leviathan",
-        "best performance by an actress in a supporting role in a motion picture": "patricia arquette",
-        "best performance by an actor in a supporting role in a motion picture": "j.k. simmons",
-        "best director - motion picture": "richard linklater",
-        "best screenplay - motion picture": "armando bo",
-        "best original score - motion picture": "theory everything",
-        "best original song - motion picture": "john legend",
-        "best television series - drama": "'the affair",
-        "best performance by an actress in a television series - drama": "ruth wilson",
-        "best performance by an actor in a television series - drama": "kevin spacey",
-        "best television series - comedy or musical": "transparent transparent_tv",
-        "best performance by an actress in a television series - comedy or musical": "gina rodriguez",
-        "best performance by an actor in a television series - comedy or musical": "jeffrey tambor",
-        "best mini-series or motion picture made for television": "fargo fargofx",
-        "best performance by an actress in a mini-series or motion picture made for television": "maggie gyllenhaal",
-        "best performance by an actor in a mini-series or motion picture made for television": "billy bob",
-        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": "joanne froggatt",
-        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "matt bomer"
+        "cecil b. demille award": [
+            "julianna margulies",
+            "don cheadle"
+        ],
+        "best motion picture - drama": [
+            "jack black",
+            "meryl streep"
+        ],
+        "best performance by an actress in a motion picture - drama": [
+            "matthew mcconaughey"
+        ],
+        "best performance by an actor in a motion picture - drama": [
+            "gwyneth paltrow"
+        ],
+        "best motion picture - comedy or musical": [
+            "owen wilson",
+            "kate hudson"
+        ],
+        "best performance by an actress in a motion picture - comedy or musical": [
+            "ricky gervais"
+        ],
+        "best performance by an actor in a motion picture - comedy or musical": [
+            "amy adams"
+        ],
+        "best animated feature film": [
+            "dragon awards"
+        ],
+        "best foreign language film": [
+            "colin farrell",
+            "lupita nyong'o"
+        ],
+        "best performance by an actress in a supporting role in a motion picture": [
+            "jared leto",
+            "dakota johnson"
+        ],
+        "best performance by an actor in a supporting role in a motion picture": [
+            "jennifer aniston",
+            "benedict cumberbatch"
+        ],
+        "best director - motion picture": [
+            "harrison ford"
+        ],
+        "best screenplay - motion picture": [
+            "kristen wiig",
+            "bill hader"
+        ],
+        "best original score - motion picture": [
+            "sienna miller",
+            "vince vaughn"
+        ],
+        "best original song - motion picture": [
+            "john legend",
+            "prince"
+        ],
+        "best television series - drama": [
+            "adam levine",
+            "paul rudd"
+        ],
+        "best performance by an actress in a television series - drama": [
+            "chris pratt",
+            "anna faris"
+        ],
+        "best performance by an actor in a television series - drama": [
+            "katherine heigl",
+            "david duchovny"
+        ],
+        "best television series - comedy or musical": [
+            "melissa mccarthy"
+        ],
+        "best performance by an actress in a television series - comedy or musical": [
+            "kerry washington",
+            "bryan cranston"
+        ],
+        "best performance by an actor in a television series - comedy or musical": [
+            "lily tomlin",
+            "jane fonda"
+        ],
+        "best mini-series or motion picture made for television": [
+            "jeremy renner",
+            "jennifer lopez"
+        ],
+        "best performance by an actress in a mini-series or motion picture made for television": [
+            "kate beckinsale",
+            "adrien brody"
+        ],
+        "best performance by an actor in a mini-series or motion picture made for television": [
+            "katie holmes",
+            "jeremy renner"
+        ],
+        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
+            "dakota johnson"
+        ],
+        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
+            "amp sethmeyers"
+        ]
     }
 }

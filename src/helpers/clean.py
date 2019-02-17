@@ -3,6 +3,7 @@ from src.helpers.debug import top_keys
 import re
 stopwords = set(stopwords.words('english'))
 stopwords.remove('don')
+stopwords.remove('will')
 
 # filter out token
 def valid_tkn(tkn, valid_kw, invalid_kw):
@@ -31,22 +32,33 @@ def valid_tkn(tkn, valid_kw, invalid_kw):
         return False
     return True
 
-def unigrams(tokens, valid_kw, invalid_kw):
-    unigrams = []
-    for tkn in tokens:
-        if valid_tkn(tkn, valid_kw, invalid_kw):
-            unigrams.append(tkn)
-    return unigrams
-
-def bigrams(tokens, valid_kw, invalid_kw):
+def unibigrams(tokens, valid_kw, invalid_kw):
     prev = False
-    bigrams = []
+    grams = {
+        'uni': set(),
+        'bi': set()
+    }
     for tkn in tokens:
         if valid_tkn(tkn, valid_kw, invalid_kw):
             if prev:
-                bigrams.append(prev + ' ' + tkn)
+                grams['bi'].add(prev + ' ' + tkn)
+            grams['uni'].add(tkn)
+            prev = tkn
+    return grams
+
+def bigrams(tokens, valid_kw, invalid_kw):
+    prev = False
+    bigrams = set()
+    for tkn in tokens:
+        if valid_tkn(tkn, valid_kw, invalid_kw):
+            if prev:
+                bigrams.add(prev + ' ' + tkn)
             prev = tkn
     return bigrams
+    # tokens = [tkn for tkn in tokens if valid_tkn(tkn, valid_kw, invalid_kw)]
+    # # ngrams of 2
+    # ngrams = zip(*[tokens[i:] for i in range(2)])
+    # return [" ".join(ngram) for ngram in ngrams]
 
 def trigrams(tokens, valid_kw, invalid_kw):
     prev1 = False
