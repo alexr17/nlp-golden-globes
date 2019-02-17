@@ -81,7 +81,8 @@ def get_awards(year):
     '''Awards is a list of strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
-    return []
+
+    return load_json(year, 'results/')['award_names']
 
 
 def get_nominees(year):
@@ -210,19 +211,24 @@ def main():
     run when grading. Do NOT change the name of this function or
     what it returns.'''
     # Your code here
+
+
+
     #pre_ceremony()
-    #lst = [('cecil b.', 26), ('b. demille', 26), ('jodie foster', 25), ('robert downey', 23), ('downey jr.', 21), ('premio cecil', 15), ('jr. presenta', 13), ('presenta jodie', 10)]
-    #print(join_ngrams(lst))
     #pre_ceremony(False)
-    #print(join_ngrams([("robert downey", 10), ("downey jr", 10), ("jr hello", 10)], 1))
     data = load_json('2013')
-    lst = find_awards(data)
-    counter = 0
+    lst = find_awards(data)[:26]
     for l in lst:
-        if counter > 30:
-            break
-        counter += 1
         print(l)
+    results = load_json('2013', 'results/')
+    results['award_names'] = lst
+    with open('results/' + '2013' +'.json', 'w') as outfile:
+        outfile.write(json.dumps(results, indent=4))
+
+    # results = load_json('2015', 'results/')
+    # results['award_names'] = lst
+    # with open('results/' + '2015' +'.json', 'w') as outfile:
+    #     outfile.write(json.dumps(results, indent=4))
     #top_keys(lst, 100)
     #print(get_presenters('2013'))
     #print(get_hosts('2013'))

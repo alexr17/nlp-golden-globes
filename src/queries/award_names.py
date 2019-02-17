@@ -13,7 +13,8 @@ from src.helpers.clean import merge_bigrams
 import pprint
 #from src.helpers.find import find_name
 
-list_of_awards =[line.strip() for line in open('./data/award_kw.txt')] # ['best', 'motion', 'picture', 'drama', 'performance', 'actress', 'actor', 'comedy', 'musical', 'animated', 'feature', 'film', 'foreign', 'language', 'supporting', 'role', 'director', 'screenplay', 'orginal', 'score', 'song', 'television', 'series',  'mini-series', 'mini']
+#list_of_awards = [line.strip() for line in open('./data/award_kw.txt')]
+list_of_awards = ['best', 'motion', 'picture', 'drama', 'performance', 'actress', 'actor', 'comedy', 'musical', 'animated', 'feature', 'film', 'foreign', 'language', 'supporting', 'role', 'director', 'screenplay', 'orginal', 'score', 'song', 'television', 'series',  'mini-series', 'mini']
 helper_words = ['by','an','in', 'a', 'for','-',':','or']
 # golden globes stopwords
 gg_sw = ['golden', 'globe', 'globes', 'goldenglobes']
@@ -31,7 +32,7 @@ award_kw = ['actor', 'actress', 'supporting']
 
 answer = {}
 
-
+# https://github.com/brownrout/EECS-337-Golden-Globes/blob/master/gg_api.py
 def see_awards(data):
     all_awards = []
     award_tweets = []
@@ -43,28 +44,40 @@ def see_awards(data):
     for tweet in award_tweets:
         tweet = tweet.split(" ")
         start = len(tweet) - 1
-        for word in list_of_awards:
-            if word in tweet:
-                index = tweet.index(word)
-                if index < start:
-                    start = index
+        end = len(tweet) - 1
+        # for word in list_of_awards:
+        #     if word in tweet:
+        #         index = tweet.index(word)
+        #         if index < start:
+        #             start = index
+        flag = False
+        for i, word in enumerate(tweet):
+            if word in list_of_awards and not flag:
+                start = i
+                flag = True
+            if word in list_of_awards:
+                end = i
 
         temp = []
-        for word in tweet[start:]:
+        #print(tweet[start:end+1])
+        for word in tweet[start:end+1]:
             if word in list_of_awards or word in helper_words:
                 temp.append(word)
-        award = ' '.join(temp)#' '.join(sorted(set(temp), key=lambda x: temp.index(x)))
+        award = ' '.join(sorted(set(temp), key=lambda x: tweet.index(x)))
+        # print(award)
+        # print('----')
+
         if award not in all_awards:
             all_awards.append(award)
-
+#
+    all_awards = list(set(all_awards))
+    all_awards = [x for x in all_awards if x.split(" ")[0] == 'best']
     for x in all_awards:
-        if x.split()[0] != 'best':
-            all_awards.remove(x)
-    for x in all_awards:
+        x1 = set([a for a in x.split(" ") if a not in helper_words])
         for y in all_awards:
-            if len(set(x.split(" ")).intersection(set(y.split(" ")))) > 4:
+            y1 = set([a for a in y.split(" ") if a not in helper_words])
+            if len(x1.intersection(y1)) > 4:
                 all_awards.remove(y)
-
     return all_awards
 
 
