@@ -6,7 +6,7 @@ from src.queries.winners import find_winner, eval_winner_tweet, generate_winners
 from src.queries.presenters import find_presenter, eval_presenter_tweet, generate_presenters_map, presenters_id_award, generate_presenters_sw
 from src.helpers.load import load_json, generate_tmdb_data
 from src.helpers.clean import join_ngrams
-from src.queries.red_carpet import find_best_dressed, find_worst_dressed
+from src.queries.red_carpet import find_best_dressed, find_worst_dressed, top_dressed
 from src.helpers.debug import top_keys, find_key
 import time
 '''Version 0.1'''
@@ -73,7 +73,11 @@ data = {}
 
 #
 # lst = find_worst_dressed(data, '2013')
-# top_keys(lst,10)
+# lst1 = find_best_dressed(data, '2013')
+# print(top_dressed(lst1, lst))
+# print('---------------')
+# top_keys(lst1, 10)
+quit()
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
@@ -114,9 +118,19 @@ def get_winner(year):
 
 
 def get_presenters(year):
-    '''Presenters is a dictionary with the hard coded award
-    names as keys, and each entry a list of strings. Do NOT change the
-    name of this function or what it returns.'''
+    '''Best, worst, and polarized dressed as a dictionary with at most 2
+    people per category.Polarized dressed means they were mixed reviews on whether they were
+    considered best or worst dressed
+    '''
+    # Your code here
+    return load_json(year, 'results/')['presenters']
+
+def get_redcarpet(year):
+    '''
+    Best, worst, and polarized dressed with at most 2 people per
+    category. Polarized dressed means that there were obvious conflicting
+    opinions on whether the person was best or worst dressed.
+    '''
     # Your code here
     return load_json(year, 'results/')['presenters']
 
@@ -155,7 +169,7 @@ def main():
         # raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
     data['2015'] = load_json('2015')
     data['2013'] = load_json('2013')
-    
+
     lst = find_awards(data['2013'])
     for l in lst:
         print(l)
@@ -208,7 +222,7 @@ def main():
             tweet = obj['text'].lower()
             # if any(word in tweet for word in debug):
             #     print(tweet)
-            
+
             # list of award dicts that WE WANT to add the tweet to
             valid_award_keys = {
                 'winner': [],
@@ -220,7 +234,7 @@ def main():
                 if winners_id_award(tweet, winners_map[award]):
                     valid_award_keys['winner'].append(award)
                 times[year]['winners']['id_award'] += (time.time() - t)
-                
+
                 t = time.time()
                 if presenters_id_award(tweet, presenters_map[award]):
                     valid_award_keys['presenter'].append(award)
@@ -236,14 +250,14 @@ def main():
             if len(valid_award_keys['presenter']):
                 eval_presenter_tweet(tweet, presenter_dicts, valid_award_keys['presenter'], presenters_sw)
             times[year]['presenters']['eval_tweet'] += (time.time() - t)
-        
+
         t = time.time()
         other_winners = {
             'name': set(),
             'title': set()
         }
         print("\n\n\nFinding Awards")
-        
+
         for award in awards_map:
             results[year]['winners'][award] = find_winner(winner_dicts[award], award, other_winners)
         times[year]['winners']['find'] += (time.time() - t)
@@ -256,7 +270,7 @@ def main():
             # print(presenters_map[award])
             results[year]['presenters'][award] = find_presenter(presenter_dicts[award], award, other_presenters, results[year]['winners'][award])
         times[year]['presenters']['find'] += (time.time() - t)
-       
+
 
        # write results to file
         with open('results/' + year +'.json', 'w') as outfile:

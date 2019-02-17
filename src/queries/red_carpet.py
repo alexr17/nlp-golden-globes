@@ -20,6 +20,49 @@ bdl = []
 wdl = []
 
 
+def top_dressed(best_dressed, worst_dressed):
+	threshold = 15
+	best_dressed = [x[0] for x in best_dressed if x[1] > threshold]
+	worst_dressed = [x[0] for x in worst_dressed if x[1] > threshold]
+	best = set()
+	worst = set()
+	polarized = set()
+
+	names = set(line.strip() for line in open('./data/names.txt'))
+
+	for person1 in best_dressed:
+		if len(best) == 2 and len(polarized) == 2:
+			break
+
+		if person1 in names:
+			if person1 in best_dressed and person1 in worst_dressed:
+				if len(polarized) < 2:
+					polarized.add(person1)
+			else:
+				if len(best) < 2:
+					best.add(person1)
+	for person2 in worst_dressed:
+		if len(worst) == 2 and len(polarized) == 2:
+			break
+
+		if person2 in names:
+			if person2 in best_dressed and person2 in worst_dressed:
+				if len(polarized) < 2:
+					polarized.add(person2)
+			elif person2 in worst_dressed:
+				if len(worst) < 2:
+					worst.add(person2)
+
+	return {
+		"best_dressed": list(best),
+		"worst_dressed": list(worst),
+		"polarized_dressed": list(polarized)
+	}
+
+
+
+
+
 def find_best_dressed(data, year):
 	best_dressed_dict = {}
 	for obj in data:
