@@ -1,5 +1,6 @@
 import nltk
 import re
+import difflib
 from collections import Counter
 from nltk import ngrams
 from src.helpers.load import load_json
@@ -34,7 +35,7 @@ answer = {}
 
 # https://github.com/brownrout/EECS-337-Golden-Globes/blob/master/gg_api.py
 def see_awards(data):
-    all_awards = []
+    all_awards = {}
     award_tweets = []
     for obj in data:
         text = obj['text'].lower()
@@ -67,18 +68,27 @@ def see_awards(data):
         # print(award)
         # print('----')
 
-        if award not in all_awards:
-            all_awards.append(award)
+        flag = False
+        if award in all_awards:
+            all_awards[award] += 1
+        else:
+            all_awards[award] = 1
+        # for x in all_awards:
+        #     if all(word in x for word in set(temp)):
+        #         flag = True
+        # if flag == False:
+        #     all_awards.append(award)
 #
-    all_awards = list(set(all_awards))
-    all_awards = [x for x in all_awards if x.split(" ")[0] == 'best']
-    for x in all_awards:
-        x1 = set([a for a in x.split(" ") if a not in helper_words])
-        for y in all_awards:
-            y1 = set([a for a in y.split(" ") if a not in helper_words])
-            if len(x1.intersection(y1)) > 4:
-                all_awards.remove(y)
-    return all_awards
+    #all_awards = [x for x in all_awards if x.split(" ")[0] == 'best']
+    # for x in all_awards:
+    #     x1 = set([a for a in x.split(" ") if a not in helper_words])
+    #     for y in all_awards:
+    #         y1 = set([a for a in y.split(" ") if a not in helper_words])
+    #         if len(x1.intersection(y1)) > 4:
+    #             all_awards.remove(y)
+    award_lst = sorted(all_awards.items(), key=lambda x: x[1], reverse=True)
+    award_lst = [x[0] for x in award_lst if x[0].split(" ")[0] == "best"]
+    return award_lst
 
 
 
