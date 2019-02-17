@@ -6,6 +6,7 @@ from src.queries.winners import find_winner, eval_winner_tweet, generate_winners
 from src.queries.presenters import find_presenter, eval_presenter_tweet, generate_presenters_map, presenters_id_award, generate_presenters_sw
 from src.helpers.load import load_json, request_imdb_data, parse_imdb_data
 from src.helpers.clean import join_ngrams
+from src.queries.red_carpet import find_best_dressed, find_worst_dressed
 from src.helpers.debug import top_keys, find_key
 import time
 '''Version 0.1'''
@@ -70,6 +71,9 @@ OFFICIAL_AWARDS_1819 = [
 
 data = {}
 
+#
+# lst = find_worst_dressed(data, '2013')
+# top_keys(lst,10)
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
