@@ -1,7 +1,5 @@
 /.vscode
-/data/gg*
-/data/name.basic*
-/data/title.basic*
+/data
 /__pycache__
 config.ini
 /src/__pycache__
