@@ -2,8 +2,8 @@ import json
 from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee
-from src.queries.winners import find_winner, eval_winner_tweet, generate_awards_map, id_award, generate_winners_sw
-from src.queries.presenters import find_presenter
+from src.queries.winners import find_winner, eval_winner_tweet, generate_awards_map, winners_id_award, generate_winners_sw
+from src.queries.presenters import find_presenter, eval_presenter_tweet, generate_presenters_map, presenters_id_award, generate_presenters_sw
 from src.helpers.load import load_json, request_imdb_data, parse_imdb_data
 from src.helpers.clean import join_ngrams
 from src.helpers.debug import top_keys, find_key
@@ -113,16 +113,7 @@ def get_presenters(year):
     names as keys, and each entry a list of strings. Do NOT change the
     name of this function or what it returns.'''
     # Your code here
-    OFFICIAL_AWARDS = []
-    if year in ['2013', '2015']:
-        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1315
-    else:
-        OFFICIAL_AWARDS = OFFICIAL_AWARDS_1819
-
-    presenters_obj = {}
-    for award in OFFICIAL_AWARDS:
-        presenters_obj[award] = ''#find_presenter(data[year], award)
-    return presenters_obj
+    return load_json(year, 'results/')['presenters']
 
 
 def pre_ceremony():
@@ -163,10 +154,12 @@ def main():
 
     # 2013/2015
     winners_sw = generate_winners_sw(OFFICIAL_AWARDS_1315)
+    presenters_sw = generate_presenters_sw(OFFICIAL_AWARDS_1315)
     awards_map = generate_awards_map(OFFICIAL_AWARDS_1315)
-    for year in ['2013', '2015']:
+    presenters_map = generate_presenters_map(OFFICIAL_AWARDS_1315)
+    for year in ['2013']:
         times[year] = {}
-        times[year]['host'] = {
+        times[year] = {
             'total': 0,
             'count': 0
         }
@@ -174,48 +167,63 @@ def main():
         # hosts
         t = time.time()
         results[year] = {'host': find_hosts(data[year])}
-        times[year]['host']['total'] += time.time() - t
-        times[year]['host']['count'] += 1
-
-        times[year]['winners'] = {
-            'total': 0,
-            'count': 0
-        }
+        times[year]['total'] += time.time() - t
+        times[year]['count'] += 1
 
         # winners
         results[year]['winners'] = {}
         winner_dicts = {}
 
+        results[year]['presenters'] = {}
+        presenter_dicts = {}
+
         # set the empty dicts
         for award in awards_map:
             winner_dicts[award] = {}
+            presenter_dicts[award] = {}
 
         # iterate through each tweet
         for obj in data[year]:
             tweet = obj['text'].lower()
+            # if all(key in tweet for key in {'george clooney', 'present'}):
+            #     print(tweet)
             t = time.time()
             # list of award dicts that WE WANT to add the tweet to
-            valid_award_keys = []
+            valid_award_keys = {
+                'winner': [],
+                'presenter': []
+            }
             for award in awards_map:
-                # if all(word in obj['text'].lower() for word in ['actor', 'miniseries', 'tv', 'movie']):
                 # if the tweet corresponds to an award, add its dict to the list
-                if id_award(tweet, awards_map[award]):
-                    valid_award_keys.append(award)
+                if winners_id_award(tweet, awards_map[award]):
+                    valid_award_keys['winner'].append(award)
+                
+                if presenters_id_award(tweet, presenters_map[award]):
+                    valid_award_keys['presenter'].append(award)
 
             # if we have valid award keys
-            if len(valid_award_keys):
-                eval_winner_tweet(obj['text'].lower(), winner_dicts, awards_map, valid_award_keys, winners_sw)
+            if len(valid_award_keys['winner']):
+                eval_winner_tweet(tweet, winner_dicts, awards_map, valid_award_keys['winner'], winners_sw)
 
-            times[year]['host']['total'] += time.time() - t
-            times[year]['host']['count'] += 1
+            if len(valid_award_keys['presenter']):
+                eval_presenter_tweet(tweet, presenter_dicts, presenters_map, valid_award_keys['winner'], presenters_sw)
+
+            times[year]['total'] += time.time() - t
+            times[year]['count'] += 1
 
         other_winners = {
             'name': set(),
             'title': set()
         }
+        print("\n\n\nFinding Awards")
         for award in awards_map:
             results[year]['winners'][award] = find_winner(winner_dicts[award], award, other_winners)
         
+        other_presenters = set()
+        print("\n\n\nFinding Presenters")
+        for award in presenters_map:
+            # print(presenters_map[award])
+            results[year]['presenters'][award] = find_presenter(presenter_dicts[award], award, other_presenters, results[year]['winners'][award])
         # write results to file
         with open('results/' + year +'.json', 'w') as outfile:
             outfile.write(json.dumps(results[year], indent=4))

@@ -30,5 +30,74 @@
         "best performance by an actor in a mini-series or motion picture made for television": "kevin costner",
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": "maggie smith",
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "ed harris"
+    },
+    "presenters": {
+        "cecil b. demille award": [
+            "robert downey"
+        ],
+        "best motion picture - drama": [
+            "julia roberts"
+        ],
+        "best performance by an actress in a motion picture - drama": [
+            "george clooney"
+        ],
+        "best performance by an actor in a motion picture - drama": "aeiouprst",
+        "best motion picture - comedy or musical": [
+            "dustin hoffman"
+        ],
+        "best performance by an actress in a motion picture - comedy or musical": [
+            "bill clinton"
+        ],
+        "best performance by an actor in a motion picture - comedy or musical": "aeiouprst",
+        "best animated feature film": [
+            "shiba4ny sacha"
+        ],
+        "best foreign language film": [
+            "sylvester stallone",
+            "arnold schwarzenegger"
+        ],
+        "best performance by an actress in a supporting role in a motion picture": [
+            "maggie smith",
+            "dennis quaid"
+        ],
+        "best performance by an actor in a supporting role in a motion picture": [
+            "bradley cooper",
+            "kate hudson"
+        ],
+        "best director - motion picture": [
+            "halle berry"
+        ],
+        "best screenplay - motion picture": [
+            "robert pattinson",
+            "amanda seyfried"
+        ],
+        "best original score - motion picture": [
+            "mychael danna"
+        ],
+        "best original song - motion picture": "aeiouprst",
+        "best television series - drama": [
+            "paul rudd"
+        ],
+        "best performance by an actress in a television series - drama": [
+            "lea michele",
+            "nathan fillion"
+        ],
+        "best performance by an actor in a television series - drama": "aeiouprst",
+        "best television series - comedy or musical": [
+            "jay leno"
+        ],
+        "best performance by an actress in a television series - comedy or musical": [
+            "kristen wiig",
+            "jason bateman"
+        ],
+        "best performance by an actor in a television series - comedy or musical": "aeiouprst",
+        "best mini-series or motion picture made for television": "aeiouprst",
+        "best performance by an actress in a mini-series or motion picture made for television": "aeiouprst",
+        "best performance by an actor in a mini-series or motion picture made for television": "aeiouprst",
+        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
+            "kerry washington",
+            "dennis quaid"
+        ],
+        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "aeiouprst"
     }
 }

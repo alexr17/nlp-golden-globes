@@ -42,33 +42,54 @@ def finesse_name(tpls):
     print(unigrams)
     print(ngrams)
 
-def find_name_generic(lst, other_winners, type_set, award):
+def find_name_generic(lst, exclude_list, type_set, award, optional=False, no_max=False):
     max = lst[0][1]
     top_tpls = []
     i = 0
-    while lst[i][1] > max * 0.5:
-
+    threshold = 0.5
+    if no_max:
+        threshold = 0
+    while i < len(lst) and lst[i][1] >= max * threshold:
+        # print(i)
         # if it exists somewhere else then remove it
-        if lst[i][0] in other_winners:
+        if lst[i][0] in exclude_list:
             lst.pop(i)
+            if i == 0:
+                max = lst[0][1]
             continue
 
         top_tpls.append(lst[i])
         if lst[i][0] in type_set:
-            return lst[i][0]
+            return lst.pop(i)[0]
         i += 1
     
-    print("\n\nCould not find name for award: " + award)
-    print(top_tpls)
+    # print("\nCould not find name for award: " + award)
+    # print(top_tpls)
     # finesse_name(top_tpls)
     #defaulting
-    return lst[0][0]
+    if optional:
+        return False
+    return lst.pop(0)[0]
 
-def find_name(lst, other_winners, award):
+def find_name(lst, exclude_list, award, max=1):
     names_set = load_imdb_data('name')
-    return find_name_generic(lst, other_winners['name'] | other_winners['title'], names_set, award)
+    optional = False
+    if max == 1:
+        return find_name_generic(lst, exclude_list, names_set, award, optional, False)
+    
+    names = set()
+    
+    for x in range(max):
+        name = find_name_generic(lst, exclude_list, names_set, award, optional, True)
+        if name:
+            names.add(name)
+        if not len(lst):
+            return names
+        optional = True
+    return names
 
 
-def find_title(lst, other_winners, award):
+def find_title(lst, exclude_list, award, max=1):
     titles_set = load_imdb_data('title')
-    return find_name_generic(lst, other_winners['name'], titles_set, award)
+    if max == 1:
+        return find_name_generic(lst, exclude_list, titles_set, award)

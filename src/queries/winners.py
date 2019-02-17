@@ -33,10 +33,10 @@ def find_winner(winner_dict, award, other_winners):
         top_keys(winner_lst, 50)
     # people
     if any(word in award for word in {'actress', 'actor', 'director', 'award'}):
-        winner = find_name(winner_lst, other_winners, award)
+        winner = find_name(winner_lst, other_winners['name'] | other_winners['title'], award)
         other_winners['name'].add(winner)
     else: # titles
-        winner = find_title(winner_lst, other_winners, award)
+        winner = find_title(winner_lst, other_winners['name'], award)
         other_winners['title'].add(winner)
     return winner
 
@@ -61,7 +61,7 @@ def eval_winner_tweet(tweet, dicts, maps, keys, sw):
                 else:
                     dicts[key][ugm] += 1
 
-def id_award(tweet, award_map):
+def winners_id_award(tweet, award_map):
     for award_key in award_map['include']:
         # if not then check if the child keys are
         if not any(rel_key in tweet for rel_key in ([award_key] + award_map['include'][award_key])):
