@@ -98,12 +98,12 @@ def see_awards(data, bigrams):
                  bigrams_dict[tkn] += 1
 
     bigrams_lst = sorted(bigrams_dict.items(), key=lambda x: x[1], reverse=True)
-
-    common_phrases = [x[0] for x in bigrams_lst[0:15]]
-    print(common_phrases)
+    #print(bigrams_lst)
+    #common_phrases = [x[0] for x in bigrams_lst if x[1] > 50]
+    #common_phrases = get_phrases(common_phrases)
     #print(common_phrases)
-    #common_phrases = ["motion picture", "supporting role", "best performance", "television series", "original score", "original song"]
-
+    #print(common_phrases)
+    common_phrases = ["motion picture", "supporting role", "best performance", "television series", "original score", "original song"]
 
 
     new_award_lst = []
@@ -114,21 +114,17 @@ def see_awards(data, bigrams):
             if all_awards[award] > max_score:
                 max_score = all_awards[award]
                 max_award = award
-
+        new_award_lst.append(max_award)
         if any(phrase in max_award for phrase in common_phrases): #.count(True) >= 1:
-            if "supporting" in max_award:
-                if "performance" in max_award:
-                    new_award_lst.append(max_award)
-            else:
                 new_award_lst.append(max_award)
 
     new_award_lst = [x for x in new_award_lst if x.split(" ")[0] == "best"]
-    threshold = 0.9
+    threshold = 0.8
     for i, x in enumerate(new_award_lst):
         x1 = set([a for a in x.split(" ") if a not in helper_words])
         for j, y in enumerate(new_award_lst[i+1:]):
             y1 = set([a for a in y.split(" ") if a not in helper_words])
-            if len(x1.intersection(y1)) > threshold*len(x1):
+            if len(x1.intersection(y1)) >= threshold*len(x1):
                 if all_awards[x] > all_awards[y]:
                     new_award_lst.remove(y)
                 else:
@@ -137,18 +133,33 @@ def see_awards(data, bigrams):
     print(len(new_award_lst))
     return new_award_lst
 
+# (downey jr)
+# (hello downey)
+def get_phrases(bigrams):
+    updated_lst = []
+    for i in range(len(bigrams)):
+        curr = bigrams[i]
+        j = i+1
+        while j < len(bigrams):
+            bigram1 = curr.split(" ")
+            bigram2 = bigrams[j].split(" ")
+            if bigram1[-1] == bigram2[0]:
+                ngram = bigram1 + [bigram2[-1]]
+                updated_lst.append(" ".join(ngram))
+            if bigram1[0] == bigram2[-1]:
+                ngram = bigram2 + [bigram1[-1]]
+                updated_lst.append(" ".join(ngram))
+            j += 1
+    return updated_lst
 
 def award_set(bigrams):
     all_awards = []
-    threshold = 0.8
-    minimum = 100
-    bigrams = [x for x in bigrams if x[1] > minimum]
     for i, bigram1 in enumerate(bigrams):
-        ngram = bigram1[0].split(" ")
+        ngram = bigram1.split(" ")
         for j, bigram2 in enumerate(bigrams):
             if bigram2 == bigram1:
                 continue
-            bigram = bigram2[0].split(" ")
+            bigram = bigram2.split(" ")
             if ngram[-1] == bigram[0]:
                ngram += bigram[1:]
             elif ngram[0] == bigram[-1]:

@@ -217,7 +217,7 @@ def main():
     #pre_ceremony()
     #pre_ceremony(False)
     data = load_json('2013')
-    lst = find_awards(data)
+    lst = find_awards(data)[:26]
     for l in lst:
         print(l)
     # results = load_json('2013', 'results/')
