@@ -49,7 +49,7 @@ def parse_tmdb_data(key, params, tmdb_method):
 # Generating the tmdb data for a range of years
 # NOTE: only run this if it hasn't been generated yet
 def generate_tmdb_data(years, vote_min=100, score_min=6):
-    print("Getting list of movies and tv shows from TMDB")
+    print("Getting list of movies, tv shows, and famous people from TMDB")
 
     config = configparser.ConfigParser()
     config.read('./config.ini')
@@ -60,7 +60,7 @@ def generate_tmdb_data(years, vote_min=100, score_min=6):
         "api_key": config['api_keys']['tmdb']
     }
     
-    if len(list(line.strip() for line in open(f'./data/names.txt'))) < 18000:
+    if len(list(line.strip() for line in open('./data/names.txt'))) < 18000:
         people = parse_tmdb_data('name', params, tmdb_method)
         write_to_file(people, './data/names.txt')
         print("Done loading people")

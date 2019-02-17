@@ -57,15 +57,15 @@
             "amy adams"
         ],
         "best animated feature film": [
-            "dragon awards"
+            "awards sunday"
         ],
         "best foreign language film": [
             "colin farrell",
             "lupita nyong'o"
         ],
         "best performance by an actress in a supporting role in a motion picture": [
-            "jared leto",
-            "dakota johnson"
+            "dakota johnson",
+            "jared leto"
         ],
         "best performance by an actor in a supporting role in a motion picture": [
             "jennifer aniston",
@@ -83,12 +83,12 @@
             "vince vaughn"
         ],
         "best original song - motion picture": [
-            "john legend",
-            "prince"
+            "common",
+            "john legend"
         ],
         "best television series - drama": [
-            "adam levine",
-            "paul rudd"
+            "paul rudd",
+            "adam levine"
         ],
         "best performance by an actress in a television series - drama": [
             "chris pratt",
@@ -106,8 +106,8 @@
             "bryan cranston"
         ],
         "best performance by an actor in a television series - comedy or musical": [
-            "lily tomlin",
-            "jane fonda"
+            "jane fonda",
+            "lily tomlin"
         ],
         "best mini-series or motion picture made for television": [
             "jeremy renner",
@@ -118,8 +118,8 @@
             "adrien brody"
         ],
         "best performance by an actor in a mini-series or motion picture made for television": [
-            "katie holmes",
-            "jeremy renner"
+            "jeremy renner",
+            "katie holmes"
         ],
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
             "dakota johnson"
@@ -127,33 +127,5 @@
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
             "amp sethmeyers"
         ]
-    },
-    "award_names": [
-        "best supporting actor in a motion picture",
-        "best performance by an actress in a supporting role mini-series or motion picture for television",
-        "best supporting actress in a mini series",
-        "best supporting actress in a motion picture",
-        "best supporting actress in a television series",
-        "best supporting actress in a drama series",
-        "best actress in mini-series or motion picture",
-        "best actress in a or motion picture for television",
-        "best performance by an actor in a motion picture",
-        "best motion picture drama for or comedy",
-        "best actor in a or motion picture for television",
-        "best actor in a mini-series or motion picture for television",
-        "best actress in a motion picture - comedy or musical",
-        "best actress in motion picture series",
-        "best performance by an actress in a motion picture",
-        "best motion picture - comedy or musical",
-        "best supporting actor in a television series",
-        "best supporting actor in mini series",
-        "best supporting actor mini-series or film",
-        "best supporting actress in a comedy or musical",
-        "best actor in a motion picture - comedy",
-        "best actor in a motion picture - musical",
-        "best actress in a motion picture - drama",
-        "best actor in a motion picture - drama",
-        "best director motion picture - drama",
-        "best actor in motion picture film"
-    ]
+    }
 }

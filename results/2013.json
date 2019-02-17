@@ -16,7 +16,7 @@
         "best performance by an actress in a supporting role in a motion picture": "anne hathaway",
         "best performance by an actor in a supporting role in a motion picture": "christoph waltz",
         "best director - motion picture": "ben affleck",
-        "best screenplay - motion picture": "django unchained",
+        "best screenplay - motion picture": "tarantino",
         "best original score - motion picture": "life",
         "best original song - motion picture": "skyfall",
         "best television series - drama": "homeland",
@@ -46,18 +46,18 @@
             "dustin hoffman"
         ],
         "best performance by an actress in a motion picture - comedy or musical": [
-            "presentando lincon"
+            "bill clinton"
         ],
         "best performance by an actor in a motion picture - comedy or musical": "aeiouprst",
         "best animated feature film": [
             "sacha baron cohen"
         ],
         "best foreign language film": [
-            "sylvester stallone",
-            "arnold schwarzenegger"
+            "arnold schwarzenegger",
+            "sylvester stallone"
         ],
         "best performance by an actress in a supporting role in a motion picture": [
-            "kerry washington",
+            "dennis quaid",
             "maggie smith"
         ],
         "best performance by an actor in a supporting role in a motion picture": [
@@ -72,7 +72,6 @@
             "amanda seyfried"
         ],
         "best original score - motion picture": [
-            "mychael danna",
             "jason statham"
         ],
         "best original song - motion picture": "aeiouprst",
@@ -80,64 +79,24 @@
             "paul rudd"
         ],
         "best performance by an actress in a television series - drama": [
-            "lea michele",
             "nathan fillion"
         ],
         "best performance by an actor in a television series - drama": "aeiouprst",
         "best television series - comedy or musical": [
-            "jimmy fallon"
+            "leno jimmy"
         ],
         "best performance by an actress in a television series - comedy or musical": [
-            "jason bateman",
-            "aziz ansari"
+            "aziz ansari",
+            "jason bateman"
         ],
         "best performance by an actor in a television series - comedy or musical": "aeiouprst",
         "best mini-series or motion picture made for television": "aeiouprst",
         "best performance by an actress in a mini-series or motion picture made for television": "aeiouprst",
         "best performance by an actor in a mini-series or motion picture made for television": "aeiouprst",
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
-            "kerry washington",
-            "dennis quaid"
+            "dennis quaid",
+            "kerry washington"
         ],
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "aeiouprst"
-    },
-    "award_names": [
-        "best performance by an actor in a supporting role motion picture",
-        "best performance by an actress in a supporting role mini-series or motion picture for television",
-        "best actress in mini-series or motion picture",
-        "best actress in a or motion picture for television",
-        "best performance by an actress in a mini-series or motion picture",
-        "best television series actor - drama",
-        "best performance by an actor in a television series",
-        "best performance by an actor in a motion picture",
-        "best motion picture drama for or comedy",
-        "best actor in a or motion picture for television",
-        "best actress in a motion picture - comedy or musical",
-        "best actress in a comedy or musical film",
-        "best actress in motion picture series",
-        "best performance by an actress in a motion picture",
-        "best motion picture - comedy or musical",
-        "best performance by a supporting actor in mini-series",
-        "best performance by an actress in a supporting role motion picture",
-        "best actress in a motion comedy or musical",
-        "best actor in a television series - comedy or musical",
-        "best actor in a television comedy or musical for role",
-        "best actress in a television series - drama",
-        "best performance by an actress in a motion picture - comedy",
-        "best actor in a television comedy or musical",
-        "best actor in a television series - musical",
-        "best actress in a comedy series television",
-        "best actress in a television comedy or musical",
-        "best television series - comedy or musical",
-        "best actor in a motion comedy or musical",
-        "best actor in a motion picture - comedy",
-        "best actor in a motion picture - musical",
-        "best actor in a musical or comedy for role",
-        "best actor in a motion comedy or for role",
-        "best actress in a motion picture - drama",
-        "best actor in a motion picture - drama",
-        "best director motion picture - drama",
-        "best actor in motion picture film",
-        "best actor in a musical or comedy film"
-    ]
+    }
 }

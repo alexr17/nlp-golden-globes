@@ -4,7 +4,7 @@ from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee
 from src.queries.winners import find_winner, eval_winner_tweet, generate_winners_map, winners_id_award, generate_winners_sw
 from src.queries.presenters import find_presenter, eval_presenter_tweet, generate_presenters_map, presenters_id_award, generate_presenters_sw
-from src.helpers.load import load_json, request_imdb_data, parse_imdb_data
+from src.helpers.load import load_json, generate_tmdb_data
 from src.helpers.clean import join_ngrams
 from src.queries.red_carpet import find_best_dressed, find_worst_dressed
 from src.helpers.debug import top_keys, find_key
@@ -127,14 +127,7 @@ def pre_ceremony():
     plain text file. It is the first thing the TA will run when grading.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
-    print("Now loading titles and names from imdb API")
-    print("Note - if you run this function in an environment like vscode, it will crash due to the size of the file being parsed")
-    request_imdb_data('title')
-    parse_imdb_data('title')
-    print("Titles imported and parsed into ./data/titles.txt")
-    request_imdb_data('name')
-    parse_imdb_data('name')
-    print("Names imported and parsed into ./data/names.txt")
+    generate_tmdb_data([2010, 2019])
     return False
 
 def generate_awards_map(awards):
