@@ -12,6 +12,10 @@ from src.helpers.debug import top_keys, find_key
 import time
 '''Version 0.1'''
 
+data = load_json('2013')
+print(find_jokes(data))
+quit()
+
 OFFICIAL_AWARDS_1315 = [
     'cecil b. demille award',
     'best motion picture - drama',
@@ -160,6 +164,9 @@ def main():
         # raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
     data['2015'] = load_json('2015')
     data['2013'] = load_json('2013')
+
+
+
     times = {}
     results = {}
 
@@ -174,7 +181,7 @@ def main():
         }
 
         jokes = find_jokes(data[year])
-        
+
         # hosts
         t = time.time()
         results[year] = {'host': find_hosts(data[year])}
@@ -219,7 +226,7 @@ def main():
         }
         for award in awards_map:
             results[year]['winners'][award] = find_winner(winner_dicts[award], award, other_winners)
-        
+
         # write results to file
         with open('results/' + year +'.json', 'w') as outfile:
             outfile.write(json.dumps(results[year], indent=4))

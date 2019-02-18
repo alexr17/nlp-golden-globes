@@ -52,13 +52,18 @@ def find_jokes(data):
 
     jokes_list = sorted(funny_jokes_dict.items(), key=lambda x: x[1][1], reverse=True)
     #printing jokes results
+    jokes_dict = {}
     print('Best jokes of the night: \n')
-    for i in range(25):
+    for i in range(10):
         if i < len(jokes_list):
             if jokes_list[i][1][1]>0:
+                if jokes_list[i][1][0] in jokes_dict:
+                    jokes_dict[jokes_list[i][1][0]].append(jokes_list[i][0])
+                else:
+                    jokes_dict[jokes_list[i][1][0]] = [jokes_list[i][0]]
                 print ('Celebrity: ' + jokes_list[i][1][0] +'\n'
                        +'Joke: '+ jokes_list[i][0] + '\n'
                        #+'Full tweet: '+ str(jokes_list[i][1][2])+ '\n'
                        #+'Score: '+ str(jokes_list[i][1][1])+ '\n'+ '\n'+ '\n'
                        )
-    return jokes_list
+    return jokes_dict
