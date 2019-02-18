@@ -54,7 +54,7 @@ def find_jokes(data):
     #printing jokes results
     jokes_dict = {}
     print('Best jokes of the night: \n')
-    for i in range(10):
+    for i in range(5):
         if i < len(jokes_list):
             if jokes_list[i][1][1]>0:
                 if jokes_list[i][1][0] in jokes_dict:

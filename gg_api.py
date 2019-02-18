@@ -12,9 +12,6 @@ from src.helpers.debug import top_keys, find_key
 import time
 '''Version 0.1'''
 
-data = load_json('2013')
-print(find_jokes(data))
-quit()
 
 OFFICIAL_AWARDS_1315 = [
     'cecil b. demille award',
