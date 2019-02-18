@@ -8,12 +8,12 @@ from src.helpers.clean import valid_tkn, unibigrams, bigrams, trigrams
 from src.helpers.debug import top_keys
 import json
 
-nominees_kw = []
-nominees_sw = {'movie', 'tv','miniseries', 'win', 'wins', 'goes', 'winner', 'won', 'lose', 'lost', 'nominated', 'nominee', 'present'}
+nominees_kw = set()
+nominees_sw = {'movie', 'tv','miniseries', 'win', 'wins', 'goes', 'winner', 'won', 'lose', 'lost', 'nominated', 'nominee', 'present', 'nominations', 'nomination'}
 gg_sw = {'golden', 'globes', 'goldenglobes', 'globe'}
 award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
 media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
-debug_awards = {"best motion picture - comedy or musical",'best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
+debug_awards = {'best performance by an actor in a motion picture - drama'}#{'best original song - motion picture'}
 
 def generate_nominees_sw(awards):
     return set((' '.join(awards)).split(' ')) | nominees_sw
@@ -24,15 +24,16 @@ def find_nominee(nominee_dict, award, other_nominees, other_winners):
         return []
 
     nominee_lst = sorted(nominee_dict.items(), key=lambda x: x[1], reverse=True)
-    print("\n\n\nTop keys for nominees for: " + award)
-    top_keys(nominee_lst, 0)
-    print(other_winners)
+    if award in debug_awards:
+        print("\n\n\nTop keys for nominees for: " + award)
+        top_keys(nominee_lst, 0)
+        print(other_winners, other_nominees)
     if any(word in award for word in {'actress', 'actor', 'director', 'award'}):
         nominees = find_name(nominee_lst, other_nominees['name'] | other_nominees['title'] | other_winners, award, 4)
         other_nominees['name'] = other_nominees['name'] | nominees
     else: # titles
         nominees = find_title(nominee_lst, other_nominees['name'] | other_winners, award, 4)
-        other_nominees['title'] = other_nominees['name'] | nominees
+        other_nominees['title'] = other_nominees['title'] | nominees
     return list(nominees)
 
 def eval_nominee_tweet(tweet, dicts, keys, sw, awards_map):

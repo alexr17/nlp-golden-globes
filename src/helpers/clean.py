@@ -33,16 +33,18 @@ def valid_tkn(tkn, valid_kw, invalid_kw):
     return True
 
 def unibigrams(tokens, valid_kw, invalid_kw):
+    valid_movie_kw = {'the', 'in', 'on', 'of', 'this'}
     prev = False
     grams = {
         'uni': set(),
         'bi': set()
     }
     for tkn in tokens:
-        if valid_tkn(tkn, valid_kw, invalid_kw):
+        if valid_tkn(tkn, valid_kw | valid_movie_kw, invalid_kw):
             if prev:
                 grams['bi'].add(prev + ' ' + tkn)
-            grams['uni'].add(tkn)
+            if tkn not in valid_movie_kw:
+                grams['uni'].add(tkn)
             prev = tkn
     return grams
 

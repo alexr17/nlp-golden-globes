@@ -34,63 +34,87 @@
     "nominees": {
         "cecil b. demille award": [],
         "best motion picture - drama": [
-            "oh"
+            "lincoln"
         ],
         "best performance by an actress in a motion picture - drama": [],
         "best performance by an actor in a motion picture - drama": [],
         "best motion picture - comedy or musical": [
-            "'s"
+            "les"
         ],
         "best performance by an actress in a motion picture - comedy or musical": [],
         "best performance by an actor in a motion picture - comedy or musical": [],
         "best animated feature film": [
             "ted",
-            "hotel transylvania",
-            "life"
+            "life",
+            "hotel transylvania"
         ],
         "best foreign language film": [
-            "'s"
+            "fingers crossed"
         ],
         "best performance by an actress in a supporting role in a motion picture": [],
-        "best performance by an actor in a supporting role in a motion picture": [],
+        "best performance by an actor in a supporting role in a motion picture": [
+            "cooper kate"
+        ],
         "best director - motion picture": [
+            "tom hooper",
+            "kathryn bigelow",
+            "quentin tarantino",
             "ang lee"
         ],
-        "best screenplay - motion picture": [],
-        "best original score - motion picture": [],
+        "best screenplay - motion picture": [
+            "life"
+        ],
+        "best original score - motion picture": [
+            "wild",
+            "the master",
+            "cloud atlas"
+        ],
         "best original song - motion picture": [
-            "safe"
+            "les miserables",
+            "argo",
+            "safe",
+            "wonder"
         ],
         "best television series - drama": [
-            "argo",
-            "breaking bad"
+            "the newsroom",
+            "breaking bad",
+            "argo"
         ],
         "best performance by an actress in a television series - drama": [
             "danes homeland"
         ],
         "best performance by an actor in a television series - drama": [
-            "lewis homeland"
+            "3rd prev"
         ],
         "best television series - comedy or musical": [
+            "the newsroom",
+            "the big bang theory",
             "modern family",
             "community"
         ],
         "best performance by an actress in a television series - comedy or musical": [
-            "strongest category"
+            "the night"
         ],
         "best performance by an actor in a television series - comedy or musical": [
             "matt leblanc"
         ],
         "best mini-series or motion picture made for television": [
-            "comedies"
+            "think"
         ],
         "best performance by an actress in a mini-series or motion picture made for television": [
-            "change amy"
+            "jessica lange",
+            "lena dunham",
+            "meryl streep",
+            "amy poehler"
         ],
         "best performance by an actor in a mini-series or motion picture made for television": [
-            "benedict cumberbatch"
+            "benedict cumberbatch",
+            "damian lewis",
+            "tina fey"
         ],
-        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [],
+        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
+            "hayden panettiere"
+        ],
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": []
     },
     "presenters": {
@@ -110,7 +134,7 @@
             "dustin hoffman"
         ],
         "best performance by an actress in a motion picture - comedy or musical": [
-            "clinton presentando"
+            "presentando lincon"
         ],
         "best performance by an actor in a motion picture - comedy or musical": [
             "aeiouprst"
@@ -119,18 +143,19 @@
             "sacha baron cohen"
         ],
         "best foreign language film": [
-            "arnold schwarzenegger",
-            "sylvester stallone"
+            "sylvester stallone",
+            "arnold schwarzenegger"
         ],
         "best performance by an actress in a supporting role in a motion picture": [
-            "maggie smith",
-            "dennis quaid"
+            "dennis quaid",
+            "maggie smith"
         ],
         "best performance by an actor in a supporting role in a motion picture": [
             "kate hudson",
             "bradley cooper"
         ],
         "best director - motion picture": [
+            "jennifer garner",
             "halle berry"
         ],
         "best screenplay - motion picture": [
@@ -138,14 +163,15 @@
             "amanda seyfried"
         ],
         "best original score - motion picture": [
+            "jennifer lopez",
             "jason statham"
         ],
         "best original song - motion picture": [
-            "aeiouprst"
+            "j. lo"
         ],
         "best television series - drama": [
-            "julia roberts",
-            "paul rudd"
+            "paul rudd",
+            "julia roberts"
         ],
         "best performance by an actress in a television series - drama": [
             "nathan fillion"
@@ -154,7 +180,7 @@
             "aeiouprst"
         ],
         "best television series - comedy or musical": [
-            "jay leno"
+            "leno jimmy"
         ],
         "best performance by an actress in a television series - comedy or musical": [
             "will ferrell",
@@ -167,10 +193,11 @@
             "aeiouprst"
         ],
         "best performance by an actress in a mini-series or motion picture made for television": [
-            "aeiouprst"
+            "jason bateman",
+            "claire danes"
         ],
         "best performance by an actor in a mini-series or motion picture made for television": [
-            "aeiouprst"
+            "awa oh"
         ],
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
             "dennis quaid",

@@ -43,10 +43,12 @@ def recur_ngram(names, dct, key, string):
 # key = 'robert'
 # print(recur_ngram(load_imdb_data('name'), dct, key, []))
 def find_ngram(tkns, names, optional, exclude_list):
+    if not len(tkns):
+        return ''
     if len(tkns) < 2 and not optional:
         return tkns[0][0]
-    if len(tkns) > 10:
-        tkns = tkns[:10]
+    if len(tkns) > 20:
+        tkns = tkns[:20]
     bgm_map = {}
 
     for tkn in tkns:
@@ -57,8 +59,8 @@ def find_ngram(tkns, names, optional, exclude_list):
             else:
                 bgm_map[sp_tkn[0]] = {sp_tkn[-1]}
     
+    print(bgm_map)
     best_ngrams = set()
-
     for tkn in bgm_map:
         name = recur_ngram(names, bgm_map, tkn, [])
         if type(name) == str and name not in exclude_list:
@@ -67,7 +69,7 @@ def find_ngram(tkns, names, optional, exclude_list):
             best_ngrams.add(' '.join(name))
     
     if optional:
-        return False
+        return ''
     else:
         return tkns[0][0]
 
@@ -79,7 +81,6 @@ def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=Fals
     if no_max:
         threshold = 0
     while i < len(lst) and lst[i][1] >= max * threshold:
-        # print(i)
         # if it exists somewhere else then remove it
         if lst[i][0] in exclude_list:
             lst.pop(i)
@@ -92,8 +93,8 @@ def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=Fals
             return lst.pop(i)[0]
         i += 1
     
-    # print("\nCould not find generic for award: " + award)
-    # print(top_tpls)
+    print("\nCould not find generic for award: " + award)
+    print(top_tpls)
     return find_ngram(top_tpls, type_set, optional, exclude_list)
     #defaulting
 
@@ -128,6 +129,8 @@ def find_title(lst, exclude_list, award, max=1):
         title = find_generic(lst, exclude_list | titles, titles_set, award, optional, True)
         if title:
             titles.add(title)
+        else:
+            return titles
         if not len(lst):
             return titles
         optional = True

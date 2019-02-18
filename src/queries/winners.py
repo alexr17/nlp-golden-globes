@@ -8,11 +8,11 @@ from src.helpers.clean import valid_tkn, unibigrams, bigrams, trigrams
 from src.helpers.debug import top_keys
 import json
 
-winners_kw = []
+winners_kw = set()
 winners_sw = {'movie', 'tv','miniseries', 'win', 'wins', 'goes', 'winner', 'won'}
 gg_sw = {'golden', 'globes', 'goldenglobes', 'globe'}
 media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
-debug_awards = {}#{"best motion picture - comedy or musical",'best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
+debug_awards = {'best performance by an actor in a mini-series or motion picture made for television'}#{"best motion picture - comedy or musical",'best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
 
 def generate_winners_sw(awards):
     return set((' '.join(awards)).split(' ')) | winners_sw

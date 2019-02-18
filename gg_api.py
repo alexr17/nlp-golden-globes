@@ -1,5 +1,6 @@
 import json
 import re
+import nltk
 from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee, eval_nominee_tweet, generate_nominees_sw
@@ -101,14 +102,12 @@ def get_winner(year):
     # Your code here
     return load_json(year, 'results/')['winners']
 
-
 def get_presenters(year):
     '''Presenters is a dictionary with the hard coded award
     names as keys, and each entry a list of strings. Do NOT change the
     name of this function or what it returns.'''
     # Your code here
     return load_json(year, 'results/')['presenters']
-
 
 def pre_ceremony():
     '''This function loads/fetches/processes any data your program
@@ -120,11 +119,19 @@ def pre_ceremony():
     return False
 
 def g_map(lst):
+    tech_movie_awards = {'director', 'song', 'cinematography', 'screenplay', 'editing', 'score'}
+    
     map = {
         'include': {},
         'exclude': {}
     }
     for e in lst:
+        if e in tech_movie_awards:
+            return {
+                'include': {e: []},
+                'exclude': {}
+            }
+
         # actor keywords
         if e == 'actress':
             map['include'][e] = ['actriz']
@@ -146,23 +153,27 @@ def g_map(lst):
     # if non-actor award, exclude actor/actress from results
     if not any(word in map['include'] for word in ['actress', 'actor']):
         map['exclude']['actress'] = ['actriz', 'actor']
+    else:
+        if 'miniseries' in map['include'] and 'supporting' in map['include']:
+            del map['include']['television']
+            del map['include']['motion']
+            map['include']['miniseries'] += ['series', 'television film', 'tv film', 'tv movie', 'tv', 'television', 'television movie']
     return map
 
-
 def generate_awards_map(awards):
-    award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
+    award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-', 'limited'}
     awards_map = {}
     for award in awards:
         award_lst = [tkn for tkn in re.sub('[^a-zA-Z. ]', '', award).split(' ') if valid_tkn(tkn, [], award_sw)]
         awards_map[award] = g_map(award_lst)
     return awards_map
 
-
 def tweet_corresponds_to_award(tweet, award_map):
     for award_key in award_map['include']:
         # if not then check if the child keys are
-        if not any(rel_key in tweet for rel_key in ([award_key] + award_map['include'][award_key])):
 
+        if not any(rel_key in tweet for rel_key in ([award_key] + award_map['include'][award_key])):
+            
             # did not pass test
             return False
 
@@ -188,9 +199,9 @@ def main():
         print("File not found")
         # raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
     data['2015'] = load_json('2015')
-    data['2013'] = load_json('2013')
+    # data['2013'] = load_json('2013')
     
-    debug = {'aziz ansari', 'jason bateman'}
+    debug = {}#{'salmon fishing in the yemen'}
     # 2013/2015
     winners_sw = generate_winners_sw(OFFICIAL_AWARDS_1315)
     presenters_sw = generate_presenters_sw(OFFICIAL_AWARDS_1315)
@@ -199,31 +210,11 @@ def main():
     awards_map = generate_awards_map(OFFICIAL_AWARDS_1315)
     # lst = find_awards(data['2013'])
     results = {}
-    times = {}
-
-    for year in ['2013']:
+    t = time.time()
+    for year in data:
+        nominated_dict = {}
         results[year] = load_json(year, 'results/')
-        times[year] = {}
-        times[year] = {
-            'total': 0,
-            'tweet_count': 0,
-            'winners': {
-                'id_award': 0,
-                'eval_tweet': 0,
-                'find': 0,
-            },
-            'presenters': {
-                'id_award': 0,
-                'eval_tweet': 0,
-                'find': 0,
-            },
-            'nominees': {
-                'id_award': 0,
-                'eval_tweet': 0,
-                'find': 0,
-            }
-        }
-        t_total = time.time()
+
         # hosts
         results[year]['host'] = results[year]['host'] or find_hosts(data[year])
 
@@ -245,10 +236,9 @@ def main():
 
         # iterate through each tweet
         for obj in data[year]:
-            times[year]['tweet_count'] += 1
             tweet = obj['text'].lower()
-            # if any(word in tweet for word in debug):
-            #     print(tweet)
+            if any(word in tweet for word in debug):
+                print(tweet)
             
             # list of award dicts that WE WANT to add the tweet to
             valid_award_keys = {
@@ -258,45 +248,42 @@ def main():
             }
             for award in awards_map:
                 # if the tweet corresponds to an award, add its dict to the list
-                tweet_valid = tweet_corresponds_to_award(tweet, awards_map[award])
-                if tweet_valid:
+                # if 'nomin' in tweet:
+                #     tkns = nltk.word_tokenize(tweet)
+                #     for tkn in tkns:
+                #         if valid_tkn(tkn, {}, {'nominated', 'nominee', 'award', 'golden', 'globes', 'goldenglobes'}):
+                #             if tkn in nominated_dict:
+                #                 nominated_dict[tkn] += 1
+                #             else:
+                #                 nominated_dict[tkn] = 1
+                if tweet_corresponds_to_award(tweet, awards_map[award]):
                     valid_award_keys['winner'].append(award)
                     if any(word in tweet for word in {'present', 'introduc', 'award best'}):
+                        # if (award in {'best motion picture - comedy or musical', 'best motion picture - drama'}):
+                        #     print(tweet)
                         valid_award_keys['presenter'].append(award)
-                    elif any(word in tweet for word in {'nomin', 'lost', 'not win', 'should have won'}):
+                    if any(word in tweet for word in {'nomin', 'nom\'d', 'lost', 'not win', 'should have won'}):
                         valid_award_keys['nominee'].append(award)                
 
-            t = time.time()
             if len(valid_award_keys['winner']):
                 eval_winner_tweet(tweet, winner_dicts, valid_award_keys['winner'], winners_sw, awards_map)
-            times[year]['winners']['eval_tweet'] += (time.time() - t)
 
-            t = time.time()
             if len(valid_award_keys['nominee']):
                 eval_winner_tweet(tweet, nominee_dicts, valid_award_keys['nominee'], nominees_sw, awards_map)
-            times[year]['nominees']['eval_tweet'] += (time.time() - t)
-            
 
-            t = time.time()
             if len(valid_award_keys['presenter']):
                 eval_presenter_tweet(tweet, presenter_dicts, valid_award_keys['presenter'], presenters_sw)
-            times[year]['presenters']['eval_tweet'] += (time.time() - t)
         
-        t = time.time()
         other_winners = {'name': set(), 'title': set()}
         print("\n\n\nFinding Awards")
         for award in awards_map:
             results[year]['winners'][award] = find_winner(winner_dicts[award], award, other_winners)
-        times[year]['winners']['find'] += (time.time() - t)
 
-        t = time.time()
         other_presenters = set()
         print("\n\n\nFinding Presenters")
         for award in awards_map:
             results[year]['presenters'][award] = find_presenter(presenter_dicts[award], award, other_presenters, results[year]['winners'][award])
-        times[year]['presenters']['find'] += (time.time() - t)
 
-        t = time.time()
         other_nominees = {'name': set(), 'title': set()}
         print("\n\n\nFinding Nominees")
         for award in awards_map:
@@ -304,17 +291,14 @@ def main():
             other_set = [results[year]['winners'][award]]
             other_set += results[year]['presenters'][award]
             results[year]['nominees'][award] = find_nominee(nominee_dicts[award], award, other_nominees, set(other_set))
-        times[year]['nominees']['find'] += (time.time() - t)
        
-
+        # top_keys(sorted(nominated_dict.items(), key=lambda x: x[1], reverse=True), 100)
        # write results to file
         with open('results/' + year +'.json', 'w') as outfile:
             outfile.write(json.dumps(results[year], indent=4))
 
-        times[year]['total'] += time.time() - t_total
-
     # printing time data
-    print(json.dumps(times, indent=4))
+    print(time.time() - t)
     return False
 
 
