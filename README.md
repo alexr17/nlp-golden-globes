@@ -21,17 +21,8 @@ $ python3
 ```
 
 #### Importing data
-Within the same directory, get the `gg2013.json` and `gg2015.json` from canvas and put it in the current, working directory. 
+Within the same directory, get the data: `gg2013.json` and `gg2015.json` from canvas and put it in the current, working directory. 
 
-Twitter API integration will be added later.
-
-
-#### Adding new packages
-```
-$ pip3 install <package-name>
-$ pip3 show <package-name>
-```
-If any packages have not been added, add the package name with the version to requirements.txt
 
 ## Getting Started
 
@@ -54,6 +45,13 @@ When you want to merge your changes
 $ git checkout master
 $ git merge <branch-name>
 ```
+#### Adding new packages
+```
+$ pip3 install <package-name>
+$ pip3 show <package-name>
+```
+If any packages have not been added, add the package name with the version to requirements.txt
+
 
 ## Authors
 Group 1: Alex Rhee, Itay Golan, Arno Murica, Anthony Leonardi

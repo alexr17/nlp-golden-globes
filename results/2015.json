@@ -33,100 +33,90 @@
     },
     "nominees": {
         "cecil b. demille award": [
-            "of tonight",
-            "tonight 's",
-            "'s winners",
             "recipient george"
         ],
         "best motion picture - drama": [
+            "the fall",
             "foxcatcher",
             "home",
-            "the fall",
             "selma"
         ],
         "best performance by an actress in a motion picture - drama": [
-            "reese witherspoon",
-            "jennifer aniston",
             "felicity jones",
+            "jennifer aniston",
+            "reese witherspoon",
             "rosamund pike"
         ],
         "best performance by an actor in a motion picture - drama": [
+            "steve carell",
             "benedict cumberbatch",
-            "kevin spacey",
-            "jake gyllenhaal",
-            "david oyelowo"
+            "david oyelowo",
+            "kevin spacey"
         ],
         "best motion picture - comedy or musical": [
-            "boyhood",
             "pride",
-            "big eyes",
-            "st. vincent"
+            "boyhood",
+            "st. vincent",
+            "big eyes"
         ],
         "best performance by an actress in a motion picture - comedy or musical": [
-            "in big",
-            "emily blunt",
             "naomi watts",
-            "in in"
+            "emily blunt"
         ],
         "best performance by an actor in a motion picture - comedy or musical": [
-            "ralph fiennes",
-            "joaquin phoenix",
+            "christoph waltz",
             "bill murray",
-            "christoph waltz"
+            "ralph fiennes",
+            "joaquin phoenix"
         ],
         "best animated feature film": [
+            "hotel transylvania",
             "forever",
-            "life",
             "the boxtrolls",
-            "hotel transylvania"
+            "life"
         ],
         "best foreign language film": [
-            "'s",
-            "tonight",
-            "tangerine",
-            "ida"
+            "tangerine"
         ],
         "best performance by an actress in a supporting role in a motion picture": [
-            "keira knightley",
             "jessica chastain",
+            "keira knightley",
             "emma stone",
             "meryl streep"
         ],
         "best performance by an actor in a supporting role in a motion picture": [
+            "ethan hawke",
             "matt bomer",
             "mark ruffalo",
-            "ethan hawke",
             "robert duvall"
         ],
         "best director - motion picture": [
+            "ava duvernay",
             "angelina jolie",
             "j.j. abrams",
-            "ava duvernay",
             "chris pine"
         ],
         "best screenplay - motion picture": [
             "boyhood",
-            "'s",
-            "n't",
             "wonder"
         ],
         "best original score - motion picture": [
             "paddington",
-            "genius",
+            "home",
             "the following",
-            "home"
+            "genius"
         ],
         "best original song - motion picture": [
+            "legend",
             "boyhood",
             "annie",
-            "legend",
             "big eyes"
         ],
         "best television series - drama": [
-            "the choice",
             "the knick",
             "pride",
-            "selma"
+            "selma",
+            "the choice"
         ],
         "best performance by an actress in a television series - drama": [
             "kerry washington",
@@ -135,58 +125,47 @@
             "viola davis"
         ],
         "best performance by an actor in a television series - drama": [
-            "liev schreiber",
-            "dominic west",
             "clive owen",
+            "dominic west",
+            "liev schreiber",
             "james spader"
         ],
         "best television series - comedy or musical": [
-            "'s",
-            "tonight",
-            "silicon valley",
-            "transparent_tv"
+            "silicon valley"
         ],
         "best performance by an actress in a television series - comedy or musical": [
-            "lena dunham",
             "julia louis-dreyfus",
             "amy adams",
+            "lena dunham",
             "taylor schilling"
         ],
         "best performance by an actor in a television series - comedy or musical": [
-            "don cheadle",
-            "ricky gervais",
             "louis c.k.",
-            "in louie"
+            "don cheadle",
+            "ricky gervais"
         ],
         "best mini-series or motion picture made for television": [
             "remember",
-            "the missing",
             "the normal heart",
-            "renner"
+            "the missing"
         ],
         "best performance by an actress in a mini-series or motion picture made for television": [
-            "amp adrien",
-            "jessica lange",
             "frances o'connor",
+            "jessica lange",
             "frances mcdormand"
         ],
         "best performance by an actor in a mini-series or motion picture made for television": [
-            "woody harrelson",
             "martin freeman",
-            "billy bob",
-            "matthew mcconaughey"
+            "matthew mcconaughey",
+            "woody harrelson"
         ],
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
-            "bizarre tca15",
-            "of outstanding",
-            "the always",
-            "range of"
+            "of outstanding"
         ],
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
-            "in on",
-            "colin hanks",
+            "alan cumming",
             "jon voight",
-            "alan cumming"
+            "colin hanks"
         ]
     },
     "presenters": {
@@ -199,32 +178,27 @@
             "meryl streep"
         ],
         "best performance by an actress in a motion picture - drama": [
-            "mcconaughey presents",
             "matthew mcconaughey"
         ],
         "best performance by an actor in a motion picture - drama": [
-            "redmayne awards",
             "gwyneth paltrow"
         ],
         "best motion picture - comedy or musical": [
-            "kate hudson",
-            "owen wilson"
+            "owen wilson",
+            "kate hudson"
         ],
         "best performance by an actress in a motion picture - comedy or musical": [
-            "rickygervais https",
             "ricky gervais"
         ],
         "best performance by an actor in a motion picture - comedy or musical": [
-            "keaton awards",
             "amy adams"
         ],
         "best animated feature film": [
-            "dragon awards",
-            "train dragon"
+            "awards sunday"
         ],
         "best foreign language film": [
-            "colin farrell",
-            "lupita nyong'o"
+            "lupita nyong'o",
+            "colin farrell"
         ],
         "best performance by an actress in a supporting role in a motion picture": [
             "jared leto",
@@ -239,16 +213,16 @@
             "wes anderson"
         ],
         "best screenplay - motion picture": [
-            "bill hader",
-            "kristen wiig"
+            "kristen wiig",
+            "bill hader"
         ],
         "best original score - motion picture": [
             "vince vaughn",
             "sienna miller"
         ],
         "best original song - motion picture": [
-            "john legend",
-            "barbra streisand"
+            "barbra streisand",
+            "john legend"
         ],
         "best television series - drama": [
             "adam levine",
@@ -263,7 +237,6 @@
             "david duchovny"
         ],
         "best television series - comedy or musical": [
-            "transparent awards",
             "melissa mccarthy"
         ],
         "best performance by an actress in a television series - comedy or musical": [
@@ -271,12 +244,12 @@
             "bryan cranston"
         ],
         "best performance by an actor in a television series - comedy or musical": [
-            "jane fonda",
-            "lily tomlin"
+            "lily tomlin",
+            "jane fonda"
         ],
         "best mini-series or motion picture made for television": [
-            "jennifer lopez",
-            "jeremy renner"
+            "jeremy renner",
+            "jennifer lopez"
         ],
         "best performance by an actress in a mini-series or motion picture made for television": [
             "adrien brody",
@@ -287,7 +260,6 @@
             "jeremy renner"
         ],
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
-            "shades grey",
             "dakota johnson"
         ],
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [

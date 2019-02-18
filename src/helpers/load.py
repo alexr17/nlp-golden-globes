@@ -10,7 +10,7 @@ import time
 import unidecode
 
 
-def load_json(year, path='data/gg'):
+def load_json(year, path='./gg'):
     with open(path + year + '.json') as f:
         data = json.load(f)
     return data
@@ -64,6 +64,9 @@ def generate_tmdb_data(years, vote_min=100, score_min=6):
         people = parse_tmdb_data('name', params, tmdb_method)
         write_to_file(people, './data/names.txt')
         print("Done loading people")
+
+    if len(list(line.strip() for line in open('./data/titles.txt'))) < 1400:
+        return
 
     titles = []
     params = {
