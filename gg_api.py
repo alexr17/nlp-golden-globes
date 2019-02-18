@@ -162,19 +162,19 @@ def main():
     what it returns.'''
     # Your code here
     # load data
+    data = {}
     try:
         data['2019'] = load_json('2019')
         data['2018'] = load_json('2018')
     except FileNotFoundError as e:
         print("File not found")
         # raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
-    data = {}
     data['2015'] = load_json('2015')
     data['2013'] = load_json('2013')
 
     lst = find_awards(data['2013'])
 
-    debug = {'aziz ansari', 'jason bateman'}
+    debug = {}#{'aziz ansari', 'jason bateman'}
     # 2013/2015
     winners_sw = generate_winners_sw(OFFICIAL_AWARDS_1315)
     presenters_sw = generate_presenters_sw(OFFICIAL_AWARDS_1315)

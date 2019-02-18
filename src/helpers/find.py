@@ -117,5 +117,17 @@ def find_name(lst, exclude_list, award, max=1):
 
 def find_title(lst, exclude_list, award, max=1):
     titles_set = load_imdb_data('title')
+    optional = False
     if max == 1:
         return find_generic(lst, exclude_list, titles_set, award)
+    
+    titles = set()
+
+    for x in range(max):
+        title = find_generic(lst, exclude_list | titles, titles_set, award, optional, True)
+        if title:
+            titles.add(title)
+        if not len(lst):
+            return titles
+        optional = True
+    return titles
