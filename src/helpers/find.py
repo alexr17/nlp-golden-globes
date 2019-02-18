@@ -43,7 +43,7 @@ def recur_ngram(names, dct, key, string):
 # key = 'robert'
 # print(recur_ngram(load_imdb_data('name'), dct, key, []))
 def find_ngram(tkns, names, optional, exclude_list):
-    if len(tkns) < 2:
+    if len(tkns) < 2 and not optional:
         return tkns[0][0]
     if len(tkns) > 10:
         tkns = tkns[:10]
@@ -83,7 +83,7 @@ def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=Fals
         # if it exists somewhere else then remove it
         if lst[i][0] in exclude_list:
             lst.pop(i)
-            if i == 0:
+            if i == 0 and not len(lst):
                 max = lst[0][1]
             continue
 
@@ -92,9 +92,9 @@ def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=Fals
             return lst.pop(i)[0]
         i += 1
     
-    print("\nCould not find generic for award: " + award)
+    # print("\nCould not find generic for award: " + award)
     # print(top_tpls)
-    return (find_ngram(top_tpls, type_set, optional, exclude_list))
+    return find_ngram(top_tpls, type_set, optional, exclude_list)
     #defaulting
 
 def find_name(lst, exclude_list, award, max=1):
@@ -109,6 +109,8 @@ def find_name(lst, exclude_list, award, max=1):
         name = find_generic(lst, exclude_list | names, names_set, award, optional, True)
         if name:
             names.add(name)
+        else:
+            return names
         if not len(lst):
             return names
         optional = True
@@ -117,5 +119,16 @@ def find_name(lst, exclude_list, award, max=1):
 
 def find_title(lst, exclude_list, award, max=1):
     titles_set = load_imdb_data('title')
+    optional = False
     if max == 1:
         return find_generic(lst, exclude_list, titles_set, award)
+
+    titles = set()
+    for x in range(max):
+        title = find_generic(lst, exclude_list | titles, titles_set, award, optional, True)
+        if title:
+            titles.add(title)
+        if not len(lst):
+            return titles
+        optional = True
+    return titles

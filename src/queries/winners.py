@@ -11,19 +11,12 @@ import json
 winners_kw = []
 winners_sw = {'movie', 'tv','miniseries', 'win', 'wins', 'goes', 'winner', 'won'}
 gg_sw = {'golden', 'globes', 'goldenglobes', 'globe'}
-award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
 media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
 debug_awards = {}#{"best motion picture - comedy or musical",'best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
 
 def generate_winners_sw(awards):
     return set((' '.join(awards)).split(' ')) | winners_sw
 
-def generate_winners_map(awards):
-    awards_map = {}
-    for award in awards:
-        award_lst = [tkn for tkn in re.sub('[^a-zA-Z. ]', '', award).split(' ') if valid_tkn(tkn, [], award_sw)]
-        awards_map[award] = g_map(award_lst)
-    return awards_map
 
 def find_winner(winner_dict, award, other_winners):    
     
@@ -46,7 +39,7 @@ def eval_winner_tweet(tweet, dicts, keys, sw, awards_map):
     
     gms = unibigrams(tokens, winners_kw, sw | gg_sw | media_sw)
     for key in keys:
-        if awards_map[key]['person']:
+        if any(word in key for word in {'actress', 'actor', 'director', 'award'}):
             tkns = gms['bi']
         else:
             tkns = gms['uni'] | gms['bi']
@@ -55,21 +48,6 @@ def eval_winner_tweet(tweet, dicts, keys, sw, awards_map):
                 dicts[key][bgm] = 1
             else:
                 dicts[key][bgm] += 1
-
-def winners_id_award(tweet, award_map):
-    for award_key in award_map['include']:
-        # if not then check if the child keys are
-        if not any(rel_key in tweet for rel_key in ([award_key] + award_map['include'][award_key])):
-
-            # did not pass test
-            return False
-
-    for award_key in award_map['exclude']:
-         
-        if any(rel_key in tweet for rel_key in ([award_key] + award_map['exclude'][award_key])):
-
-            return False
-    return True
 
 def g_map(lst):
     map = {

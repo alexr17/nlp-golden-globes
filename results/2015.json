@@ -31,14 +31,146 @@
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": "joanne froggatt",
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "matt bomer"
     },
-    "presenters": {
+    "nominees": {
         "cecil b. demille award": [
-            "julianna margulies",
-            "don cheadle"
+            "winners nominees"
         ],
         "best motion picture - drama": [
-            "jack black",
+            "selma",
+            "red",
+            "foxcatcher",
+            "home"
+        ],
+        "best performance by an actress in a motion picture - drama": [
+            "jennifer aniston",
+            "felicity jones",
+            "rosamund pike",
+            "reese witherspoon"
+        ],
+        "best performance by an actor in a motion picture - drama": [
+            "jake gyllenhaal",
+            "benedict cumberbatch",
+            "david oyelowo",
+            "steve carell"
+        ],
+        "best motion picture - comedy or musical": [
+            "pride",
+            "st. vincent",
+            "birdman",
+            "boyhood"
+        ],
+        "best performance by an actress in a motion picture - comedy or musical": [
+            "naomi watts",
+            "emily blunt"
+        ],
+        "best performance by an actor in a motion picture - comedy or musical": [
+            "christoph waltz",
+            "bill murray",
+            "joaquin phoenix",
+            "ralph fiennes"
+        ],
+        "best animated feature film": [
+            "life",
+            "forever",
+            "hotel transylvania"
+        ],
+        "best foreign language film": [
+            "tangerine"
+        ],
+        "best performance by an actress in a supporting role in a motion picture": [
+            "emma stone",
+            "jessica chastain",
+            "keira knightley",
             "meryl streep"
+        ],
+        "best performance by an actor in a supporting role in a motion picture": [
+            "edward norton",
+            "robert duvall",
+            "mark ruffalo",
+            "matt bomer"
+        ],
+        "best director - motion picture": [
+            "ava duvernay"
+        ],
+        "best screenplay - motion picture": [
+            "boyhood",
+            "whiplash",
+            "gone girl"
+        ],
+        "best original score - motion picture": [
+            "introduce"
+        ],
+        "best original song - motion picture": [
+            "big eyes"
+        ],
+        "best television series - drama": [
+            "downton abbey",
+            "paul",
+            "revenge",
+            "breaking bad"
+        ],
+        "best performance by an actress in a television series - drama": [
+            "claire danes",
+            "julianna margulies",
+            "viola davis",
+            "kerry washington"
+        ],
+        "best performance by an actor in a television series - drama": [
+            "liev schreiber",
+            "james spader",
+            "dominic west",
+            "clive owen"
+        ],
+        "best television series - comedy or musical": [
+            "silicon valley",
+            "veep",
+            "birdman",
+            "race"
+        ],
+        "best performance by an actress in a television series - comedy or musical": [
+            "julia louis-dreyfus",
+            "amy adams",
+            "edie falco",
+            "lena dunham"
+        ],
+        "best performance by an actor in a television series - comedy or musical": [
+            "ricky gervais",
+            "don cheadle",
+            "louis c.k.",
+            "william h. macy"
+        ],
+        "best mini-series or motion picture made for television": [
+            "sherlock",
+            "remember",
+            "true detective"
+        ],
+        "best performance by an actress in a mini-series or motion picture made for television": [
+            "frances mcdormand",
+            "jessica lange",
+            "frances o'connor"
+        ],
+        "best performance by an actor in a mini-series or motion picture made for television": [
+            "woody harrelson",
+            "martin freeman",
+            "matthew mcconaughey"
+        ],
+        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
+            "downton abbey"
+        ],
+        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
+            "alan cumming",
+            "colin hanks",
+            "jon voight"
+        ]
+    },
+    "presenters": {
+        "cecil b. demille award": [
+            "don cheadle",
+            "julianna margulies"
+        ],
+        "best motion picture - drama": [
+            "meryl streep",
+            "jack black"
         ],
         "best performance by an actress in a motion picture - drama": [
             "matthew mcconaughey"
@@ -47,8 +179,8 @@
             "gwyneth paltrow"
         ],
         "best motion picture - comedy or musical": [
-            "owen wilson",
-            "kate hudson"
+            "kate hudson",
+            "owen wilson"
         ],
         "best performance by an actress in a motion picture - comedy or musical": [
             "ricky gervais"
@@ -57,7 +189,7 @@
             "amy adams"
         ],
         "best animated feature film": [
-            "awards sunday"
+            "dragon awards"
         ],
         "best foreign language film": [
             "colin farrell",
@@ -75,16 +207,16 @@
             "harrison ford"
         ],
         "best screenplay - motion picture": [
-            "kristen wiig",
-            "bill hader"
+            "bill hader",
+            "kristen wiig"
         ],
         "best original score - motion picture": [
             "sienna miller",
             "vince vaughn"
         ],
         "best original song - motion picture": [
-            "common",
-            "john legend"
+            "john legend",
+            "common"
         ],
         "best television series - drama": [
             "paul rudd",
@@ -102,12 +234,12 @@
             "melissa mccarthy"
         ],
         "best performance by an actress in a television series - comedy or musical": [
-            "kerry washington",
-            "bryan cranston"
+            "bryan cranston",
+            "kerry washington"
         ],
         "best performance by an actor in a television series - comedy or musical": [
-            "jane fonda",
-            "lily tomlin"
+            "lily tomlin",
+            "jane fonda"
         ],
         "best mini-series or motion picture made for television": [
             "jeremy renner",
@@ -125,7 +257,8 @@
             "dakota johnson"
         ],
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
-            "amp sethmeyers"
+            "katieholmes212 amp"
         ]
-    }
+    },
+    "award_names": []
 }

@@ -18,17 +18,10 @@ debug_awards = {'best performance by an actress in a motion picture - comedy or 
 def generate_presenters_sw(awards):
     return set((' '.join(awards)).split(' ')) | presenters_sw
 
-def generate_presenters_map(awards):
-    presenters_map = {}
-    for award in awards:
-        award_lst = [tkn for tkn in re.sub('[^a-zA-Z. ]', '', award).split(' ') if valid_tkn(tkn, [], award_sw)]
-        presenters_map[award] = g_map(award_lst)
-    return presenters_map
-
 def find_presenter(presenter_dict, award, other_presenters, winner):
     if not len(presenter_dict):
         print("Could not find a presenter for: " + award)
-        return 'aeiouprst'
+        return ['aeiouprst']
     presenter_lst = sorted(presenter_dict.items(), key=lambda x: x[1], reverse=True)
     # if award in debug_awards:
     #     print("\n\nTop keys for: " + award)
@@ -47,21 +40,6 @@ def eval_presenter_tweet(tweet, dicts, keys, sw):
                 dicts[key][bgm] = 1
             else:
                 dicts[key][bgm] += 1
-
-def presenters_id_award(tweet, award_map):
-    for award_key in award_map['include']:
-        # if not then check if the child keys are
-        if not any(rel_key in tweet for rel_key in ([award_key] + award_map['include'][award_key])):
-
-            # did not pass test
-            return False
-
-    for award_key in award_map['exclude']:
-         
-        if any(rel_key in tweet for rel_key in ([award_key] + award_map['exclude'][award_key])):
-
-            return False
-    return True
 
 def g_map(lst):
     map = {
