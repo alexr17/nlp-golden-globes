@@ -14,7 +14,8 @@ from src.helpers.clean import merge_bigrams
 import pprint
 #from src.helpers.find import find_name
 
-list_of_awards = [line.strip() for line in open('./data/award_kw.txt')]
+#list_of_awards = [line.strip() for line in open('./data/award_kw.txt')]
+list_of_awards = ['best', 'motion', 'picture', 'drama', 'performance', 'actress', 'actor', 'comedy', 'musical', 'animated', 'feature', 'film', 'foreign', 'language', 'supporting', 'role', 'director', 'screenplay', 'orginal', 'score', 'song', 'television', 'series',  'mini-series', 'mini']
 filler_words = ['by','an','in', 'a', 'for','-',':','or']
 # golden globes stopwords
 gg_sw = ['golden', 'globe', 'globes', 'goldenglobes']
@@ -130,46 +131,4 @@ def find_awards(data):
     removed_awards = set(removed_awards)
     new_award_lst = [award for award in new_award_lst if award not in removed_awards]
     return new_award_lst
-
-
-
-# def get_phrases(bigrams):
-#     updated_lst = []
-#     for i in range(len(bigrams)):
-#         curr = bigrams[i]
-#         j = i+1
-#         while j < len(bigrams):
-#             bigram1 = curr.split(" ")
-#             bigram2 = bigrams[j].split(" ")
-#             if bigram1[-1] == bigram2[0]:
-#                 ngram = bigram1 + [bigram2[-1]]
-#                 updated_lst.append(" ".join(ngram))
-#             if bigram1[0] == bigram2[-1]:
-#                 ngram = bigram2 + [bigram1[-1]]
-#                 updated_lst.append(" ".join(ngram))
-#             j += 1
-#     return updated_lst
-
-# def award_set(bigrams):
-#     all_awards = []
-#     for i, bigram1 in enumerate(bigrams):
-#         ngram = bigram1.split(" ")
-#         for j, bigram2 in enumerate(bigrams):
-#             if bigram2 == bigram1:
-#                 continue
-#             bigram = bigram2.split(" ")
-#             if ngram[-1] == bigram[0]:
-#                ngram += bigram[1:]
-#             elif ngram[0] == bigram[-1]:
-#                 ngram = [bigram[0]] + ngram
-#         ngram = " ".join(ngram)
-#         flag = False
-#         for award in all_awards:
-#             if ngram in award:
-#                 flag = True
-#                 break
-#         if not flag:
-#             all_awards.append(ngram)
-
-#     return all_awards
 
