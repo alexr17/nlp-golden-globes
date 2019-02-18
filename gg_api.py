@@ -72,7 +72,6 @@ OFFICIAL_AWARDS_1819 = [
     'cecil b. demille award'
 ]
 
-data = {}
 
 #
 # lst = find_worst_dressed(data, '2013')
@@ -80,7 +79,6 @@ data = {}
 # print(top_dressed(lst1, lst))
 # print('---------------')
 # top_keys(lst1, 10)
-quit()
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
@@ -170,12 +168,11 @@ def main():
     except FileNotFoundError as e:
         print("File not found")
         # raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
+    data = {}
     data['2015'] = load_json('2015')
     data['2013'] = load_json('2013')
 
     lst = find_awards(data['2013'])
-    for l in lst:
-        print(l)
 
     debug = {'aziz ansari', 'jason bateman'}
     # 2013/2015

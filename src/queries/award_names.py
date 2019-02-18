@@ -15,7 +15,6 @@ import pprint
 #from src.helpers.find import find_name
 
 list_of_awards = [line.strip() for line in open('./data/award_kw.txt')]
-#list_of_awards = ['best', 'motion', 'picture', 'drama', 'performance', 'actress', 'actor', 'comedy', 'musical', 'animated', 'feature', 'film', 'foreign', 'language', 'supporting', 'role', 'director', 'screenplay', 'orginal', 'score', 'song', 'television', 'series',  'mini-series', 'mini']
 filler_words = ['by','an','in', 'a', 'for','-',':','or']
 # golden globes stopwords
 gg_sw = ['golden', 'globe', 'globes', 'goldenglobes']
