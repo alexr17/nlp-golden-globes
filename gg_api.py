@@ -1,4 +1,5 @@
 import json
+from src.queries.humor import find_jokes
 from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee
@@ -7,6 +8,7 @@ from src.queries.presenters import find_presenter
 from src.helpers.load import load_json, request_imdb_data, parse_imdb_data
 from src.helpers.clean import join_ngrams
 from src.helpers.debug import top_keys, find_key
+
 import time
 '''Version 0.1'''
 
@@ -171,6 +173,8 @@ def main():
             'count': 0
         }
 
+        jokes = find_jokes(data[year])
+        
         # hosts
         t = time.time()
         results[year] = {'host': find_hosts(data[year])}
@@ -224,7 +228,11 @@ def main():
     print(json.dumps(times, indent=4))
 
 
+
+
+
     return False
+
 
 
 if __name__ == '__main__':
