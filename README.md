@@ -21,7 +21,7 @@ $ python3
 ```
 
 #### Importing data
-Within the same directory, create a 'data' folder containing files `gg2013.json` and `gg2015.json` with the appropriate data.
+Within the same directory, get the `gg2013.json` and `gg2015.json` from canvas and put it in the current, working directory. 
 
 Twitter API integration will be added later.
 
@@ -31,7 +31,7 @@ Twitter API integration will be added later.
 $ pip3 install <package-name>
 $ pip3 show <package-name>
 ```
-Add the package name with the version to requirements.txt
+If any packages have not been added, add the package name with the version to requirements.txt
 
 ## Getting Started
 
@@ -40,6 +40,8 @@ Once all the data and packages have been imported, then run:
 ```
 $ python3 gg_api.py
 ```
+
+This will print out the data in human, readable format including the presenters, nominees and winners for each award, along with the best, worst, and controversially dressed and best jokes. 
 
 ## Contributing
 
