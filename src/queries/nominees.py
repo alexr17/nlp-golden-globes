@@ -8,37 +8,33 @@ from src.helpers.clean import valid_tkn, unibigrams, bigrams, trigrams
 from src.helpers.debug import top_keys
 import json
 
-nominees_kw = []
-nominees_sw = {'movie', 'tv','miniseries', 'win', 'wins', 'goes', 'winner', 'won', 'lose', 'lost'}
+nominees_kw = set()
+nominees_sw = {'movie', 'tv','miniseries', 'win', 'wins', 'goes', 'winner', 'won', 'lose', 'lost', 'nominated', 'nominee', 'present', 'nominations', 'nomination', 'nominees'}
 gg_sw = {'golden', 'globes', 'goldenglobes', 'globe'}
 award_sw = {"best", "award", "performance", 'made', 'role', 'any', '-'}
 media_sw = {"eonline", 'cnnshowbiz', 'cinema21'}
-debug_awards = {}#{"best motion picture - comedy or musical",'best motion picture - drama','best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television'}
+debug_awards = {}
 
 def generate_nominees_sw(awards):
     return set((' '.join(awards)).split(' ')) | nominees_sw
 
-def generate_nominees_map(awards):
-    awards_map = {}
-    for award in awards:
-        award_lst = [tkn for tkn in re.sub('[^a-zA-Z. ]', '', award).split(' ') if valid_tkn(tkn, [], award_sw)]
-        awards_map[award] = g_map(award_lst)
-    return awards_map
-
-def find_nominee(nominee_dict, award, other_nominees):
+def find_nominee(nominee_dict, award, other_nominees, other_winners):    
+    if not len(nominee_dict):
+        print("Could not find a nominee for: " + award)
+        return ["etaoin shrdlu"]
 
     nominee_lst = sorted(nominee_dict.items(), key=lambda x: x[1], reverse=True)
     if award in debug_awards:
-        print("\n\n\nTop keys for: " + award)
-        top_keys(nominee_lst, 50)
-    # people
+        print("\n\n\nTop keys for nominees for: " + award)
+        top_keys(nominee_lst, 0)
+        print(other_winners, other_nominees)
     if any(word in award for word in {'actress', 'actor', 'director', 'award'}):
-        nominee = find_name(nominee_lst, other_nominees['name'] | other_nominees['title'], award)
-        other_nominees['name'].add(nominee)
+        nominees = find_name(nominee_lst, other_nominees['name'] | other_nominees['title'] | other_winners, award, 4)
+        other_nominees['name'] = other_nominees['name'] | nominees
     else: # titles
-        nominee = find_title(nominee_lst, other_nominees['name'], award)
-        other_nominees['title'].add(nominee)
-    return nominee
+        nominees = find_title(nominee_lst, other_nominees['name'] | other_winners, award, 4)
+        other_nominees['title'] = other_nominees['title'] | nominees
+    return list(nominees)
 
 def eval_nominee_tweet(tweet, dicts, keys, sw, awards_map):
     # tokens = bigrams(tweet.split(' '), winners_kw, winners_sw + gg_sw + media_sw + list(map.keys()))
@@ -55,52 +51,3 @@ def eval_nominee_tweet(tweet, dicts, keys, sw, awards_map):
                 dicts[key][bgm] = 1
             else:
                 dicts[key][bgm] += 1
-
-def nominees_id_award(tweet, award_map):
-    for award_key in award_map['include']:
-        # if not then check if the child keys are
-        if not any(rel_key in tweet for rel_key in ([award_key] + award_map['include'][award_key])):
-
-            # did not pass test
-            return False
-
-    for award_key in award_map['exclude']:
-
-        if any(rel_key in tweet for rel_key in ([award_key] + award_map['exclude'][award_key])):
-
-            return False
-    return True
-
-def g_map(lst):
-    map = {
-        'include': {
-            'nominee': ['nominated', 'lost']
-        },
-        'exclude': {
-            'win': ['won']
-        }
-    }
-    for e in lst:
-        # actor keywords
-        if e == 'actress':
-            map['include'][e] = ['actriz']
-        elif e == 'television' or e == 'series':
-            map['include']['television'] = ['series', 'tv', 'show']
-        elif e == 'motion' or e == 'picture':
-            map['include']['motion'] = ['picture', 'movie']
-        elif e == 'miniseries':
-            map['include'][e] = ['mini-series', 'mini']
-        elif e == 'comedy' or e == 'musical':
-            map['include']['comedy'] = ['musical']
-        else:
-            map['include'][e] = []
-
-    # if map generated for best actor and not supporting actor, then exclude supporting from search
-    if 'supporting' not in map['include'] and any(word in map['include'] for word in ['actress', 'actor']):
-        map['exclude']['supporting'] = []
-
-    # if non-actor award, exclude actor/actress from results
-    if not any(word in map['include'] for word in ['actress', 'actor']):
-        map['exclude']['actress'] = ['actriz', 'actor']
-    return map
-

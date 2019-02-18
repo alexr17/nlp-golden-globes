@@ -31,6 +31,96 @@
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": "maggie smith",
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "ed harris"
     },
+    "nominees": {
+        "cecil b. demille award": [
+            "etaoin shrdlu"
+        ],
+        "best motion picture - drama": [
+            "lincoln"
+        ],
+        "best performance by an actress in a motion picture - drama": [
+            "etaoin shrdlu"
+        ],
+        "best performance by an actor in a motion picture - drama": [
+            "etaoin shrdlu"
+        ],
+        "best motion picture - comedy or musical": [
+            "'s"
+        ],
+        "best performance by an actress in a motion picture - comedy or musical": [
+            "etaoin shrdlu"
+        ],
+        "best performance by an actor in a motion picture - comedy or musical": [
+            "etaoin shrdlu"
+        ],
+        "best animated feature film": [
+            "hotel transylvania",
+            "ted",
+            "life"
+        ],
+        "best foreign language film": [
+            "crossed amour"
+        ],
+        "best performance by an actress in a supporting role in a motion picture": [
+            "etaoin shrdlu"
+        ],
+        "best performance by an actor in a supporting role in a motion picture": [
+            "hudson the"
+        ],
+        "best director - motion picture": [
+            "ang lee",
+            "kathryn bigelow",
+            "quentin tarantino",
+            "tom hooper"
+        ],
+        "best screenplay - motion picture": [
+            "life"
+        ],
+        "best original score - motion picture": [
+            "the master",
+            "cloud atlas",
+            "wild"
+        ],
+        "best original song - motion picture": [
+            "les miserables",
+            "safe",
+            "argo",
+            "wonder"
+        ],
+        "best television series - drama": [
+            "bad"
+        ],
+        "best performance by an actress in a television series - drama": [
+            "danes homeland"
+        ],
+        "best performance by an actor in a television series - drama": [
+            "lewis homeland"
+        ],
+        "best television series - comedy or musical": [
+            "show"
+        ],
+        "best performance by an actress in a television series - comedy or musical": [
+            "the night"
+        ],
+        "best performance by an actor in a television series - comedy or musical": [
+            "etaoin shrdlu"
+        ],
+        "best mini-series or motion picture made for television": [
+            "comedies"
+        ],
+        "best performance by an actress in a mini-series or motion picture made for television": [
+            "amy p"
+        ],
+        "best performance by an actor in a mini-series or motion picture made for television": [
+            "benedict cumberbatch"
+        ],
+        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
+            "hayden panettiere"
+        ],
+        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
+            "etaoin shrdlu"
+        ]
+    },
     "presenters": {
         "cecil b. demille award": [
             "robert downey jr."
@@ -41,65 +131,83 @@
         "best performance by an actress in a motion picture - drama": [
             "george clooney"
         ],
-        "best performance by an actor in a motion picture - drama": "aeiouprst",
+        "best performance by an actor in a motion picture - drama": [
+            "etaoin shrdlu"
+        ],
         "best motion picture - comedy or musical": [
             "dustin hoffman"
         ],
         "best performance by an actress in a motion picture - comedy or musical": [
-            "lincon jennifer"
+            "clinton presentando"
         ],
-        "best performance by an actor in a motion picture - comedy or musical": "aeiouprst",
         "best animated feature film": [
             "sacha baron cohen"
         ],
         "best foreign language film": [
-            "sylvester stallone",
-            "arnold schwarzenegger"
+            "arnold schwarzenegger",
+            "sylvester stallone"
         ],
         "best performance by an actress in a supporting role in a motion picture": [
-            "kerry washington",
-            "maggie smith"
+            "maggie smith",
+            "dennis quaid"
         ],
         "best performance by an actor in a supporting role in a motion picture": [
             "bradley cooper",
             "kate hudson"
         ],
         "best director - motion picture": [
-            "halle berry"
+            "halle berry",
+            "jennifer garner"
         ],
         "best screenplay - motion picture": [
             "robert pattinson",
             "amanda seyfried"
         ],
         "best original score - motion picture": [
-            "mychael danna",
+            "jennifer lopez",
             "jason statham"
         ],
-        "best original song - motion picture": "aeiouprst",
+        "best original song - motion picture": [
+            "j. lo"
+        ],
         "best television series - drama": [
             "paul rudd"
         ],
         "best performance by an actress in a television series - drama": [
-            "nathan fillion",
-            "lea michele"
+            "nathan fillion"
         ],
-        "best performance by an actor in a television series - drama": "aeiouprst",
+        "best performance by an actor in a television series - drama": [
+            "etaoin shrdlu"
+        ],
         "best television series - comedy or musical": [
-            "jimmy fallon"
+            "jay leno"
         ],
         "best performance by an actress in a television series - comedy or musical": [
-            "jason bateman",
-            "aziz ansari"
+            "aziz ansari",
+            "jason bateman"
         ],
-        "best performance by an actor in a television series - comedy or musical": "aeiouprst",
-        "best mini-series or motion picture made for television": "aeiouprst",
-        "best performance by an actress in a mini-series or motion picture made for television": "aeiouprst",
-        "best performance by an actor in a mini-series or motion picture made for television": "aeiouprst",
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
-            "kerry washington",
-            "dennis quaid"
+            "dennis quaid",
+            "kerry washington"
         ],
-        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "aeiouprst"
+        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
+            "etaoin shrdlu"
+        ],
+        "best performance by an actor in a motion picture - comedy or musical": [
+            "etaoin shrdlu"
+        ],
+        "best performance by an actor in a television series - comedy or musical": [
+            "etaoin shrdlu"
+        ],
+        "best mini-series or motion picture made for television": [
+            "etaoin shrdlu"
+        ],
+        "best performance by an actress in a mini-series or motion picture made for television": [
+            "etaoin shrdlu"
+        ],
+        "best performance by an actor in a mini-series or motion picture made for television": [
+            "etaoin shrdlu"
+        ]
     },
     "award_names": [
         "best supporting actress in a television series",

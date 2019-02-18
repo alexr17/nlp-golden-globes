@@ -33,7 +33,7 @@ def parse_tmdb(data, field):
 def parse_tmdb_data(key, params, tmdb_method):
     tmdb_url = "https://api.themoviedb.org/"
     data = []
-
+    # print(f"{tmdb_url}{tmdb_method}?{urlencode(params)}")
     resp = requests.get(f"{tmdb_url}{tmdb_method}?{urlencode(params)}").json()
     pages = int(resp['total_pages'])
 
@@ -43,7 +43,7 @@ def parse_tmdb_data(key, params, tmdb_method):
         time.sleep(0.25)
         data += parse_tmdb(requests.get(f"{tmdb_url}{tmdb_method}?{urlencode(params)}").json(), key)
         print(len(data))
-
+    params['page'] = '1'
     return data
 
 # Generating the tmdb data for a range of years
@@ -76,8 +76,8 @@ def generate_tmdb_data(years, vote_min=100, score_min=6):
     # movies
     tmdb_method = f"3/discover/movie"
     movie_years = range(years[0], years[1])
-
     for year in movie_years:
+        # print(year)
         params["primary_release_year"] = str(year)
         titles += parse_tmdb_data('title', params, tmdb_method)
 
@@ -85,6 +85,7 @@ def generate_tmdb_data(years, vote_min=100, score_min=6):
     tmdb_method = f"3/discover/tv"
     tv_years = range(years[0]-5, years[1])
     for year in tv_years:
+        print(year)
         params["first_air_date_year"] = str(year)
         titles += parse_tmdb_data('name', params, tmdb_method)
 

@@ -43,10 +43,12 @@ def recur_ngram(names, dct, key, string):
 # key = 'robert'
 # print(recur_ngram(load_imdb_data('name'), dct, key, []))
 def find_ngram(tkns, names, optional, exclude_list):
-    if len(tkns) < 2:
+    if not len(tkns):
+        return ''
+    if len(tkns) < 2 and not optional:
         return tkns[0][0]
-    if len(tkns) > 10:
-        tkns = tkns[:10]
+    if len(tkns) > 20:
+        tkns = tkns[:20]
     bgm_map = {}
 
     for tkn in tkns:
@@ -56,9 +58,7 @@ def find_ngram(tkns, names, optional, exclude_list):
                 bgm_map[sp_tkn[0]].add(sp_tkn[-1])
             else:
                 bgm_map[sp_tkn[0]] = {sp_tkn[-1]}
-
     best_ngrams = set()
-
     for tkn in bgm_map:
         name = recur_ngram(names, bgm_map, tkn, [])
         if type(name) == str and name not in exclude_list:
@@ -66,10 +66,10 @@ def find_ngram(tkns, names, optional, exclude_list):
         elif not optional:
             best_ngrams.add(' '.join(name))
 
-    if optional:
-        return False
-    else:
+    if not optional:
         return tkns[0][0]
+    else:
+        return ''
 
 def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=False):
     max = lst[0][1]
@@ -79,11 +79,10 @@ def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=Fals
     if no_max:
         threshold = 0
     while i < len(lst) and lst[i][1] >= max * threshold:
-        # print(i)
         # if it exists somewhere else then remove it
         if lst[i][0] in exclude_list:
             lst.pop(i)
-            if i == 0:
+            if i == 0 and len(lst):
                 max = lst[0][1]
             continue
 
@@ -92,9 +91,9 @@ def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=Fals
             return lst.pop(i)[0]
         i += 1
 
-    print("\nCould not find generic for award: " + award)
+    # print("\nCould not find generic for award: " + award)
     # print(top_tpls)
-    return (find_ngram(top_tpls, type_set, optional, exclude_list))
+    return find_ngram(top_tpls, type_set, optional, exclude_list)
     #defaulting
 
 def find_name(lst, exclude_list, award, max=1):
@@ -109,6 +108,8 @@ def find_name(lst, exclude_list, award, max=1):
         name = find_generic(lst, exclude_list | names, names_set, award, optional, True)
         if name:
             names.add(name)
+        else:
+            return names
         if not len(lst):
             return names
         optional = True
@@ -120,13 +121,14 @@ def find_title(lst, exclude_list, award, max=1):
     optional = False
     if max == 1:
         return find_generic(lst, exclude_list, titles_set, award)
-    
-    titles = set()
 
+    titles = set()
     for x in range(max):
         title = find_generic(lst, exclude_list | titles, titles_set, award, optional, True)
         if title:
             titles.add(title)
+        else:
+            return titles
         if not len(lst):
             return titles
         optional = True

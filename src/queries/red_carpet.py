@@ -63,7 +63,7 @@ def top_dressed(best_dressed, worst_dressed):
 
 
 
-def find_best_dressed(data, year):
+def find_best_dressed(data):
 	best_dressed_dict = {}
 	for obj in data:
 		if 'dress' in obj['text']:
@@ -85,7 +85,7 @@ def find_best_dressed(data, year):
 	#best_dressed_lst = find_name(best_dressed_lst,best_dressed_dict)
 	return best_dressed_lst
 
-def find_worst_dressed(data, year):
+def find_worst_dressed(data):
 	worst_dressed_dict = {}
 	for obj in data:
 		if 'dress' in obj['text']:
@@ -101,7 +101,7 @@ def find_worst_dressed(data, year):
 							worst_dressed_dict[tkn] += 1
 	worst_dressed_lst = sorted(worst_dressed_dict.items(), key=lambda x: x[1], reverse=True)
 	#best_dressed_lst = find_name(best_dressed_lst,best_dressed_dict)
-	bd = find_best_dressed(data,year)
+	bd = find_best_dressed(data)
 	for item in bd:
 		if item[1]>35:
 			bdl.append(item[0])
