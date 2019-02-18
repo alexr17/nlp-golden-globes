@@ -129,7 +129,6 @@ def find_awards(data):
 
     removed_awards = set(removed_awards)
     new_award_lst = [award for award in new_award_lst if award not in removed_awards]
-    print(len(new_award_lst))
     return new_award_lst
 
 

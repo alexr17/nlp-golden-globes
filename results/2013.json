@@ -100,5 +100,20 @@
             "dennis quaid"
         ],
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "aeiouprst"
-    }
+    },
+    "award_names": [
+        "best supporting actress in a television series",
+        "best supporting actress in a mini-series or motion picture",
+        "best television series actor - drama",
+        "best motion picture drama for or comedy",
+        "best original song in a motion picture - music",
+        "best supporting actor in a television series",
+        "best supporting actress in a motion picture for role",
+        "best supporting actress comedy",
+        "best animated feature film",
+        "best supporting actor in a miniseries or motion picture",
+        "best motion picture musical comedy",
+        "best actor motion picture - drama for performance",
+        "best director motion picture - drama for movie"
+    ]
 }

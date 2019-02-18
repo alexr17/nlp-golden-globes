@@ -31,6 +31,103 @@
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": "joanne froggatt",
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "matt bomer"
     },
+    "presenters": {
+        "cecil b. demille award": [
+            "julianna margulies",
+            "don cheadle"
+        ],
+        "best motion picture - drama": [
+            "meryl streep",
+            "jack black"
+        ],
+        "best performance by an actress in a motion picture - drama": [
+            "matthew mcconaughey"
+        ],
+        "best performance by an actor in a motion picture - drama": [
+            "gwyneth paltrow"
+        ],
+        "best motion picture - comedy or musical": [
+            "owen wilson",
+            "kate hudson"
+        ],
+        "best performance by an actress in a motion picture - comedy or musical": [
+            "ricky gervais"
+        ],
+        "best performance by an actor in a motion picture - comedy or musical": [
+            "amy adams"
+        ],
+        "best animated feature film": [
+            "dragon awards"
+        ],
+        "best foreign language film": [
+            "lupita nyong'o",
+            "colin farrell"
+        ],
+        "best performance by an actress in a supporting role in a motion picture": [
+            "jared leto",
+            "dakota johnson"
+        ],
+        "best performance by an actor in a supporting role in a motion picture": [
+            "jennifer aniston",
+            "benedict cumberbatch"
+        ],
+        "best director - motion picture": [
+            "harrison ford"
+        ],
+        "best screenplay - motion picture": [
+            "bill hader",
+            "kristen wiig"
+        ],
+        "best original score - motion picture": [
+            "sienna miller",
+            "vince vaughn"
+        ],
+        "best original song - motion picture": [
+            "john legend",
+            "prince"
+        ],
+        "best television series - drama": [
+            "adam levine",
+            "paul rudd"
+        ],
+        "best performance by an actress in a television series - drama": [
+            "anna faris",
+            "chris pratt"
+        ],
+        "best performance by an actor in a television series - drama": [
+            "katherine heigl",
+            "david duchovny"
+        ],
+        "best television series - comedy or musical": [
+            "melissa mccarthy"
+        ],
+        "best performance by an actress in a television series - comedy or musical": [
+            "kerry washington",
+            "bryan cranston"
+        ],
+        "best performance by an actor in a television series - comedy or musical": [
+            "lily tomlin",
+            "jane fonda"
+        ],
+        "best mini-series or motion picture made for television": [
+            "jeremy renner",
+            "jennifer lopez"
+        ],
+        "best performance by an actress in a mini-series or motion picture made for television": [
+            "kate beckinsale",
+            "adrien brody"
+        ],
+        "best performance by an actor in a mini-series or motion picture made for television": [
+            "jeremy renner",
+            "seth meyers"
+        ],
+        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
+            "dakota johnson"
+        ],
+        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
+            "sethmeyers nominees"
+        ]
+    },
     "award_names": [
         "best actress in a motion picture comedy or musical for role",
         "best animated feature film movie",
