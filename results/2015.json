@@ -31,101 +31,72 @@
         "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": "joanne froggatt",
         "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": "matt bomer"
     },
-    "presenters": {
-        "cecil b. demille award": [
-            "julianna margulies",
-            "don cheadle"
-        ],
-        "best motion picture - drama": [
-            "jack black",
-            "meryl streep"
-        ],
-        "best performance by an actress in a motion picture - drama": [
-            "matthew mcconaughey"
-        ],
-        "best performance by an actor in a motion picture - drama": [
-            "gwyneth paltrow"
-        ],
-        "best motion picture - comedy or musical": [
-            "owen wilson",
-            "kate hudson"
-        ],
-        "best performance by an actress in a motion picture - comedy or musical": [
-            "ricky gervais"
-        ],
-        "best performance by an actor in a motion picture - comedy or musical": [
-            "amy adams"
-        ],
-        "best animated feature film": [
-            "awards sunday"
-        ],
-        "best foreign language film": [
-            "colin farrell",
-            "lupita nyong'o"
-        ],
-        "best performance by an actress in a supporting role in a motion picture": [
-            "dakota johnson",
-            "jared leto"
-        ],
-        "best performance by an actor in a supporting role in a motion picture": [
-            "jennifer aniston",
-            "benedict cumberbatch"
-        ],
-        "best director - motion picture": [
-            "harrison ford"
-        ],
-        "best screenplay - motion picture": [
-            "kristen wiig",
-            "bill hader"
-        ],
-        "best original score - motion picture": [
-            "sienna miller",
-            "vince vaughn"
-        ],
-        "best original song - motion picture": [
-            "common",
-            "john legend"
-        ],
-        "best television series - drama": [
-            "paul rudd",
-            "adam levine"
-        ],
-        "best performance by an actress in a television series - drama": [
-            "chris pratt",
-            "anna faris"
-        ],
-        "best performance by an actor in a television series - drama": [
-            "katherine heigl",
-            "david duchovny"
-        ],
-        "best television series - comedy or musical": [
-            "melissa mccarthy"
-        ],
-        "best performance by an actress in a television series - comedy or musical": [
-            "kerry washington",
-            "bryan cranston"
-        ],
-        "best performance by an actor in a television series - comedy or musical": [
-            "jane fonda",
-            "lily tomlin"
-        ],
-        "best mini-series or motion picture made for television": [
-            "jeremy renner",
-            "jennifer lopez"
-        ],
-        "best performance by an actress in a mini-series or motion picture made for television": [
-            "kate beckinsale",
-            "adrien brody"
-        ],
-        "best performance by an actor in a mini-series or motion picture made for television": [
-            "jeremy renner",
-            "katie holmes"
-        ],
-        "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": [
-            "dakota johnson"
-        ],
-        "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": [
-            "amp sethmeyers"
-        ]
-    }
+    "award_names": [
+        "best actress in a motion picture comedy or musical for role",
+        "best animated feature film movie",
+        "best performance by an actor in a motion picture comedy or musical",
+        "best performance by an actress in a supporting role motion picture",
+        "best actor actress comedy series",
+        "best original song foreign language",
+        "best supporting actress film actor",
+        "best supporting actress in a mini series or movie",
+        "best supporting actress in a or motion picture for television",
+        "best supporting actress in a mini series for role",
+        "best actor mini series film",
+        "best actor in a mini series or motion picture for television",
+        "best actor movie or mini series",
+        "best actor in a miniseries movie for short",
+        "best performance by an actress in a television series comedy or musical",
+        "best original song in a motion picture movie",
+        "best original song - motion picture by for film",
+        "best original score motion - movie",
+        "best performance by an actor in a supporting role mini-series or motion picture for television",
+        "best supporting actor in a mini series or musical",
+        "best supporting actor in a miniseries or series movie",
+        "best supporting actor in a television series - movie",
+        "best supporting actor for movie or mini-series role",
+        "best supporting actor in a miniseries or motion picture for role",
+        "best performance by an actress in a motion picture comedy or musical",
+        "best performance by an actress motion musical",
+        "best animated feature film cast",
+        "best original motion picture song",
+        "best supporting actress in a motion picture musical or comedy",
+        "best supporting actress - motion picture for performance",
+        "best supporting actress in a motion picture for movie",
+        "best supporting actress motion picture drama",
+        "best animated feature original song",
+        "best motion picture - original score",
+        "best performance in a television series musical or comedy an actor",
+        "best actor in a television series musical",
+        "best actress miniseries or television film",
+        "best actor television series - comedy or music",
+        "best foreign language film - director",
+        "best foreign language film movie",
+        "best series actor comedy or musical",
+        "best supporting actor actress in a motion picture",
+        "best television series actor - drama",
+        "best television series actor",
+        "best series actor comedy",
+        "best performance by an actress in a television series drama",
+        "best actor in a motion picture comedy or musical for performance",
+        "best motion picture - comedy or musical film",
+        "best actor in a motion picture musical or for role",
+        "best motion picture comedy or movie",
+        "best actress motion musical or supporting",
+        "best motion picture drama for performance",
+        "best performance in a motion picture drama actress",
+        "best actor in a motion picture drama for story",
+        "best actor in a motion drama role",
+        "best original score actor for motion picture",
+        "best motion picture drama actor",
+        "best motion picture drama - film",
+        "best motion picture drama a for cast",
+        "best motion picture drama for film an director",
+        "best motion picture drama original",
+        "best director supporting actress movie",
+        "best original score animated feature",
+        "best motion picture drama for director",
+        "best motion picture director supporting actress",
+        "best picture comedy or musical film"
+    ]
 }

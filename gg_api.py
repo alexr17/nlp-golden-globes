@@ -282,6 +282,28 @@ def main():
     print(json.dumps(times, indent=4))
 
 
+    #pre_ceremony()
+    #pre_ceremony(False)
+    data = load_json('2013')
+    lst = find_awards(data)
+    # for l in lst:
+    #     print(l)
+    results2013 = load_json('2013', 'results/')
+    results2013['award_names'] = lst
+    with open('results/' + '2013' +'.json', 'w') as outfile:
+        outfile.write(json.dumps(results2013, indent=4))
+
+    data = load_json('2015')
+    lst = find_awards(data)
+    results2015 = load_json('2015', 'results/')
+    results2015['award_names'] = lst
+    with open('results/' + '2015' +'.json', 'w') as outfile:
+        outfile.write(json.dumps(results2015, indent=4))
+    #top_keys(lst, 100)
+    #print(get_presenters('2013'))
+    #print(get_hosts('2013'))
+    #print(get_hosts('2015'))
+    # get_winner('2013')
     return False
 
 
