@@ -14,9 +14,9 @@ from src.helpers.clean import merge_bigrams
 import pprint
 #from src.helpers.find import find_name
 
-#list_of_awards = [line.strip() for line in open('./data/award_kw.txt')]
-list_of_awards = ['best', 'motion', 'picture', 'drama', 'performance', 'actress', 'actor', 'comedy', 'musical', 'animated', 'feature', 'film', 'foreign', 'language', 'supporting', 'role', 'director', 'screenplay', 'orginal', 'score', 'song', 'television', 'series',  'mini-series', 'mini']
-helper_words = ['by','an','in', 'a', 'for','-',':','or']
+list_of_awards = [line.strip() for line in open('./data/award_kw.txt')]
+#list_of_awards = ['best', 'motion', 'picture', 'drama', 'performance', 'actress', 'actor', 'comedy', 'musical', 'animated', 'feature', 'film', 'foreign', 'language', 'supporting', 'role', 'director', 'screenplay', 'orginal', 'score', 'song', 'television', 'series',  'mini-series', 'mini']
+filler_words = ['by','an','in', 'a', 'for','-',':','or']
 # golden globes stopwords
 gg_sw = ['golden', 'globe', 'globes', 'goldenglobes']
 
@@ -32,7 +32,7 @@ media_sw = ['eonline', 'cnnshowbiz']
 award_kw = ['actor', 'actress', 'supporting']
 
 
-# Used intersection of tweet set and tweet indexing from the following project:
+# Used intersection of tweet set and tweet indexing idea from the following project:
 # https://github.com/brownrout/EECS-337-Golden-Globes/blob/master/gg_api.py
 def find_awards(data):
     all_awards = {}
@@ -41,10 +41,10 @@ def find_awards(data):
     bigrams_dict = {}
     for obj in data:
         text = obj['text'].lower()
-        if len(set(list_of_awards).intersection(set(text.split(" ")))) > 4:
+        if len(set(list_of_awards).intersection(set(text.split(" ")))) >= 4:
             award_tweets.append(text)
 
-    # Find where award_words start and end in tweet
+    # Find where award words start and end in tweet
     for tweet in award_tweets:
         tweet = tweet.split(" ")
         start = len(tweet) - 1
@@ -62,9 +62,9 @@ def find_awards(data):
 
         # Construct award based on indexed tweet
         for word in tweet[start:end+1]:
-            if word in list_of_awards and word not in helper_words:
+            if word in list_of_awards and word not in filler_words:
                 temp1.append(word)
-            if word in list_of_awards or word in helper_words:
+            if word in list_of_awards or word in filler_words:
                 temp.append(word)
 
         # Use set to prevent recurring words and sort it based on how it's order in the tweet
@@ -97,7 +97,7 @@ def find_awards(data):
     bigrams_lst = sorted(bigrams_dict.items(), key=lambda x: x[1], reverse=True)
 
     # Include only the more popular bigrams
-    common_phrases = [x[0] for x in bigrams_lst if x[1] > 50]
+    common_phrases = [x[0] for x in bigrams_lst if x[1] > 80]
     #common_phrases = ["motion picture", "supporting role", "best performance", "television series", "original score", "original song"]
 
     # Include the most popular for every similar category and make sure it contains
@@ -111,12 +111,14 @@ def find_awards(data):
                 max_score = all_awards[award]
                 max_award = award
         #new_award_lst.append(max_award)
-        if [phrase in max_award for phrase in common_phrases].count(True) > 1:
+        if [phrase in max_award for phrase in common_phrases].count(True) > 2:
             new_award_lst.append(max_award)
 
     new_award_lst = [x for x in new_award_lst if x.split(" ")[0] == "best"]
     threshold = 0.85
     removed_awards = []
+
+    # Remove awards that are very similar to one another
     for i, x in enumerate(new_award_lst):
         x1 = set([a for a in x.split(" ")])
         for j, y in enumerate(new_award_lst[i+1:]):
@@ -127,9 +129,8 @@ def find_awards(data):
                         removed_awards.append(x)
 
     removed_awards = set(removed_awards)
-    for a in removed_awards:
-        if a in new_award_lst:
-            new_award_lst.remove(a)
+    new_award_lst = [award for award in new_award_lst if award not in removed_awards]
+    print(len(new_award_lst))
     return new_award_lst
 
 
