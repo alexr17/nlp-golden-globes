@@ -209,14 +209,16 @@ def main():
     # load data
     print("Loading data from text files")
     data = {}
+    
+        # raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
+    data['2013'] = load_json('2013')
+    data['2015'] = load_json('2015')
+
     try:
         data['2019'] = load_json('2019')
         data['2018'] = load_json('2018')
     except FileNotFoundError as e:
         print("2018 and 2019 files not found. Please ^C and add them to the directory and run main again")
-        # raise FileNotFoundError('\nIt looks like you haven\'t put the data for 2018 and 2019 into the /data/ directory.\n\nPlease do so the code can run properly.')
-    data['2013'] = load_json('2013')
-    data['2015'] = load_json('2015')
     print("Data loaded")
 
     lst = find_awards(data['2013'])
@@ -232,6 +234,11 @@ def main():
     results = {}
     t = time.time()
     for year in data:
+        if year == '2019':
+            winners_sw = generate_winners_sw(OFFICIAL_AWARDS_1819)
+            presenters_sw = generate_presenters_sw(OFFICIAL_AWARDS_1819)
+            nominees_sw = generate_nominees_sw(OFFICIAL_AWARDS_1819)
+            awards_map = generate_awards_map(OFFICIAL_AWARDS_1819)
         print("Now parsing data for " + year)
         nominated_dict = {}
         results[year] = load_json(year, 'results/')
@@ -288,17 +295,14 @@ def main():
                 eval_presenter_tweet(tweet, presenter_dicts, valid_award_keys['presenter'], presenters_sw)
         
         other_winners = {'name': set(), 'title': set()}
-        print("\n\nFinding Awards")
         for award in awards_map:
             results[year]['winners'][award] = find_winner(winner_dicts[award], award, other_winners)
 
         other_presenters = set()
-        print("\n\nFinding Presenters")
         for award in awards_map:
             results[year]['presenters'][award] = find_presenter(presenter_dicts[award], award, other_presenters, results[year]['winners'][award])
 
         other_nominees = {'name': set(), 'title': set()}
-        print("\n\nFinding Nominees")
         for award in awards_map:
             # print(nominees_map[award])
             other_set = [results[year]['winners'][award]]
