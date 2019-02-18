@@ -57,7 +57,7 @@ def presenters_id_award(tweet, award_map):
             return False
 
     for award_key in award_map['exclude']:
-         
+
         if any(rel_key in tweet for rel_key in ([award_key] + award_map['exclude'][award_key])):
 
             return False
@@ -96,7 +96,7 @@ def g_map(lst):
     # if non-actor award, exclude actor/actress from results
     if not any(word in map['include'] for word in ['actress', 'actor']):
         map['exclude']['actress'] = ['actriz', 'actor']
-    
+
     # if non movie award:
     # if 'motion' in map['include'] and 'television' not in map['include']:
     #     map['exclude']['television'] = ['tv', 'series', 'miniseries', 'show']

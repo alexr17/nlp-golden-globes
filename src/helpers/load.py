@@ -53,13 +53,13 @@ def generate_tmdb_data(years, vote_min=100, score_min=6):
 
     config = configparser.ConfigParser()
     config.read('./config.ini')
-    
+
     # people
     tmdb_method = "3/person/popular"
     params = {
         "api_key": config['api_keys']['tmdb']
     }
-    
+
     if len(list(line.strip() for line in open('./data/names.txt'))) < 18000:
         people = parse_tmdb_data('name', params, tmdb_method)
         write_to_file(people, './data/names.txt')
@@ -76,11 +76,11 @@ def generate_tmdb_data(years, vote_min=100, score_min=6):
     # movies
     tmdb_method = f"3/discover/movie"
     movie_years = range(years[0], years[1])
-    
+
     for year in movie_years:
         params["primary_release_year"] = str(year)
         titles += parse_tmdb_data('title', params, tmdb_method)
-    
+
     # tv
     tmdb_method = f"3/discover/tv"
     tv_years = range(years[0]-5, years[1])

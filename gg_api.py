@@ -1,4 +1,5 @@
 import json
+from src.queries.humor import find_jokes
 from src.queries.host import find_hosts
 from src.queries.award_names import find_awards
 from src.queries.nominees import find_nominee
@@ -8,8 +9,10 @@ from src.helpers.load import load_json, generate_tmdb_data
 from src.helpers.clean import join_ngrams
 from src.queries.red_carpet import find_best_dressed, find_worst_dressed, top_dressed
 from src.helpers.debug import top_keys, find_key
+
 import time
 '''Version 0.1'''
+
 
 OFFICIAL_AWARDS_1315 = [
     'cecil b. demille award',
@@ -258,6 +261,10 @@ def main():
         }
         print("\n\n\nFinding Awards")
 
+        other_winners = {
+            'name': set(),
+            'title': set()
+        }
         for award in awards_map:
             results[year]['winners'][award] = find_winner(winner_dicts[award], award, other_winners)
         times[year]['winners']['find'] += (time.time() - t)
@@ -305,6 +312,7 @@ def main():
     #print(get_hosts('2015'))
     # get_winner('2013')
     return False
+
 
 
 if __name__ == '__main__':

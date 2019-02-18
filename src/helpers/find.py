@@ -56,7 +56,7 @@ def find_ngram(tkns, names, optional, exclude_list):
                 bgm_map[sp_tkn[0]].add(sp_tkn[-1])
             else:
                 bgm_map[sp_tkn[0]] = {sp_tkn[-1]}
-    
+
     best_ngrams = set()
 
     for tkn in bgm_map:
@@ -65,7 +65,7 @@ def find_ngram(tkns, names, optional, exclude_list):
             return name
         elif not optional:
             best_ngrams.add(' '.join(name))
-    
+
     if optional:
         return False
     else:
@@ -91,7 +91,7 @@ def find_generic(lst, exclude_list, type_set, award, optional=False, no_max=Fals
         if lst[i][0] in type_set:
             return lst.pop(i)[0]
         i += 1
-    
+
     print("\nCould not find generic for award: " + award)
     # print(top_tpls)
     return (find_ngram(top_tpls, type_set, optional, exclude_list))
@@ -102,9 +102,9 @@ def find_name(lst, exclude_list, award, max=1):
     optional = False
     if max == 1:
         return find_generic(lst, exclude_list, names_set, award, optional, False)
-    
+
     names = set()
-    
+
     for x in range(max):
         name = find_generic(lst, exclude_list | names, names_set, award, optional, True)
         if name:

@@ -25,8 +25,8 @@ def generate_nominees_map(awards):
         awards_map[award] = g_map(award_lst)
     return awards_map
 
-def find_nominee(nominee_dict, award, other_nominees):    
-    
+def find_nominee(nominee_dict, award, other_nominees):
+
     nominee_lst = sorted(nominee_dict.items(), key=lambda x: x[1], reverse=True)
     if award in debug_awards:
         print("\n\n\nTop keys for: " + award)
@@ -43,7 +43,7 @@ def find_nominee(nominee_dict, award, other_nominees):
 def eval_nominee_tweet(tweet, dicts, keys, sw, awards_map):
     # tokens = bigrams(tweet.split(' '), winners_kw, winners_sw + gg_sw + media_sw + list(map.keys()))
     tokens = nltk.word_tokenize(tweet)
-    
+
     gms = unibigrams(tokens, nominees_kw, sw | gg_sw | media_sw)
     for key in keys:
         if awards_map[key]['person']:
@@ -65,7 +65,7 @@ def nominees_id_award(tweet, award_map):
             return False
 
     for award_key in award_map['exclude']:
-         
+
         if any(rel_key in tweet for rel_key in ([award_key] + award_map['exclude'][award_key])):
 
             return False
